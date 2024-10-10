@@ -24,6 +24,7 @@ owner Gym[] @relation("Gym Owner")
 member Gym[] @relation("Gym member")
 memberships Membership[] @relation("User Memberships")
 attendance Attendance[] @relation("UserAttendance")
+provider Providers
 }
 
 model Role {
@@ -43,6 +44,15 @@ attendance  Attendance[]
 
 
 }
+
+model OTP {
+  id        Int      @id @default(autoincrement())
+  email     String
+  otp       String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
 model Membership {
   id String @id @default(uuid())
   price String
@@ -66,4 +76,8 @@ model Attendance {
 enum Roles {
   USER
   ADMIN
+}
+enum Providers {
+google
+credentials
 }

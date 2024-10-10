@@ -16,17 +16,22 @@ import { Dumbbell } from "lucide-react";
 import { motion } from "framer-motion";
 import { SignUp } from "@/types/types";
 import { FlipWords } from "./ui/flip-words";
-import { signup } from "@/app/actions/signup";
+import { signup } from "@/actions/signup/signup";
 import { Signin } from "./SignIn";
 import { signIn } from "next-auth/react";
+import { toast } from "sonner";
+import { generateOTP } from "@/actions/generateOTP/generateOtp";
+import { SendMail } from "@/actions/sendMail/mailer";
+import { useRouter } from "next/navigation";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { formDataAtom } from "@/states/signUpForm";
+import { signUpSchema } from "@/actions/signup/schema";
+import { checkEmailExists } from "@/actions/checkEmail";
 
 export const Signup = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState<SignUp>({
-    name: "",
-    email: "",
-    cellPh: 0,
-  });
+  const [formData, setFormData] = useRecoilState(formDataAtom);
+  const router = useRouter();
   const words = [
     "Effortless Membership Tracking",
     "Seamless Billing",
@@ -38,28 +43,67 @@ export const Signup = () => {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
+    const result = signUpSchema.safeParse(formData);
+    const isEmailExists = await checkEmailExists(formData.email);
 
-   const response =await signup(formData);
-   if(response.data){
-    const signinresponse = await signIn("credentials",{
-      phone:response.data.cellPh,
-      password:formData.password,
-      redirect:false,
-      callbackUrl:"/dashboard"
-    })
-    console.log(signinresponse,"Signin response")
-   }
+    localStorage.setItem("formData", JSON.stringify(formData));
 
-    setTimeout(() => {
+    if (result.success) {
+      if (isEmailExists.data) {
+        setLoading(false);
+        toast.error(`Email Already Exists ! Sign In `, {
+          closeButton: true,
+          position: "bottom-center",
+        });
+      } else {
+        const otpresponse = await generateOTP(formData.email);
+        localStorage.setItem("fromSignup", "true");
+        if (otpresponse.data) {
+          const sendmail = await SendMail({
+            reciepientEmail: formData.email,
+            otp: otpresponse.data.otp as string,
+            expiresAt: "30",
+          });
+
+          if (sendmail.success) {
+            router.push(`otp/${formData.email}`);
+          } else {
+            toast.error(`${sendmail.error}`, {
+              closeButton: true,
+            });
+          }
+        } else {
+          toast.error(`${otpresponse.error}`, {
+            closeButton: true,
+          });
+        }
+
+        setLoading(false);
+      }
+    } else {
+      const errors = result.error.flatten().fieldErrors as Record<
+        string,
+        string[]
+      >;
+
+      for (const field in errors) {
+        console.log(field);
+        toast.error(`${field} : ${errors[field]?.join(",")}`, {
+          closeButton: true,
+        });
+      }
       setLoading(false);
-    }, 3000);
+    }
   }
+
   async function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    console.log(formData);
   }
 
   return (
@@ -81,7 +125,7 @@ export const Signup = () => {
           whileHover={{ scale: [null, 1.2, 1.1] }}
           transition={{ duration: 0.3 }}
         >
-          <Card  className="w-[400px] card  hover hover:shadow-2xl border-4 border-black hover:shadow-primary/30 transition-shadow">
+          <Card className="w-[400px] card  hover hover:shadow-2xl border-4 border-black hover:shadow-primary/30 transition-shadow">
             <CardHeader className="space-y-1">
               <CardTitle className="text-2xl">Create an account</CardTitle>
               <CardDescription>
@@ -90,7 +134,17 @@ export const Signup = () => {
             </CardHeader>
             <CardContent className="grid gap-4">
               <div className="grid grid-cols-2 gap-6">
-                <Button variant="outline">Google</Button>
+                <Button
+                  onClick={async () => {
+                    await signIn("google", {
+                      redirect: false,
+                      callbackUrl: "/dashboard",
+                    });
+                  }}
+                  variant="outline"
+                >
+                  Google
+                </Button>
               </div>
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -109,6 +163,7 @@ export const Signup = () => {
                     id="name"
                     name="name"
                     type="text"
+                    value={formData.name}
                     placeholder="John Doe"
                     onChange={handleChange}
                   />
@@ -119,6 +174,7 @@ export const Signup = () => {
                     id="email"
                     name="email"
                     type="email"
+                    value={formData.email}
                     placeholder="m@example.com"
                     onChange={handleChange}
                   />
@@ -128,6 +184,7 @@ export const Signup = () => {
                   <Input
                     name="cellPh"
                     type="number"
+                    value={formData.cellPh}
                     placeholder="1234567890"
                     onChange={handleChange}
                   />
@@ -137,6 +194,7 @@ export const Signup = () => {
                   <Input
                     id="confirm-password"
                     name="password"
+                    value={formData.password}
                     type="password"
                     onChange={handleChange}
                   />

@@ -71,7 +71,7 @@ export default function SidebarHome({ children, session }: any) {
         <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
       onClick: async () => {
-        signOut({ callbackUrl: "/signin" });
+        signOut();
         router.push("/signin");
       },
     },
@@ -95,35 +95,35 @@ export default function SidebarHome({ children, session }: any) {
             </div>
           </div>
           <div>
-            {session.user.provider==="google" ? (
+            {session.user.provider === "google" ? (
               <SidebarLink
-              link={{
-                label: session.user.name,
-                href: "#",
-                icon: (
-                  <Image
-                    src={session.user.image}
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            />
-            ): (
+                link={{
+                  label: session.user.name,
+                  href: "#",
+                  icon: (
+                    <Image
+                      src={session.user.image}
+                      className="h-7 w-7 flex-shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    />
+                  ),
+                }}
+              />
+            ) : (
               <SidebarLink
-              link={{
-                label: session.user.name,
-                href: "#",
-                icon: (
-                  <MultiAvatar
-                    name={session.user.name}
-                    className="h-12 w-12"
-                  ></MultiAvatar>
-                ),
-              }}
-            />
+                link={{
+                  label: session.user.name,
+                  href: "#",
+                  icon: (
+                    <MultiAvatar
+                      name={session.user.name}
+                      className="h-12 w-12"
+                    ></MultiAvatar>
+                  ),
+                }}
+              />
             )}
           </div>
         </SidebarBody>
