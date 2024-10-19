@@ -3,7 +3,7 @@
 import { SignUp } from "@/types/types";
 import prisma from "@repo/db/client";
 import bcrypt from "bcrypt";
-import { signUpSchema } from "./schema";
+import { signUpSchema } from "@/types/validations";
 
 export const signup = async (formData: SignUp) => {
   try {

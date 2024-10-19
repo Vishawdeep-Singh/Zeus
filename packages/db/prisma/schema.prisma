@@ -35,13 +35,14 @@ model Role {
 
 model Gym {
 id String @id @default(uuid())
+name String
 address String
 owner User @relation("Gym Owner",fields: [ownerId], references: [id])
 ownerId Int 
 memberships Membership[]
 members User[]  @relation("Gym member")
 attendance  Attendance[]
-
+phoneNumber String
 
 }
 
@@ -57,10 +58,11 @@ model Membership {
   id String @id @default(uuid())
   price String
   duration Int
-  description String?
+  description String[]
   gym Gym @relation(fields: [gymId], references: [id])
   gymId String
   users User[] @relation("User Memberships")
+  color String
   
 }
 

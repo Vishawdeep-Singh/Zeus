@@ -25,7 +25,7 @@ import { SendMail } from "@/actions/sendMail/mailer";
 import { useRouter } from "next/navigation";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { formDataAtom } from "@/states/signUpForm";
-import { signUpSchema } from "@/actions/signup/schema";
+import { signUpSchema } from "@/types/validations";
 import { checkEmailExists } from "@/actions/checkEmail";
 
 export const Signup = () => {

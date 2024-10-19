@@ -15,6 +15,9 @@ module.exports = {
   ],
   theme: {
   	extend: {
+		backgroundImage: {
+			'fitness-gradient': 'linear-gradient(90deg, #1E3A8A 0%, #3B82F6 100%)',
+		  },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -82,12 +85,17 @@ module.exports = {
 			  "caret-blink": {
 				"0%,70%,100%": { opacity: "1" },
 				"20%,50%": { opacity: "0" },
+			  },
+			  move: {
+				"0%": { transform: "translateX(-200px)" },
+				"100%": { transform: "translateX(200px)" },
 			  }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-			"caret-blink": "caret-blink 1.25s ease-out infinite"
+			"caret-blink": "caret-blink 1.25s ease-out infinite",
+			 move: "move 5s linear infinite"
   		}
   	}
   },

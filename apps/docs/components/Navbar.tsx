@@ -1,91 +1,146 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "@/components/ui/alert-dialog"; // Import alert dialog components
 import { Bell, Plus } from "lucide-react";
 import { useState } from "react";
 import { Input } from "./ui/input";
+import { FileUpload } from "./ui/file-upload";
+import { TAddForm } from "@/types/types";
+import { addFormSchema } from "@/types/validations";
+import { toast } from "sonner";
+import { addGym } from "@/actions/addGym";
+
 export const Navbar = ({ title }: { title: string }) => {
-  const [showAddGymModal, setShowAddGymModal] = useState(false);
+  const [gymFormData, setGymFormData] = useState<TAddForm>({
+    name: "",
+    address: "",
+    phoneNumber: ""
+  });
+  const [file, setFile] = useState<File>();
+
+  const [dialogOpen,setDialogOpen]=useState(false)
+  const handleFileUpload = (file: File) => {
+    setFile(file);
+    console.log(file);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setGymFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFormSubmit = async (event: React.FormEvent) => {
+    event.preventDefault(); // Prevent default form submission
+    const result = addFormSchema.safeParse(gymFormData);
+    if (result.success) {
+      const response = await addGym(gymFormData);
+      if(response.data){
+        console.log(response)
+        toast.success("Gym added successfully",{
+          position:"top-center",
+          closeButton:true,
+          duration:5000
+        })
+      
+        setDialogOpen(false)
+        setGymFormData(
+          {
+            name: "",
+            address: "",
+            phoneNumber: ""
+          }
+        )
+      }
+      else if(response.errors){
+        const errors = response.errors
+      for (const field in errors) {
+        console.log(field);
+        toast.error(`${field} : ${errors[field]?.join(",")}`, {
+          closeButton: true,
+          
+        });
+      }
+      }
+      else {
+        toast.error(`${response.error}`, {
+          closeButton: true,
+          
+        });
+      }
+
+      
+    } else {
+      const errors = result.error.flatten().fieldErrors as Record<string, string[]>;
+      for (const field in errors) {
+        console.log(field);
+        toast.error(`${field} : ${errors[field]?.join(",")}`, {
+          closeButton: true,
+          
+        });
+      }
+    }
+  };
+
   return (
-    <div>
-      <div className=" flex  justify-between">
-        <div className="text-3xl font-bold text-gray-800">{title}</div>
+    <div className="p-3 bg-slate-950 opacity-80 rounded-3xl">
+      <div className="flex justify-between">
+        <div className="text-3xl font-bold text-white">{title}</div>
         <div className="space-x-4">
-          <Button onClick={() => setShowAddGymModal(true)}>
-            <Plus className="mr-2" size={20} />
-            Add Gym
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Bell size={20} />
-                <span className="sr-only">Notifications</span>
+          <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <AlertDialogTrigger asChild>
+              <Button  onClick={()=>{setDialogOpen(true)}}>
+                <Plus className="mr-2"  size={20} />
+                Add Gym
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>New member sign-up</DropdownMenuItem>
-              <DropdownMenuItem>Upcoming class: Yoga at 2 PM</DropdownMenuItem>
-              <DropdownMenuItem>
-                Maintenance scheduled for tomorrow
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="pointer-events-auto">
+              <AlertDialogTitle>Add New Gym</AlertDialogTitle>
+              <form className="space-y-4" onSubmit={handleFormSubmit}>
+                <div>
+                  <label htmlFor="">Upload an image of your gym</label>
+                  <FileUpload onChange={handleFileUpload} />
+                </div>
+                <div>
+                  <label htmlFor="gymName" className="block text-sm font-medium text-gray-700">
+                    Gym Name
+                  </label>
+                  <Input id="gymName" name="name" placeholder="Enter gym name" onChange={handleChange} />
+                </div>
+                <div>
+                  <label htmlFor="gymAddress" className="block text-sm font-medium text-gray-700">
+                    Address
+                  </label>
+                  <Input id="gymAddress" name="address" placeholder="Enter gym address" onChange={handleChange} />
+                </div>
+                <div>
+                  <label htmlFor="gymPhone" className="block text-sm font-medium text-gray-700">
+                    Phone Number
+                  </label>
+                  <Input id="gymPhone" type="number" name="phoneNumber" placeholder="Enter phone number" onChange={handleChange} />
+                </div>
+                <div className="flex justify-end space-x-4">
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <Button type="submit">Add Gym</Button>
+                </div>
+              </form>
+            </AlertDialogContent>
+          </AlertDialog>
+          <Button variant="ghost" size="icon">
+            <Bell size={20} color="white" />
+            <span className="sr-only">Notifications</span>
+          </Button>
         </div>
       </div>
-      {showAddGymModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg w-full max-w-md">
-            <h3 className="text-2xl font-bold mb-4">Add New Gym</h3>
-            <form className="space-y-4">
-              <div>
-                <label
-                  htmlFor="gymName"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Gym Name
-                </label>
-                <Input id="gymName" placeholder="Enter gym name" />
-              </div>
-              <div>
-                <label
-                  htmlFor="gymAddress"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Address
-                </label>
-                <Input id="gymAddress" placeholder="Enter gym address" />
-              </div>
-              <div>
-                <label
-                  htmlFor="gymPhone"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Phone Number
-                </label>
-                <Input id="gymPhone" placeholder="Enter phone number" />
-              </div>
-              <div className="flex justify-end space-x-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setShowAddGymModal(false)}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit">Add Gym</Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
