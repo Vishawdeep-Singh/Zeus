@@ -20,12 +20,27 @@ async function getGymDetails(id:string){
                         duration:true,
                         description:true,
                         color:true,
-                        price:true
+                        price:true,
+                        users:true
 
 
                     }
+                },
+                members:{
+                    include:{
+                      memberships: {
+                        where:{
+                            gymId:id
+                        },
+                        include:{
+                            membership:true,
+                            
+                        }
+                      }
+                    }
                 }
-            }
+            },
+
         })
         if(!response){
             return {error:"Gym Details doest not exist"}
@@ -44,6 +59,7 @@ const session = await getServerSession(authOptions)
 if(!session?.user){
     redirect('/signin')
 }
+
 
 const {id}=params
 if(!id){
@@ -67,8 +83,16 @@ if(gymsDetails.error){
 }
 
 return <div className="space-y-5 p-4 h-screen overflow-auto "><Navbar title={""} ></Navbar>
-<div className="">
-    <ManageGym gymDetails={gymsDetails.data as Gym}></ManageGym>
+<div className="animate-slide-up">
+    <ManageGym role="admin" gymDetails={gymsDetails.data as Gym}></ManageGym>
 </div>
 </div>
 }
+
+const awaiter = (ms: number): Promise<void> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(); // Resolve the promise after 'ms' milliseconds
+      }, ms);
+    });
+  };

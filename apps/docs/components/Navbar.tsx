@@ -92,7 +92,7 @@ export const Navbar = ({ title }: { title: string }) => {
   };
 
   return (
-    <div className="p-3 bg-slate-950 opacity-80 rounded-3xl">
+    <div className="p-3 bg-black rounded-3xl">
       <div className="flex justify-between">
         <div className="text-3xl font-bold text-white">{title}</div>
         <div className="space-x-4">

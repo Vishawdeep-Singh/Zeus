@@ -30,7 +30,8 @@ export type SignUp = {
     phoneNumber: string;
     id: string;
     ownerId: number;
-    memberships?:MembershipAction[]
+    memberships?:MembershipAction[];
+    members?: Member[]
   } | null
 
   export type TAddForm =  z.infer<typeof addFormSchema>
@@ -47,7 +48,15 @@ export type SignUp = {
     duration:Number,
     price:string,
     color:string,
-    description?:string[]
+    description?:string[],
+    users?:UserMembership[]
+  } | {
+    id?:string
+    duration:Number,
+    price:string,
+    color:string,
+    description?:string[],
+    gymId:string
   }
 
   export type MembershipCardProps = {
@@ -57,3 +66,24 @@ export type SignUp = {
     color:string,
     index:number
   };
+
+  export type Member = {
+    id: number,
+    name: string,
+    email: string,
+    cellPh: string,
+    password: string | null,
+    provider: string,
+    memberships:UserMembership[]
+  }
+
+  export type UserMembership={
+    userId:number,
+    membershipId:string,
+    dateJoined:Date
+    gymId:string,
+    membership?: MembershipAction
+
+  
+  
+  } 

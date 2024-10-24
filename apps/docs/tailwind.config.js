@@ -101,6 +101,16 @@ module.exports = {
         'move': {
           "0%": { transform: "translateX(-200px)" },
           "100%": { transform: "translateX(200px)" },
+        },
+        'slide-up':{
+          '0%' : {
+            transform:" translateY(40px)",
+           opacity: "30"
+          },
+          '100%': {
+            transform: "translateY(0)",
+            opacity: "100"
+          }
         }
       },
       animation: {
@@ -108,6 +118,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
          "caret-blink": "caret-blink 1.25s ease-out infinite",
          'move': "move 5s linear infinite",
+         'slide-up': "slide-up 1s ease-out forwards"
       },
     },
   },

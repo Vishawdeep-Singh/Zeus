@@ -22,7 +22,7 @@ password String?
 roles Role[] @relation("User Roles")
 owner Gym[] @relation("Gym Owner")
 member Gym[] @relation("Gym member")
-memberships Membership[] @relation("User Memberships")
+memberships UserMembership[] // Explicit Many to Many Relation
 attendance Attendance[] @relation("UserAttendance")
 provider Providers
 }
@@ -43,6 +43,7 @@ memberships Membership[]
 members User[]  @relation("Gym member")
 attendance  Attendance[]
 phoneNumber String
+userMemberships UserMembership[]
 
 }
 
@@ -61,9 +62,20 @@ model Membership {
   description String[]
   gym Gym @relation(fields: [gymId], references: [id])
   gymId String
-  users User[] @relation("User Memberships")
+  users UserMembership[] 
   color String
   
+}
+
+model UserMembership {
+  userId        Int
+  membershipId  String
+  dateJoined    DateTime
+  gymId         String
+  user          User       @relation(fields: [userId], references: [id])
+  membership    Membership @relation(fields: [membershipId], references: [id])
+  gym           Gym        @relation(fields: [gymId], references: [id])
+   @@id([userId, membershipId]) // Composite primary key
 }
 
 model Attendance {
