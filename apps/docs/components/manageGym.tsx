@@ -9,8 +9,12 @@ import AddMembership from "./addMembership";
 import CardDemo from "./blocks/cards-demo-1";
 import { MembershipCard } from "./membershipCards";
 import { MembersofGym } from "./membersOfGym";
-export const ManageGym = ({ gymDetails,role }: { gymDetails: Gym,role:string}) => {
+export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gymDetails: Gym,role:string,gymId:string,membershipUserDetails?:{membershipId:string,userId:number}[]}) => {
   console.log("Inside Manage Gym",gymDetails);
+
+ 
+  
+  
   return (
     <div className="flex rounded-3xl p-7 flex-col items-center bg-slate-100 mx-0   scroll-smooth space-y-24 bg-muted/40 border shadow-sm ">
       <div className="flex items-center justify-center font-mono font-bold text-9xl">
@@ -37,8 +41,8 @@ export const ManageGym = ({ gymDetails,role }: { gymDetails: Gym,role:string}) =
           Memberships
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 items-center">
-          {gymDetails?.memberships?.map((data:any,i:any)=>{
-            return <MembershipCard key={i} index={1} color={data.color} duration={data.duration} price={data.price} description={data.description as string[]}></MembershipCard>
+          {gymDetails?.memberships?.map((data,i)=>{
+            return <MembershipCard membershipUserDetails={membershipUserDetails} key={i} gymId={gymId} index={1} id={data.id as string} color={data.color} duration={data.duration} price={data.price} description={data.description as string[]}></MembershipCard>
           })}
           </div>
 

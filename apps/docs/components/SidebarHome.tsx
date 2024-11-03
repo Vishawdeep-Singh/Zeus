@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   Bell,
@@ -28,13 +28,95 @@ import { signOut } from "next-auth/react";
 import multiavatar from "@multiavatar/multiavatar/esm";
 import MultiAvatar from "./Multiavatar";
 import { useRouter } from "next/navigation";
+import { useWebSocket } from "@/context/socketContext";
+import { getGymsOfOwner } from "@/actions/getGymsOfOwner";
+import { toast } from "sonner";
+import { useWebSockets } from "@/hooks/useWebSocket";
+import { useRecoilState } from "recoil";
+import { notificationsState } from "@/states/notifications";
+import { addNotifications } from "@/actions/addNotifications";
+import { useNotifications } from "@/hooks/useNotifications";
+import { Notification } from "@/types/types";
 
 export default function SidebarHome({ children, session }: any) {
   const router = useRouter();
   const avatar = multiavatar(session.name);
+  const { socket, user } = useWebSocket();
+  const [gymIds, setGymIds] = useState<string[]>([]);
+  const notifications=useNotifications()
+  const [, setNotifications] = useRecoilState(notificationsState);
+
+  useEffect(() => {
+    async function fetchGymIds() {
+      const response = await getGymsOfOwner();
+      if (response.error) {
+        toast.error(`${response.error}`, {
+          closeButton: true,
+          position: "top-center",
+        });
+      } else {
+        setGymIds(response.data as []);
+      }
+    }
+    fetchGymIds();
+  }, []);
+
+
+  useEffect(() => {
+    if (socket) {
+      console.log("here");
+      socket.onmessage = async (event) => {
+        console.log(JSON.parse(event.data));
+
+        const { type, data } = JSON.parse(event.data) || {};
+        console.log(type, data);
+        if (type === "check-in") {
+          const audio = new Audio(`/notifications.mp3`);
+          await audio.play();
+          // toast.info(`${data.message}`,{
+          //   position:'top-right'
+          // })
+
+          toast(
+            <div className="space-x-2 space-y-1 flex items-center">
+              <Bell size={20} fill="black"></Bell>
+              <div className="font-semibold">{data.message}</div>
+            </div>,
+            { duration: 5000, position: "top-right" }
+          );
+          
+          const response = await addNotifications(data.message,data.time)
+         
+          if(response.data){
+            setNotifications((prev) => [...prev,response?.data]);
+          }
+          if(response.error){
+            toast.error(`${response.error}`,{
+              closeButton:true,
+              position:"top-center"
+            })
+          }
+        }
+      };
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    if (user && socket && gymIds?.length > 0) {
+      socket.send(
+        JSON.stringify({
+          type: "join-notifications-admin",
+          data: {
+            gymIds: gymIds,
+            ownerId: user.id,
+          },
+        })
+      );
+    }
+  }, [user, socket, gymIds]);
 
   console.log(session);
-  console.log(avatar);
+
   const links = [
     {
       label: "Dashboard",

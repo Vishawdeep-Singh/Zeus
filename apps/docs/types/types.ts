@@ -7,6 +7,10 @@ export type SignUp = {
     password?: string;
   };
 
+  export type User={
+    
+  }
+
   export type SignIn = Pick<SignUp, 'email' | 'password'>;
 
   export type Credentials ={
@@ -56,15 +60,20 @@ export type SignUp = {
     price:string,
     color:string,
     description?:string[],
-    gymId:string
+    gymId:string,
+    users?:UserMembership[]
   }
 
   export type MembershipCardProps = {
+    id:string
     price: string;
     duration: Number;
     description: string[];
     color:string,
-    index:number
+    index:number,
+    gymId:string,
+    membershipUserDetails: {membershipId:string , userId:number}[] | undefined
+
   };
 
   export type Member = {
@@ -87,3 +96,16 @@ export type SignUp = {
   
   
   } 
+
+  export type Notification={
+    id: string;
+    userId: number;
+    message: string;
+    createdAt: Date;
+    isRead: boolean;
+    type: "ADMIN" | "USER";
+
+  }
+
+ 
+ 

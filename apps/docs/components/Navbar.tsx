@@ -9,13 +9,19 @@ import {
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog"; // Import alert dialog components
 import { Bell, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { FileUpload } from "./ui/file-upload";
 import { TAddForm } from "@/types/types";
 import { addFormSchema } from "@/types/validations";
 import { toast } from "sonner";
 import { addGym } from "@/actions/addGym";
+import { useWebSocket } from "@/context/socketContext";
+import { useWebSockets } from "@/hooks/useWebSocket";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Notifications } from "./notifications";
+import { useRecoilState } from "recoil";
+import { notificationsState } from "@/states/notifications";
 
 export const Navbar = ({ title }: { title: string }) => {
   const [gymFormData, setGymFormData] = useState<TAddForm>({
@@ -24,6 +30,14 @@ export const Navbar = ({ title }: { title: string }) => {
     phoneNumber: ""
   });
   const [file, setFile] = useState<File>();
+  
+  const [notifications,setNotifications]=useRecoilState(notificationsState)
+
+  console.log(notifications)
+
+
+  
+ 
 
   const [dialogOpen,setDialogOpen]=useState(false)
   const handleFileUpload = (file: File) => {
@@ -92,13 +106,14 @@ export const Navbar = ({ title }: { title: string }) => {
   };
 
   return (
-    <div className="p-3 bg-black rounded-3xl">
+    <nav className="p-3 bg-black rounded-3xl">
       <div className="flex justify-between">
         <div className="text-3xl font-bold text-white">{title}</div>
-        <div className="space-x-4">
+    
+        <div className="space-x-7">
           <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <AlertDialogTrigger asChild>
-              <Button  onClick={()=>{setDialogOpen(true)}}>
+              <Button className="hover:bg-slate-800"  onClick={()=>{setDialogOpen(true)}}>
                 <Plus className="mr-2"  size={20} />
                 Add Gym
               </Button>
@@ -135,12 +150,10 @@ export const Navbar = ({ title }: { title: string }) => {
               </form>
             </AlertDialogContent>
           </AlertDialog>
-          <Button variant="ghost" size="icon">
-            <Bell size={20} color="white" />
-            <span className="sr-only">Notifications</span>
-          </Button>
+          <Notifications></Notifications>
+
         </div>
       </div>
-    </div>
+    </nav>
   );
 };

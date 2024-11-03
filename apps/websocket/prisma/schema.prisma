@@ -25,7 +25,6 @@ member Gym[] @relation("Gym member")
 memberships UserMembership[] // Explicit Many to Many Relation
 attendance Attendance[] @relation("UserAttendance")
 provider Providers
-notifications Notification[]
 }
 
 model Role {
@@ -93,16 +92,6 @@ model Attendance {
   @@index([gymId])
   @@index([date])
   @@index([time])
-}
-
-model Notification {
-  id String @id @default(uuid())
-  userId Int
-  User User @relation(fields: [userId], references: [id])
-  message String
-  createdAt DateTime
-  isRead Boolean @default(false)
-  type Roles
 }
 
 enum Roles {
