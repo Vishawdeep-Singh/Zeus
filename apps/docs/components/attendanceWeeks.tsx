@@ -37,8 +37,8 @@ const chartConfig = {
 export default function Component() {
  
     return (
-        <div className="w-[50%]  h-full">
-          <Card className=" w-[100%] h-full shadow-md">
+        <div className="w-[50%]   h-full">
+          <Card className=" w-[100%] bg-[#f7f7f7] h-full hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
             <CardHeader>
               <CardTitle>Daily Attendance Chart</CardTitle>
               <CardDescription>Last 7 Days</CardDescription>

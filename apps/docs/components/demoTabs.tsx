@@ -7,6 +7,7 @@ import { Component1 } from "./revenueMonths";
 import { Component2 } from "./todayAttendance";
 import { MembersofGym } from "./membersOfGym";
 import Component3 from "./membershipExpiry";
+import { MasterTable } from "./masterTable";
 
 export function TabsDemo() {
   const tabs = [
@@ -14,32 +15,28 @@ export function TabsDemo() {
       title: "Analytics",
       value: "product",
       content: (
-        <div className="w-full space-y-10 overflow-auto relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br bg-white border-2 border-black ">
-          <p>Analytics</p>
-          <div className="flex space-y-10 flex-col ">
-            <div className="flex space-x-5">
-            <Component></Component>
-            <Component1></Component1>
-            </div>
-            <div className="flex">
-            <Component2></Component2>
-            <Component3></Component3>
-            </div>
-
-
+        <div className="w-full space-y-10  overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br bg-white  border-black ">
+        <p>Analytics</p>
+        <div className="flex space-y-10 flex-col ">
+          <div className="flex flex-wrap space-x-5">
+          <Component></Component>
+          <Component1></Component1>
+          
+         
           </div>
-          <div>
-           
-          </div>
+
 
         </div>
+
+
+      </div>
       ),
     },
     {
       title: "Membership Expiry",
       value: "services",
       content: (
-        <div className="w-full space-y-10 overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-primary bg-gradient-to-br border-2  bg-white border-black ">
+        <div className="w-full space-y-10 overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-primary bg-gradient-to-br  bg-white  ">
           <p>Membership Expiry</p>
           <div>
           <Component3></Component3>
@@ -48,35 +45,25 @@ export function TabsDemo() {
       ),
     },
     {
-      title: "Playground",
-      value: "playground",
+      title: "Today's Visits",
+      value: "Today's Visits",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br border-2  bg-white border-black">
-          <p>Playground tab</p>
-          <DummyContent />
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br  bg-white ">
+       
+         <Component2></Component2>
         </div>
       ),
     },
     {
-      title: "Content",
-      value: "content",
+      title: "Master Search",
+      value: "Master Search",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br border-2  bg-white border-black">
-          <p>Content tab</p>
-          <DummyContent />
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br  bg-white ">
+          <MasterTable></MasterTable>
+         
         </div>
       ),
-    },
-    {
-      title: "Random",
-      value: "random",
-      content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br border-2 bg-white border-black">
-          <p>Random tab</p>
-          <DummyContent />
-        </div>
-      ),
-    },
+    }
   ];
 
   return (

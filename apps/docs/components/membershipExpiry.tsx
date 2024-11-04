@@ -48,10 +48,7 @@ export default function Component3() {
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle>Membership Expiry</CardTitle>
-      </CardHeader>
+    <Card className="w-full max-w-4xl bg-[#f7f7f7] pt-4 mx-auto hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
       <CardContent>
         <div className="flex items-center space-x-2 mb-4">
           <Search className="w-5 h-5 text-gray-500" />

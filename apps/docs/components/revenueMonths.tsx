@@ -38,7 +38,7 @@ const chartConfig = {
 
 export function Component1() {
   return (
-    <Card className="w-[40%] shadow-md">
+    <Card className="w-[40%] bg-[#f7f7f7] hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
       <CardHeader>
         <CardTitle>Revenue Chart</CardTitle>
         <CardDescription>

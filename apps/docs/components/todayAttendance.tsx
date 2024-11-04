@@ -37,10 +37,10 @@ const chartConfig = {
 
 export function Component2() {
   return (
-    <Card className="flex flex-col shadow-md">
+    <Card className="flex bg-[#f7f7f7] flex-col hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Radial Chart - Text</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Today's Attendance</CardTitle>
+        <CardDescription className="text-lg">{new Date().toDateString()}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
