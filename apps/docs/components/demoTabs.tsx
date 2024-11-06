@@ -8,15 +8,26 @@ import { Component2 } from "./todayAttendance";
 import { MembersofGym } from "./membersOfGym";
 import Component3 from "./membershipExpiry";
 import { MasterTable } from "./masterTable";
+import { GymFilter } from "./gymFilter";
+import { GymsData, MasterTableMember } from "@/types/types";
 
-export function TabsDemo() {
+export function TabsDemo({masterTableData,ownedGyms}:{masterTableData:MasterTableMember[],ownedGyms:{gymId:string,gymName:string}[]}) {
+  console.log("In Tabs",masterTableData)
+  console.log("Owned",ownedGyms)
   const tabs = [
     {
       title: "Analytics",
       value: "product",
       content: (
-        <div className="w-full space-y-10  overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br bg-white  border-black ">
-        <p>Analytics</p>
+        <div className="w-full space-y-10  overflow-hidden  relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br bg-white  border-black ">
+          <div className="flex space-x-10 w-full items-center">
+          <p>Analytics</p>
+          <div>
+          <GymFilter></GymFilter>
+          </div>
+          
+          </div>
+       
         <div className="flex space-y-10 flex-col ">
           <div className="flex flex-wrap space-x-5">
           <Component></Component>
@@ -49,7 +60,9 @@ export function TabsDemo() {
       value: "Today's Visits",
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br  bg-white ">
-       
+       <div className="flex text-black justify-center p-5">
+        <GymFilter></GymFilter>
+       </div>
          <Component2></Component2>
         </div>
       ),
@@ -59,7 +72,7 @@ export function TabsDemo() {
       value: "Master Search",
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br  bg-white ">
-          <MasterTable></MasterTable>
+          <MasterTable ownedGyms={ownedGyms} membersData={masterTableData}></MasterTable>
          
         </div>
       ),

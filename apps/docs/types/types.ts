@@ -107,5 +107,53 @@ export type SignUp = {
 
   }
 
+
+
+
+
+
+  interface Attendance {
+    id: string;
+    gymId: string;
+    userId: number;
+    date: string; // Consider using Date if these strings will be parsed into dates
+    time: string; // Same consideration for time if needed
+  }
+  
+  interface Membership1 {
+    gymId: string;
+    membershipId: string;
+    dateJoined: string;
+    membership: {
+      duration: number;
+    };
+    // Consider Date if it will be parsed
+  }
+  
+  interface Member1 {
+    id: number;
+    name: string;
+    email: string;
+    cellPh: string;
+    memberships: Membership1[];
+    attendance: Attendance[];
+  }
+  
+  interface Gym1 {
+    id: string;
+    name: string;
+    members: Member1[];
+  }
+  export interface MasterTableMember {
+    id: number;              // Unique identifier for the member
+    name: string;            // Member's name
+    email: string;           // Member's email address
+    phone: string;           // Member's phone number (note: "phonw" might be a typo for "phone")
+    gymName: string;         // Name of the gym the member is associated with
+    membershipDuration: number; // Duration of membership in months
+    daysLeft: number;    
+    attendance:string[]    // Number of days left in the membership
+  }
+  export type GymsData = Gym1[];
  
  

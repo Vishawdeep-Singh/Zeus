@@ -12,15 +12,12 @@ import {
 import { useRecoilState } from "recoil";
 import { GymFilterState } from "@/states/filters";
 
-export function SelectGyms() {
+export function SelectGyms({ownedGyms}:{ownedGyms:{gymId:string,gymName:string}[]}) {
     const [filter,setGymFilter] = useRecoilState(GymFilterState)
-    const gymNames = [
-        "Fitness Hub",
-        "Powerhouse Gym",
-        "Body Builders",
-        "Gym Central",
-        "Elite Fitness"
-      ];
+    if(!ownedGyms){
+      return <div>Loading...</div>
+    }
+  
   return (
     <Select onValueChange={(value) => setGymFilter(value)}>
       <SelectTrigger className="w-[180px] text-gray-500 ">
@@ -29,8 +26,8 @@ export function SelectGyms() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Gyms</SelectLabel>
-          {gymNames.map((name,i)=>{
-            return <SelectItem key={i}  value={name}>{name}</SelectItem>
+          {ownedGyms && ownedGyms.map((gym,i)=>{
+            return <SelectItem key={gym.gymId}  value={gym.gymName}>{gym.gymName}</SelectItem>
           })}
           <SelectItem value={"null"}>None</SelectItem>
 
