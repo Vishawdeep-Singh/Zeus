@@ -23,7 +23,7 @@ export function TabsDemo({masterTableData,ownedGyms}:{masterTableData:MasterTabl
           <div className="flex space-x-10 w-full items-center">
           <p>Analytics</p>
           <div>
-          <GymFilter></GymFilter>
+          <GymFilter ownedGyms={ownedGyms}></GymFilter>
           </div>
           
           </div>
@@ -61,7 +61,7 @@ export function TabsDemo({masterTableData,ownedGyms}:{masterTableData:MasterTabl
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br  bg-white ">
        <div className="flex text-black justify-center p-5">
-        <GymFilter></GymFilter>
+        <GymFilter ownedGyms={ownedGyms}></GymFilter>
        </div>
          <Component2></Component2>
         </div>

@@ -4,6 +4,10 @@ export const GymFilterState = atom<string | null>({
     key:"gymFilter",
     default:null
 })
+export const AttedanceGymFilterState = atom<string | null>({
+    key:"AttedanceGymFilterState",
+    default:null
+})
 
 export const dateRange = atom<DateRange | undefined>({
     key:"dateRange", 
