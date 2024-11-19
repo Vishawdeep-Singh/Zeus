@@ -11,9 +11,10 @@ import { MasterTable } from "./masterTable";
 import { GymFilter } from "./gymFilter";
 import { GymsData, MasterTableMember } from "@/types/types";
 
-export function TabsDemo({masterTableData,ownedGyms}:{masterTableData:MasterTableMember[],ownedGyms:{gymId:string,gymName:string}[]}) {
+export function TabsDemo({masterTableData,ownedGyms, membershipExpiry}:{masterTableData:MasterTableMember[],ownedGyms:{gymId:string,gymName:string}[],membershipExpiry:GymsData}) {
   console.log("In Tabs",masterTableData)
   console.log("Owned",ownedGyms)
+  console.log("Membership Expiry",membershipExpiry)
   const tabs = [
     {
       title: "Analytics",
@@ -49,8 +50,9 @@ export function TabsDemo({masterTableData,ownedGyms}:{masterTableData:MasterTabl
       content: (
         <div className="w-full space-y-10 overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-primary bg-gradient-to-br  bg-white  ">
           <p>Membership Expiry</p>
-          <div>
-          <Component3></Component3>
+          <div className=" flex flex-col space-y-5">
+          <GymFilter ownedGyms={ownedGyms}></GymFilter>
+          <Component3 membershipExpiry={membershipExpiry}></Component3>
           </div>
         </div>
       ),

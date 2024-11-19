@@ -139,7 +139,7 @@ export type SignUp = {
     attendance: Attendance[];
   }
   
-  interface Gym1 {
+  export interface Gym1 {
     id: string;
     name: string;
     members: Member1[];
@@ -156,4 +156,22 @@ export type SignUp = {
   }
   export type GymsData = Gym1[];
  
- 
+  export type AttendanceData = {
+    userId: number;
+    date: string;
+    time: string;
+  };
+  
+  export type Attendances = {
+    id: string;
+    attendance: AttendanceData[];
+  };
+
+  export type ExpiredMembers ={
+    id: number,
+    name: string,
+    email: string,
+    phoneNumber: string,
+    membershipDuration: number,
+    expiredOn : string
+  };

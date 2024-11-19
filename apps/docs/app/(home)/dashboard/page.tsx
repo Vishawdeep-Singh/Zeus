@@ -50,7 +50,7 @@ export default async function () {
 
 
         </div> */}
-        <TabsDemo masterTableData={response.data} ownedGyms={response.ownedGyms}></TabsDemo>
+        <TabsDemo membershipExpiry={response.memberhshipExpiry} masterTableData={response.data} ownedGyms={response.ownedGyms}></TabsDemo>
       </div>
       <div></div>
     </div>
@@ -93,11 +93,12 @@ select: {
     });
 
     console.log(JSON.stringify(response, null, 2));
+    const memberhshipExpiry = response
    const strucutedData= await masterTableDataConversion(response)
    const ownedGyms = await onwerGymsConversion(response)
    console.log("Ow",ownedGyms)
    
-   return {data:strucutedData,ownedGyms}
+   return {data:strucutedData,ownedGyms,memberhshipExpiry}
   } catch (error: any) {
     console.error(error.message);
     return {error:"Not able to get Dashboard Data at the moment"}

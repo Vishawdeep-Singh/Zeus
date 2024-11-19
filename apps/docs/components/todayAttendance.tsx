@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
+import { TrendingUp } from "lucide-react";
 import {
   Label,
   PolarGrid,
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
-} from "recharts"
+} from "recharts";
 
 import {
   Card,
@@ -16,14 +16,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { ChartConfig, ChartContainer } from "@/components/ui/chart"
+} from "@/components/ui/card";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { useEffect, useState } from "react";
+import { getTodayAttendance } from "@/actions/getTodaysAttendance";
+import { toast } from "sonner";
+import { AttedanceGymFilterState } from "@/states/filters";
+import { useRecoilValue } from "recoil";
+import { Attendances } from "@/types/types";
 
-export const description = "A radial chart with text"
-
-const chartData = [
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-]
+export const description = "A radial chart with text";
 
 const chartConfig = {
   visitors: {
@@ -33,14 +35,60 @@ const chartConfig = {
     label: "Safari",
     color: "black",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function Component2() {
+  const gymFilterValue = useRecoilValue(AttedanceGymFilterState);
+  const [allGymAttendancesData, setAllGymAttendancesData] = useState<
+    Attendances[]
+  >([]);
+  const [attendances, setAttendances] = useState<number>(0);
+  const [chartData, setChartData] = useState<{ visitors: number }[]>([
+    { visitors: 0 },
+  ]);
+
+  useEffect(() => {
+    async function fetchTodayAttendance() {
+      const response = await getTodayAttendance();
+      if (response.error) {
+        toast.error(`${response.error}`, {
+          closeButton: true,
+          position: "top-center",
+        });
+      }
+
+      if (response.data) {
+        setAllGymAttendancesData(response.data);
+      }
+    }
+    fetchTodayAttendance();
+  }, []);
+
+  useEffect(() => {
+    if (gymFilterValue && allGymAttendancesData.length > 0) {
+      const gymAttendanceData = allGymAttendancesData.find(
+        (obj) => obj.id === gymFilterValue
+      );
+
+      const finalFilterdAttendance = gymAttendanceData?.attendance.filter(
+        (obj) => {
+          const date = new Date().toLocaleDateString();
+          return date === obj.date;
+        }
+      );
+      if (finalFilterdAttendance) {
+        setAttendances(finalFilterdAttendance.length);
+        setChartData([{ visitors: finalFilterdAttendance.length }]);
+      }
+    }
+  }, [gymFilterValue, allGymAttendancesData]);
   return (
     <Card className="flex bg-[#f7f7f7] flex-col hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
       <CardHeader className="items-center pb-0">
         <CardTitle>Today's Attendance</CardTitle>
-        <CardDescription className="text-lg">{new Date().toDateString()}</CardDescription>
+        <CardDescription className="text-lg">
+          {new Date().toDateString()}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -61,7 +109,7 @@ export function Component2() {
               className="first:fill-muted last:fill-background"
               polarRadius={[86, 74]}
             />
-            <RadialBar dataKey="visitors" background   cornerRadius={10} />
+            <RadialBar dataKey="visitors" background cornerRadius={10} />
             <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
               <Label
                 content={({ viewBox }) => {
@@ -78,7 +126,7 @@ export function Component2() {
                           y={viewBox.cy}
                           className="fill-foreground text-4xl font-bold"
                         >
-                          {chartData[0].visitors.toLocaleString()}
+                          {attendances.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
@@ -88,7 +136,7 @@ export function Component2() {
                           Visitors
                         </tspan>
                       </text>
-                    )
+                    );
                   }
                 }}
               />
@@ -105,5 +153,5 @@ export function Component2() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }
