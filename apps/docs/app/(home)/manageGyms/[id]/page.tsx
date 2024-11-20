@@ -79,18 +79,11 @@ export default async function ({ params }: { params: { id: string } }) {
     );
   }
 
-  return (
-    <div className="space-y-5 p-4 h-screen overflow-auto ">
-      <Navbar title={""}></Navbar>
-      <div className="animate-slide-up">
-        <ManageGym
-          role="admin"
-          gymDetails={gymsDetails.data as Gym}
-          gymId={""}
-        ></ManageGym>
-      </div>
-    </div>
-  );
+return <div className="space-y-5 p-4 h-screen overflow-auto "><Navbar title={""} ></Navbar>
+<div className="animate-slide-up">
+    <ManageGym role="admin" gymDetails={gymsDetails.data as Gym} gymId={""}></ManageGym>
+</div>
+</div>
 }
 
 const awaiter = (ms: number): Promise<void> => {

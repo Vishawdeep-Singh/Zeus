@@ -85,7 +85,7 @@ export default function Component() {
         const days = [];
         const today = new Date();
 
-        for (let i = 1; i <= 7; i++) {
+        for (let i = 1; i < 7; i++) {
           const day = new Date(today);
           day.setDate(today.getDate() - i);
           const dayName = day.toLocaleDateString("en-us", { weekday: "long" });
@@ -105,7 +105,7 @@ export default function Component() {
       });
       // console.log(last7Days)
       // console.log(sevenDaysAgoAttendances)
-      const finalData = last7Days.reverse();
+      const finalData = last7Days;
       setChartData(finalData);
     }
     fetchData();
