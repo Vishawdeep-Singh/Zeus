@@ -1,3 +1,4 @@
+import { FloatingDockDemo } from "@/components/floatingDock";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import StylishAttendanceMarker from "@/components/userAttendance";
@@ -25,6 +26,7 @@ export default  async function(){
 return <StylishAttendanceMarker key={gymDetails.id} gymId={gymDetails.id} name={gymDetails.name} address={gymDetails.address}></StylishAttendanceMarker>
 })}
         </div>
+        <FloatingDockDemo></FloatingDockDemo>
 
         </div>
 }

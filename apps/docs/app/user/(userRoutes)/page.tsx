@@ -1,5 +1,6 @@
 import { FloatingDockDemo } from "@/components/floatingDock";
 import { ExpandableCardDemo } from "@/components/userCards";
+import { UserHomePage } from "@/components/userHomePage";
 import prisma from "@repo/db/client";
 
 async function getGymDetails() {
@@ -16,12 +17,13 @@ export default async function UserHome (){
 
     const gymDetails = await getGymDetails();
 
-    return <div className="bg-muted">
-        <div className="text-center text-4xl p-10 font-bold">
-            Join Gym
+    return <div className="">
+        <div className="text-center text-6xl p-10 font-bold">
+            Gyms
         </div>
         <div>
-        <ExpandableCardDemo gymDetails={gymDetails.data}></ExpandableCardDemo>
+        
+        <UserHomePage gymDetails={gymDetails.data}></UserHomePage>
         </div>
         <FloatingDockDemo></FloatingDockDemo>
     </div>
