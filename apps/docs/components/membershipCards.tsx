@@ -45,7 +45,7 @@ export function MembershipCard({
 
   const getGifUrl = (index: any) => gifUrls[index % gifUrls.length];
   const gifUrl = getGifUrl(index);
-  const activeMembership = membershipUserDetails?.find((details) => details.membershipId === id);
+  const activeMembership = membershipUserDetails?.find((details) => details.membershipId == id);
 console.log(activeMembership)
 
   return (
@@ -88,15 +88,14 @@ console.log(activeMembership)
               return <li key={i}>{x}</li>;
             })}
           </ul>
-          <p className="mt-4 text-2xl font-bold">Rs .{price}</p>
+          <p className="mt-4 text-2xl font-bold">₹ {price}</p>
 
           <Button
             onClick={handleChoosePlan}
             className="mt-4  pointer-events-auto  z-30 w-full"
             disabled={activeMembership}
           >
-            
-            {activeMembership ? "Plan Chosen" : "Choose Plan"}
+            {activeMembership ? <span className="text-green-500">Active plan</span> : "Choose Plan"}
           </Button>
         </CardContent>
       </Card>

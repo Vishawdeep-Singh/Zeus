@@ -12,11 +12,11 @@ import { authOptions } from "@/lib/auth";
 import MultiAvatar from "./Multiavatar";
 import Image from "next/image";
 
-export async function MembersofGym({ membersDetails }: any) {
+export async function MembersofGym({ membersDetails, owner }: any) {
   const session =await getServerSession(authOptions)
   console.log("Inside members of gym", membersDetails);
   return (
-    <div className=" h-96 w-full mx-auto overflow-y-auto bg-muted bg-opacity-100 shadow-sm  hover:shadow-2xl hover:shadow-primary/30  hover:scale-105 transition-all  duration-300 hover:bg-white rounded-xl border p-4">
+    <div className=" h-96 w-full mx-auto overflow-y-auto bg-transparent border-none bg-opacity-100 shadow-sm hover:border hover:shadow-2xl hover:shadow-primary/30  hover:scale-105 transition-all  duration-300 hover:bg-white rounded-xl border p-4">
       <div className="grid grid-cols-3 gap-4 items-center content-center w-full ">
         {membersDetails.map((member: any, i: any) => {
           console.log(member.memberships);
@@ -59,7 +59,11 @@ export async function MembersofGym({ membersDetails }: any) {
                 
              
             )}
+                  <div>
                   <p>{member.name}</p>
+                  {member.id == owner && <p className="text-sm text-start">Gym owner</p>}
+                  </div>
+                  
                 </div>
               </PopoverTrigger>
 

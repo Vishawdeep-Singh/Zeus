@@ -75,21 +75,26 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
     });
   };
 
+  function handleClose() {
+    setIsOpen(prev=> !prev);
+  }
+
   return (
     <div>
-      <Button onClick={() => setIsOpen(true)} className="mb-4">Add New Membership</Button>
+      <Button onClick={handleClose} className="mb-4">Add New Membership</Button>
 
       {/* Modal */}
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Card className=" w-[38%] overflow-y-auto h-[85%] mx-auto bg-white rounded-lg shadow-lg p-4">
+          
+        <div className="fixed w-screen h-screen inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Card className=" w-[38%] overflow-y-auto h-fit mx-auto bg-white rounded-lg shadow-lg p-2 px-4">
             <CardHeader>
               <CardTitle>Add New Membership</CardTitle>
               <CardDescription>Create a new membership option for your gym</CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
+              <form onSubmit={handleSubmit} className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="price">Price</Label>
                   <Input
                     id="price"
@@ -101,7 +106,7 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
                     required
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="duration">Duration (in months)</Label>
                   <Input
                     id="duration"
@@ -113,7 +118,7 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
                     required
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <Label htmlFor="description">Description (optional)</Label>
                   <Textarea
                     id="description"
@@ -123,7 +128,7 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
                     onChange={handleInputChange}
                   />
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <div className="flex space-x-4">
                     <Label htmlFor="color">Set Color</Label>
                     <div style={{ backgroundColor: formData.color }} className="h-4 w-12 rounded" />
@@ -131,7 +136,8 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
                   <HexColorPicker color={formData.color} onChange={handleColorChange} />
                 </div>
 
-                <Button type="submit" className="w-full">Add Membership</Button>
+                <Button type="submit" className="w-full">Add Membership</Button> 
+                <Button onClick={() => setIsOpen(false)} className="w-full mt-4">Close</Button>
               </form>
             </CardContent>
             <CardFooter>
@@ -141,10 +147,10 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
                 </Alert>
               )}
             </CardFooter>
-            <Button onClick={() => setIsOpen(false)} className="w-full mt-4">Close</Button>
           </Card>
         </div>
       )}
     </div>
+
   );
 }

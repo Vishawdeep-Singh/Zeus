@@ -43,7 +43,7 @@ export default async function (){
            Your Memberships
         </div>
       
-      <div className="grid grid-cols-3 mx-auto w-[90%]  gap-10 ">
+      <div className="grid grid-cols-3 mx-auto w-[90%] gap-10 pb-10 ">
         {response.data?.map((membership,i)=>{
             return <BackgroundGradientDemo dateJoined={membership.dateJoined} membershipDetails={membership.membership}></BackgroundGradientDemo>
         })}

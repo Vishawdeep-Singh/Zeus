@@ -53,7 +53,7 @@ export function FloatingDockDemo() {
     
   ];
   return (
-    <div className="flex z-50 relative justify-center h-screen w-full">
+    <div className="flex z-50 relative justify-center h-fit w-full">
       <FloatingDock
       desktopClassName="fixed bottom-10 text-black bg-black"
         mobileClassName="translate-y-20" // only for demo, remove for production

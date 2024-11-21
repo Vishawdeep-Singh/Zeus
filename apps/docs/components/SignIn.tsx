@@ -121,15 +121,16 @@ export const Signin = () => {
           transition={{ duration: 0.3 }}
         >
           <Card className="w-[400px] hover hover:shadow-lg hover:shadow-primary/30 transition-shadow">
-            <CardHeader className="space-y-1">
+            <CardHeader className="space-y-1 text-center">
               <CardTitle className="text-2xl">Sign In</CardTitle>
               <CardDescription>
                 Enter your details below to create your account
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-              <div className="grid grid-cols-2 gap-6">
+              <div className="m-auto">
                 <Button
+                  className="w-32"
                   onClick={async () => {
                     await signIn("google", {
                       redirect: false,

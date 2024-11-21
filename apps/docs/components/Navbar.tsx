@@ -141,7 +141,7 @@ export const Navbar = ({ title }: { title: string }) => {
                   <label htmlFor="gymPhone" className="block text-sm font-medium text-gray-700">
                     Phone Number
                   </label>
-                  <Input id="gymPhone" type="number" name="phoneNumber" placeholder="Enter phone number" onChange={handleChange} />
+                  <Input max="9999999999" id="gymPhone" type="number" name="phoneNumber" placeholder="Enter phone number..." onChange={handleChange} />
                 </div>
                 <div className="flex justify-end space-x-4">
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
