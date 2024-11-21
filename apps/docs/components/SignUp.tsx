@@ -126,15 +126,16 @@ export const Signup = () => {
           transition={{ duration: 0.3 }}
         >
           <Card className="w-[400px] card  hover hover:shadow-2xl border-4 border-black hover:shadow-primary/30 transition-shadow">
-            <CardHeader className="space-y-1">
+            <CardHeader className="space-y-1 text-center">
               <CardTitle className="text-2xl">Create an account</CardTitle>
               <CardDescription>
                 Enter your details below to create your account
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-              <div className="grid grid-cols-2 gap-6">
+              <div className="m-auto">
                 <Button
+                  className="w-32"
                   onClick={async () => {
                     await signIn("google", {
                       redirect: false,
@@ -185,7 +186,7 @@ export const Signup = () => {
                     name="cellPh"
                     type="number"
                     value={formData.cellPh}
-                    placeholder="1234567890"
+                    placeholder="9876543210"
                     onChange={handleChange}
                   />
                 </div>
@@ -193,6 +194,7 @@ export const Signup = () => {
                   <Label htmlFor="confirm-password">Password</Label>
                   <Input
                     id="confirm-password"
+                    placeholder="**********"
                     name="password"
                     value={formData.password}
                     type="password"

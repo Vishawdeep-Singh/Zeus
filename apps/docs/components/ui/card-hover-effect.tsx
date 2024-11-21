@@ -19,7 +19,7 @@ export const HoverEffect = ({
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 gap-6 py-10",
+        "grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 gap-6 py-2",
         className
       )}
     >
@@ -51,7 +51,10 @@ export const HoverEffect = ({
           </AnimatePresence>
           <Card>
             <CardTitle>{item?.name}</CardTitle>
-            <CardImage></CardImage>
+            {/* <CardImage></CardImage> */}
+            <div className="h-80 w-full bg-cover bg-center rounded-xl"
+            style={{backgroundImage : 'url(https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)'}} 
+            ></div>
             <CardDescription phoneNumber={item?.phoneNumber as string}>{item?.address}</CardDescription>
           </Card>
         </Link>
@@ -70,7 +73,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-full w-full p-4 overflow-hidden bg-transparent text-black border-transparent group-hover:border-slate-700 relative z-20",
         className
       )}
     >
@@ -88,46 +91,47 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("text-zinc-100 text-4xl text-center font-bold tracking-wide  mb-4", className)}>
+    <h4 className={cn("text-black text-4xl text-center font-bold tracking-wide  mb-4", className)}>
       {children}
     </h4>
   );
 };
-export const CardImage = ({
-  className,
+// export const CardImage = ({
+//   className,
 
-}: {
-  className?: string;
+// }: {
+//   className?: string;
  
-}) => {
-  return (
-  <Image src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  alt="Description of image"
-  width={1000}
-  height={1000}
-  className=" h-60 w-full object-cover rounded-xl"></Image>
-  );
-};
+// }) => {
+//   return (
+//   <Image src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//   alt="Description of image"
+//   width={1000}
+//   height={1200}
+//   className=" h-60 w-full object-cover rounded-xl"></Image>
+//   );
+// };
 export const CardDescription = ({
   className,
   children,
+  phoneNumber
 }: {
   className?: string;
   children: React.ReactNode;
   phoneNumber:string
 }) => {
   return (
-    <div>
+    <div className="font-bold" >
     <p
       className={cn(
-        "mt-8 text-zinc-400 tracking-wide leading-relaxed text-md",
+        "mt-4 text-black tracking-wide leading-relaxed text-md",
         className
       )}
     >
       {children}
     </p>
-    <p className=" text-zinc-400 tracking-wide leading-relaxed text-md">
-      +91 99920-44411
+    <p className=" text-black tracking-wide leading-relaxed text-md">
+      +91 {phoneNumber}
     </p>
     </div>
 

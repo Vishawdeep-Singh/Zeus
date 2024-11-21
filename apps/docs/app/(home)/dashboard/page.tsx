@@ -13,6 +13,7 @@ import prisma from "@repo/db/client";
 import { masterTableDataConversion, onwerGymsConversion } from "@/lib/helper";
 import { toast } from "sonner";
 import { GymsData } from "@/types/types";
+import React from "react";
 
 export default async function () {
   const session = await getServerSession(authOptions);

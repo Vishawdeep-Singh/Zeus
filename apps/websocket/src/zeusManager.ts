@@ -1,16 +1,8 @@
 import { createClient, RedisClientType } from "redis";
 import { WebSocket } from "ws";
-const connection = {
-  Adminname: process.env.REDIS_AdminNAME || "", // Adminname is optional
-  password: process.env.REDIS_PASSWORD || "", // Password is required if Redis is password-protected
-  host: process.env.REDIS_HOST || "127.0.0.1",
-  port: process.env.REDIS_PORT || 6379,
-};
 
   
-  const redisCredentials = {
-    url: `redis://:${connection.password}@${connection.host}:${connection.port}`,
-  };
+
   
   
 

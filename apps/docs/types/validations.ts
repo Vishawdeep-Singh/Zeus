@@ -12,7 +12,6 @@ export const signInSchema=signUpSchema.pick({
     password:true
 })
 
-
 export const addFormSchema = z.object({
     name:z.string().min(3,{message:"Name must be of 3 or more letters"}),
     address:z.string().min(6,"Enter a valid address"),
@@ -21,5 +20,3 @@ export const addFormSchema = z.object({
 })
 
 export const paramsId = z.string().uuid({message:"This is not a valid uuid"})
-
-

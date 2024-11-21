@@ -1,6 +1,5 @@
 import { WebSocketServer } from 'ws';
 import http from 'http';
-import { createClient, RedisClientType } from "redis";
 import { ZeusManager } from './zeusManager';
 
 const server = http.createServer((request, response) => {

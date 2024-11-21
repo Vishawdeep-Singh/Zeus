@@ -9,6 +9,7 @@ import AddMembership from "./addMembership";
 import CardDemo from "./blocks/cards-demo-1";
 import { MembershipCard } from "./membershipCards";
 import { MembersofGym } from "./membersOfGym";
+import { ManageGymHero } from "./manageGymsHero";
 export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gymDetails: Gym,role:string,gymId:string,membershipUserDetails?:{membershipId:string,userId:number}[]}) => {
   console.log("Inside Manage Gym",gymDetails);
 
@@ -17,22 +18,10 @@ export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gym
   
   return (
     <div className="flex rounded-3xl p-7 flex-col items-center bg-slate-100 mx-0   scroll-smooth space-y-24 bg-muted/40 border shadow-sm ">
-      <div className="flex items-center justify-center font-mono font-bold text-9xl">
-        {gymDetails?.name}
-      </div>
-      <div className="space-y-5">
-        <Image
-          src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Description of image"
-          width={1000}
-          height={1000}
-          className=" h-96 w-96 object-cover rounded-xl"
-        ></Image>
-        <div className="text-xl">{gymDetails?.address}</div>
-      </div>
+      <ManageGymHero address={gymDetails?.address as string } name={gymDetails?.name as string} />
 {role!=="user" &&       <div className="flex justify-center">
         
-        <AddMembership gymName={gymDetails?.name as string} gymId={gymDetails?.id as string}></AddMembership>
+        <AddMembership gymName={gymDetails?.name as string} gymId={gymDetails?.id as string} />
       </div> }
 
 
@@ -55,7 +44,7 @@ export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gym
         </div>
           
           
-          <MembersofGym membersDetails={gymDetails?.members}></MembersofGym>
+          <MembersofGym membersDetails={gymDetails?.members} owner={gymDetails?.ownerId} ></MembersofGym>
          
         </div>
 
@@ -63,3 +52,19 @@ export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gym
     </div>
   );
 };
+
+
+
+// <div className="flex items-center justify-center font-mono font-bold text-9xl">
+//         {gymDetails?.name}
+//       </div>
+//       <div className="space-y-5">
+//         <Image
+//           src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//           alt="Description of image"
+//           width={1000}
+//           height={1000}
+//           className=" h-96 w-96 object-cover rounded-xl"
+//         ></Image>
+//         <div className="text-xl">{gymDetails?.address}</div>
+//       </div>

@@ -47,7 +47,7 @@ export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
         </p>
 
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          <b className="text-black"> Price:</b> Rs. {membershipDetails.price}
+          <b className="text-black"> Price:</b> ₹ {membershipDetails.price}
         </p>
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           <div className="flex space-x-2">
