@@ -138,6 +138,18 @@ import { WebSocket } from "ws";
 
       }
 
+      async joinGymMembership(gymId:string,userId:string,gymName:string,userName:string){
+        console.log("here2")
+        let user = this.users.get(userId);
+        if(user){
+         user.purchasedGyms.add(gymId);
+        
+           let message = `${userName} with Id ${userId} joined at ${gymName}`
+            this.notifyAdmins(gymId,message,"join-in")
+        
+        } 
+      }
+
       disconnect(ws:WebSocket){
         this.adminSubscribers.forEach(subscribers => subscribers.delete(ws));
         this.userSubscribers.forEach(subscribers => subscribers.delete(ws));

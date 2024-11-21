@@ -7,6 +7,7 @@ import { MembershipCardProps } from "@/types/types";
 import { joinMembership } from "@/actions/joinMembership";
 import { toast } from "sonner";
 import { ChoosePlanButton } from "./choosePlanBtn";
+import { useWebSocket } from "@/context/socketContext";
 
 export function MembershipCard({
   id,
@@ -18,11 +19,18 @@ export function MembershipCard({
   gymId,
   membershipUserDetails
 }: MembershipCardProps) {
+  const {sendMessage,user}= useWebSocket();
   async function handleChoosePlan() {
     console.log(id);
     console.log(gymId)
     const response = await joinMembership(id, gymId);
     if (response.data) {
+      sendMessage("membership-purchased",{
+        userId:user?.id,
+        userName:user?.name,
+        gymId:gymId,
+        gymName:response.gymDetails.name
+      })
       toast.success("Membership sucessfully purchased", {
         closeButton: true,
         position: "top-center",

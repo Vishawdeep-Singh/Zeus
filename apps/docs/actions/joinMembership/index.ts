@@ -25,10 +25,13 @@ try {
                     connect: { id: Number(session?.user.id) },
                 },
             },
+            select:{
+                name:true
+            }
         }),
     ])
 
-    return { data: membership }
+    return { data: membership,gymDetails:gym }
 } catch (error:any) {
      console.log(error)
     if (error.code === 'P2002') { // Prisma unique constraint violation error
