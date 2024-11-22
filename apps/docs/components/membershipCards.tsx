@@ -6,8 +6,9 @@ import { cn } from "@/lib/utils";
 import { MembershipCardProps } from "@/types/types";
 import { joinMembership } from "@/actions/joinMembership";
 import { toast } from "sonner";
-import { ChoosePlanButton } from "./choosePlanBtn";
 import { useWebSocket } from "@/context/socketContext";
+import { usePathname } from "next/navigation";
+import { ChoosePlan } from "./choosePlan";
 
 export function MembershipCard({
   id,
@@ -17,9 +18,14 @@ export function MembershipCard({
   color,
   index,
   gymId,
-  owner,
   membershipUserDetails
 }: MembershipCardProps) {
+
+  const url = usePathname();
+
+  const isUser = url.startsWith('/user/');
+  console.log('is user', isUser)
+
   const {sendMessage,user}= useWebSocket();
   async function handleChoosePlan() {
     console.log(id);
@@ -59,7 +65,7 @@ console.log(activeMembership)
 
   return (
     <div
-      className="relative bg-black  rounded-md "
+      className="relative bg-black rounded-md"
       style={{
         boxShadow: `3px 10px 6px -1px black, 3px 8px 4px -1px black`,
         
@@ -98,16 +104,16 @@ console.log(activeMembership)
             })}
           </ul>
           <p className="mt-4 text-2xl font-bold">₹ {price}</p>
-            {Number(user?.id) != owner && (
-              <Button
-              onClick={handleChoosePlan}
-              className="mt-4  pointer-events-auto  z-30 w-full"
-              disabled={activeMembership}
-              >
-                {activeMembership ? <span className="text-green-500">Active plan</span> : "Choose Plan"}
-              </Button>
-            ) }
-          
+          {isUser && (
+            <ChoosePlan handleChoosePlan={handleChoosePlan} activeMembership={activeMembership ? true : false} />
+              // <Button
+              // onClick={handleChoosePlan}
+              // className="mt-4  pointer-events-auto  z-30 w-full"
+              // disabled={activeMembership}
+              // >
+              //   {activeMembership ? <span className="text-green-400" >Active plan</span> : "Choose Plan"}
+              // </Button>
+          )}
         </CardContent>
       </Card>
     </div>
