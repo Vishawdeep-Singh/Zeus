@@ -17,6 +17,7 @@ export function MembershipCard({
   color,
   index,
   gymId,
+  owner,
   membershipUserDetails
 }: MembershipCardProps) {
   const {sendMessage,user}= useWebSocket();
@@ -97,14 +98,16 @@ console.log(activeMembership)
             })}
           </ul>
           <p className="mt-4 text-2xl font-bold">₹ {price}</p>
-
-          <Button
-            onClick={handleChoosePlan}
-            className="mt-4  pointer-events-auto  z-30 w-full"
-            disabled={activeMembership}
-          >
-            {activeMembership ? <span className="text-green-500">Active plan</span> : "Choose Plan"}
-          </Button>
+            {Number(user?.id) != owner && (
+              <Button
+              onClick={handleChoosePlan}
+              className="mt-4  pointer-events-auto  z-30 w-full"
+              disabled={activeMembership}
+              >
+                {activeMembership ? <span className="text-green-500">Active plan</span> : "Choose Plan"}
+              </Button>
+            ) }
+          
         </CardContent>
       </Card>
     </div>

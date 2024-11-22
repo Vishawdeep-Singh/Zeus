@@ -73,7 +73,7 @@ export type SignUp = {
     index:number,
     gymId:string,
     membershipUserDetails: {membershipId:string , userId:number}[] | undefined
-
+    owner: number
   };
 
   export type Member = {

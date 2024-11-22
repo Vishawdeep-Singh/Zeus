@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Providers>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} w-full h-full`}>
         {children}
         <Toaster  richColors={true} visibleToasts={9}/>
       </body>

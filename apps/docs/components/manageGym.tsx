@@ -31,7 +31,7 @@ export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gym
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 items-center">
           {gymDetails?.memberships?.map((data,i)=>{
-            return <MembershipCard membershipUserDetails={membershipUserDetails} key={i} gymId={gymId} index={1} id={data.id as string} color={data.color} duration={data.duration} price={data.price} description={data.description as string[]}></MembershipCard>
+            return <MembershipCard membershipUserDetails={membershipUserDetails} key={i} gymId={gymId} index={1} id={data.id as string} color={data.color} duration={data.duration} price={data.price} description={data.description as string[]} owner={gymDetails?.ownerId} ></MembershipCard>
           })}
           </div>
 
