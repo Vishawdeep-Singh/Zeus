@@ -80,14 +80,13 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
   }
 
   return (
-    <div>
-      <Button onClick={handleClose} className="mb-4">Add New Membership</Button>
+    <div className="overflow-clip">
+      <Button onClick={() => setIsOpen(true)} className="mb-4">Add New Membership</Button>
 
       {/* Modal */}
       {isOpen && (
-          
-        <div className="fixed w-screen h-screen inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Card className=" w-[38%] overflow-y-auto h-fit mx-auto bg-white rounded-lg shadow-lg p-2 px-4">
+        <div className="fixed inset-0 overflow-clip flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <Card className=" w-[38%] overflow-y-auto h-[85%] mx-auto bg-white rounded-lg shadow-lg p-4">
             <CardHeader>
               <CardTitle>Add New Membership</CardTitle>
               <CardDescription>Create a new membership option for your gym</CardDescription>

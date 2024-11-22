@@ -97,6 +97,30 @@ export default function SidebarHome({ children, session }: any) {
             })
           }
         }
+        else if(type==="join-in"){
+          const audio = new Audio(`/notifications.mp3`);
+          await audio.play();
+
+          toast(
+            <div className="space-x-2 space-y-1 flex items-center">
+              <Bell size={20} fill="black"></Bell>
+              <div className="font-semibold">{data.message}</div>
+            </div>,
+            { duration: 5000, position: "top-right" }
+          );
+          
+          const response = await addNotifications(data.message,data.time)
+         
+          if(response.data){
+            setNotifications((prev) => [...prev,response?.data]);
+          }
+          if(response.error){
+            toast.error(`${response.error}`,{
+              closeButton:true,
+              position:"top-center"
+            })
+          }
+        }
       };
     }
   }, [socket]);
