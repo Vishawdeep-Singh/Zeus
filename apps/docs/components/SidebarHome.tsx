@@ -101,7 +101,7 @@ export default function SidebarHome({ children, session }: any) {
           const audio = new Audio(`/notifications.mp3`);
           await audio.play();
 
-          toast(
+             toast(
             <div className="space-x-2 space-y-1 flex items-center">
               <Bell size={20} fill="black"></Bell>
               <div className="font-semibold">{data.message}</div>

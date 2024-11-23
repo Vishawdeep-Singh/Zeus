@@ -94,6 +94,8 @@ model Attendance {
   @@index([time])
 }
 
+
+
 enum Roles {
   USER
   ADMIN

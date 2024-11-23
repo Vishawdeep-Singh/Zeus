@@ -20,6 +20,7 @@ export function MembershipCard({
   membershipUserDetails
 }: MembershipCardProps) {
   const {sendMessage,user}= useWebSocket();
+  
   async function handleChoosePlan() {
     console.log(id);
     console.log(gymId)
@@ -53,7 +54,7 @@ export function MembershipCard({
 
   const getGifUrl = (index: any) => gifUrls[index % gifUrls.length];
   const gifUrl = getGifUrl(index);
-  const activeMembership = membershipUserDetails?.find((details) => details.membershipId == id);
+  const activeMembership = membershipUserDetails?.find((details) => details.membershipId === id);
 console.log(activeMembership)
 
   return (
@@ -96,14 +97,15 @@ console.log(activeMembership)
               return <li key={i}>{x}</li>;
             })}
           </ul>
-          <p className="mt-4 text-2xl font-bold">₹ {price}</p>
+          <p className="mt-4 text-2xl font-bold">Rs .{price}</p>
 
           <Button
             onClick={handleChoosePlan}
             className="mt-4  pointer-events-auto  z-30 w-full"
             disabled={activeMembership}
           >
-            {activeMembership ? <span className="text-green-500">Active plan</span> : "Choose Plan"}
+            
+            {activeMembership ? "Plan Chosen" : "Choose Plan"}
           </Button>
         </CardContent>
       </Card>

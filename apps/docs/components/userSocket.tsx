@@ -5,11 +5,14 @@ import { getPurchasedGymsOfUser } from "@/actions/getPurchasedGyms";
 import { useWebSocket } from "@/context/socketContext";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { MembershipExpiringWarning } from "./membershipExpiringWarning";
+import { useWarningNotifications } from "@/hooks/useWarningNotifications";
 
 
 export function UserSocket({children}:any){
     const { socket, user } = useWebSocket();
     const [gymIds, setGymIds] = useState<string[]>([]);
+    const warningNotifications=useWarningNotifications()
   
     useEffect(() => {
       async function fetchGymIds() {

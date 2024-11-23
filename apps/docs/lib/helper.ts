@@ -1,4 +1,11 @@
-import { ExpiredMembers, Gym1, GymsData, MasterTableMember } from "@/types/types";
+
+import {
+  ExpiredMembers,
+  Gym1,
+  GymsData,
+  MasterTableMember,
+} from "@/types/types";
+import prisma from "@repo/db/client";
 import moment from "moment";
 import { DateRange } from "react-day-picker";
 import { current } from "tailwindcss/colors";
@@ -60,7 +67,7 @@ export const membershipExpiryConversion = (data: Gym1) => {
     .map((obj3) => {
       let currentGymMembership = obj3.memberships.filter((obj4) => {
         return obj4.gymId === gymId;
-      })
+      });
       if (currentGymMembership.length === 0) return null;
       const dateJoined = new Date(currentGymMembership[0]!.dateJoined);
       const membershipDuration = currentGymMembership[0]!.membership.duration;
@@ -74,7 +81,7 @@ export const membershipExpiryConversion = (data: Gym1) => {
         email: obj3.email,
         phoneNumber: obj3.cellPh,
         membershipDuration: currentGymMembership[0]!.membership.duration,
-        expiredOn : expirationDate.toDateString()
+        expiredOn: expirationDate.toDateString(),
       };
     });
 
@@ -111,3 +118,6 @@ export const checkIfItLiesInRange = (
 
   return membersExistBetweenDate;
 };
+
+
+

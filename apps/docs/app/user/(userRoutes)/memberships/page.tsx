@@ -35,6 +35,7 @@ export default async function (){
     
     
     const response = await getMembership(session.user.id)
+    console.log("User Side Memberhsips Data",response.data)
     if(response.error){
         return <div className="text-5xl font-bold text-center">{response.error}</div>
     }

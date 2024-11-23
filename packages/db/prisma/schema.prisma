@@ -26,6 +26,7 @@ memberships UserMembership[] // Explicit Many to Many Relation
 attendance Attendance[] @relation("UserAttendance")
 provider Providers
 notifications Notification[]
+warningNotifications WarningNotifications[]
 }
 
 model Role {
@@ -45,7 +46,7 @@ members User[]  @relation("Gym member")
 attendance  Attendance[]
 phoneNumber String
 userMemberships UserMembership[]
-
+warningNotifications WarningNotifications[]
 }
 
 model OTP {
@@ -103,6 +104,16 @@ model Notification {
   createdAt DateTime
   isRead Boolean @default(false)
   type Roles
+}
+
+model WarningNotifications {
+ id String @id @default(uuid())
+ userId Int
+ User User @relation(fields: [userId],references: [id])
+ gymId String
+ gym Gym @relation(fields: [gymId],references: [id])
+ message String
+ resolved Boolean
 }
 
 enum Roles {
