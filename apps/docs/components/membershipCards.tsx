@@ -27,6 +27,7 @@ export function MembershipCard({
   console.log('is user', isUser)
 
   const {sendMessage,user}= useWebSocket();
+  
   async function handleChoosePlan() {
     console.log(id);
     console.log(gymId)
@@ -60,7 +61,7 @@ export function MembershipCard({
 
   const getGifUrl = (index: any) => gifUrls[index % gifUrls.length];
   const gifUrl = getGifUrl(index);
-  const activeMembership = membershipUserDetails?.find((details) => details.membershipId == id);
+  const activeMembership = membershipUserDetails?.find((details) => details.membershipId === id);
 console.log(activeMembership)
 
   return (
@@ -103,6 +104,7 @@ console.log(activeMembership)
               return <li key={i}>{x}</li>;
             })}
           </ul>
+
           <p className="mt-4 text-2xl font-bold">₹ {price}</p>
           {isUser && (
             <ChoosePlan handleChoosePlan={handleChoosePlan} activeMembership={activeMembership ? true : false} />
@@ -114,6 +116,7 @@ console.log(activeMembership)
               //   {activeMembership ? <span className="text-green-400" >Active plan</span> : "Choose Plan"}
               // </Button>
           )}
+
         </CardContent>
       </Card>
     </div>

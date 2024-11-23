@@ -1,6 +1,6 @@
 import { getNotifications } from "@/actions/getNotificatios";
 import { atom, selector } from "recoil";
-import { Notification } from "@/types/types";
+import { Notification, WarningNotification } from "@/types/types";
 
 export const notificationsState = atom<Notification[]>({
     key: 'notificationsState',
@@ -15,3 +15,8 @@ export const notificationsState = atom<Notification[]>({
       return notifications.filter(notification => !notification.isRead);
     },
   });
+
+  export const warningNotificationsState = atom<WarningNotification[]>({
+    key:"warningNotificationsState",
+    default:[]
+  })

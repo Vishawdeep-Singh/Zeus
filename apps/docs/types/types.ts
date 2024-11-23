@@ -174,3 +174,11 @@ export type SignUp = {
     membershipDuration: number,
     expiredOn : string
   };
+
+  export type WarningNotification={
+    gymId: string;
+    id: string;
+    userId: number;
+    message: string;
+    resolved: boolean;
+  }
