@@ -12,18 +12,15 @@ import { MembersofGym } from "./membersOfGym";
 import { ManageGymHero } from "./manageGymsHero";
 export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gymDetails: Gym,role:string,gymId:string,membershipUserDetails?:{membershipId:string,userId:number}[]}) => {
   console.log("Inside Manage Gym",gymDetails);
-
- 
-  
   
   return (
-    <div className="flex rounded-3xl p-7 flex-col items-center bg-slate-100 mx-0   scroll-smooth space-y-24 bg-muted/40 border shadow-sm ">
+    <div className="flex rounded-3xl p-7 flex-col items-center bg-slate-100 mx-0 scroll-smooth space-y-24 bg-muted/40 border shadow-sm">
       <ManageGymHero address={gymDetails?.address as string } name={gymDetails?.name as string} />
-{role!=="user" &&       <div className="flex justify-center">
-        
-        <AddMembership gymName={gymDetails?.name as string} gymId={gymDetails?.id as string} />
-      </div> }
-
+      {role!=="user" && (
+        <div className="flex justify-center">
+          <AddMembership gymName={gymDetails?.name as string} gymId={gymDetails?.id as string} />
+        </div>
+      )}
 
       <div className="space-y-10 p-10 ">
         <div className="text-4xl text-center">
@@ -31,10 +28,9 @@ export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gym
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 items-center">
           {gymDetails?.memberships?.map((data,i)=>{
-            return <MembershipCard membershipUserDetails={membershipUserDetails} key={i} gymId={gymId} index={1} id={data.id as string} color={data.color} duration={data.duration} price={data.price} description={data.description as string[]}></MembershipCard>
+            return <MembershipCard membershipUserDetails={membershipUserDetails} key={i} gymId={gymId} index={1} id={data.id as string} color={data.color} duration={data.duration} price={data.price} description={data.description as string[]} ></MembershipCard>
           })}
           </div>
-
       </div>
 
      {role!=="user" && <div className="w-[70%]">
@@ -42,12 +38,8 @@ export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gym
         <div className="text-center text-primary font-bold">
         Members of this Gym
         </div>
-          
-          
           <MembersofGym membersDetails={gymDetails?.members} owner={gymDetails?.ownerId} ></MembersofGym>
-         
         </div>
-
       </div> } 
     </div>
   );

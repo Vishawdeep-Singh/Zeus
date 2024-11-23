@@ -1,17 +1,19 @@
 "use client";
-import { HexColorPicker } from "react-colorful";
+
 import { useState } from "react";
+import { HexColorPicker } from "react-colorful";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { addMemberships } from "@/actions/addMemberships";
 import { Membership } from "@/types/types";
 import { toast } from "sonner";
 
-export default function AddMembership({ gymId, gymName }: { gymId: string, gymName: string }) {
+export default function AddMembership({ gymId, gymName }: { gymId: string; gymName: string }) {
   const [formData, setFormData] = useState<Membership>({
     price: "",
     duration: 1,
@@ -19,7 +21,7 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
     color: "#aabbcc"
   });
   const [error, setError] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false); // Controls modal visibility
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleColorChange = (newColor: string) => {
     setFormData((prev) => ({ ...prev, color: newColor }));
@@ -59,7 +61,7 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
         closeButton: true,
         position: "top-center",
       });
-      setIsOpen(false); // Close modal on success
+      setIsOpen(false);
     } else {
       toast.error(`${response.error}`, {
         closeButton: true,
@@ -75,81 +77,72 @@ export default function AddMembership({ gymId, gymName }: { gymId: string, gymNa
     });
   };
 
-  function handleClose() {
-    setIsOpen(prev=> !prev);
-  }
-
   return (
-    <div className="overflow-clip">
-      <Button onClick={() => setIsOpen(true)} className="mb-4">Add New Membership</Button>
-
-      {/* Modal */}
-      {isOpen && (
-        <div className="fixed inset-0 overflow-clip flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <Card className=" w-[38%] overflow-y-auto h-[85%] mx-auto bg-white rounded-lg shadow-lg p-4">
-            <CardHeader>
-              <CardTitle>Add New Membership</CardTitle>
-              <CardDescription>Create a new membership option for your gym</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="price">Price</Label>
-                  <Input
-                    id="price"
-                    name="price"
-                    type="number"
-                    placeholder="e.g., 29.99"
-                    value={formData.price}
-                    onChange={handleInputChange}
-                    required
-                  />
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button className="mb-4">Add New Membership</Button>
+      </DialogTrigger>
+      <DialogContent className="w-[38%] h-fit min-h-[90vh] border-none p-0">
+        <Card className="w-full h-fit bg-background shadow-none border-none">
+          <CardHeader>
+            <CardTitle>Add New Membership</CardTitle>
+            <CardDescription>Create a new membership option for your gym</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-2">
+              <div className="space-y-2">
+                <Label htmlFor="price">Price</Label>
+                <Input
+                  id="price"
+                  name="price"
+                  type="number"
+                  placeholder="e.g., 29.99"
+                  value={formData.price}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="duration">Duration (in months)</Label>
+                <Input
+                  id="duration"
+                  name="duration"
+                  type="number"
+                  min="1"
+                  value={Number(formData.duration)}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  name="description"
+                  placeholder="Enter membership details..."
+                  value={formData.description}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-4">
+                  <Label htmlFor="color">Set Color</Label>
+                  <div style={{ backgroundColor: formData.color }} className="h-6 w-12 rounded" />
                 </div>
-                <div className="space-y-1">
-                  <Label htmlFor="duration">Duration (in months)</Label>
-                  <Input
-                    id="duration"
-                    name="duration"
-                    type="number"
-                    min="1"
-                    value={Number(formData.duration)}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="description">Description (optional)</Label>
-                  <Textarea
-                    id="description"
-                    name="description"
-                    placeholder="Enter membership details..."
-                    value={formData.description}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex space-x-4">
-                    <Label htmlFor="color">Set Color</Label>
-                    <div style={{ backgroundColor: formData.color }} className="h-4 w-12 rounded" />
-                  </div>
-                  <HexColorPicker color={formData.color} onChange={handleColorChange} />
-                </div>
-
-                <Button type="submit" className="w-full">Add Membership</Button> 
-                <Button onClick={() => setIsOpen(false)} className="w-full mt-4">Close</Button>
-              </form>
-            </CardContent>
-            <CardFooter>
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-            </CardFooter>
-          </Card>
-        </div>
-      )}
-    </div>
-
+                <HexColorPicker color={formData.color} onChange={handleColorChange} />
+              </div>
+              <Button type="submit" className="w-full">Add Membership</Button>
+            </form>
+          </CardContent>
+          <CardFooter>
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+          </CardFooter>
+        </Card>
+      </DialogContent>
+    </Dialog>
   );
 }

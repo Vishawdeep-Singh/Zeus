@@ -25,6 +25,7 @@ try {
         }
     })
     revalidatePath(`/manageGyms/${gymId}`)
+    revalidatePath(`/user/view/${gymId}`)
     return {data:response}
     
 } catch (error) {
