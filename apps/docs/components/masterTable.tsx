@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, CalendarCheck } from "lucide-react";
 import { DatePicker } from "./datePicker";
 import { SelectGyms } from "./gymSelector";
 import { useEffect, useState } from "react";
@@ -19,6 +19,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { GymsData, MasterTableMember } from "@/types/types";
 import BeatLoader from "react-spinners/BeatLoader";
 import { checkIfItLiesInRange } from "@/lib/helper";
+import { AttendanceDropDown } from "./AttendaceDropDown";
 
 // const membersData = [
 //   {
@@ -210,7 +211,7 @@ export function MasterTable({
   membersData: MasterTableMember[];
   ownedGyms: { gymId: string; gymName: string }[];
 }) {
-  console.log(ownedGyms);
+  console.log("Master table member data", membersData);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setGymFilter] = useRecoilState(GymFilterState);
   const dateFilter = useRecoilValue(dateRange);
@@ -246,8 +247,6 @@ export function MasterTable({
     });
     setnameFilteredMembers(filteredMembers);
   }, [searchTerm, filter, dateFilteredData, membersData]);
-
-  
 
   //   let nameFilteredMembers:any=[] // My version
 
@@ -289,7 +288,11 @@ export function MasterTable({
               placeholder=" Name"
             />
           </div>
-          <div className="max-h-96 overflow-y-auto">
+          <div className="max-h-96 overflow-y-auto [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-transparent
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
             <Table className="">
               <TableHeader>
                 <TableRow>
@@ -300,20 +303,22 @@ export function MasterTable({
                   <TableHead>Gym Name</TableHead>
                   <TableHead>Memberhsip Duration</TableHead>
                   <TableHead>Days Left</TableHead>
+                  {dateFilter && <TableHead>Date</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody className="font-medium">
                 {nameFilteredMembers &&
-                  nameFilteredMembers.map((member, i) => (
-                    <TableRow key={i}>
-                      <TableCell>{member.id}</TableCell>
-                      <TableCell>{member.name}</TableCell>
-                      <TableCell>{member.email}</TableCell>
-                      <TableCell>{member.phone}</TableCell>
-                      <TableCell>{member.gymName}</TableCell>
-                      <TableCell>{member.membershipDuration}</TableCell>
-                      <TableCell>{member.daysLeft}</TableCell>
-                    </TableRow>
+                  nameFilteredMembers.map((member, i) =>  (
+                      <TableRow key={i}>
+                        <TableCell>{member.id}</TableCell>
+                        <TableCell>{member.name}</TableCell>
+                        <TableCell>{member.email}</TableCell>
+                        <TableCell>{member.phone}</TableCell>
+                        <TableCell>{member.gymName}</TableCell>
+                        <TableCell>{member.membershipDuration}</TableCell>
+                        <TableCell>{member.daysLeft}</TableCell>
+                        {dateFilter && <TableCell><AttendanceDropDown attendances={member.attendance} /></TableCell>}
+                      </TableRow>
                   ))}
               </TableBody>
             </Table>
