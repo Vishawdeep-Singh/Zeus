@@ -1,57 +1,78 @@
-"use server"
+"use server";
 import prisma from "@repo/db/client";
 import moment from "moment";
 
 export const membershipExpiryWarning = async (data: any) => {
+  for (const userMembership of data) {
+    console.log("AAABBB", userMembership);
+    const originalDate = moment(userMembership.dateJoined);
+    const monthsToSubtract = userMembership.membership.duration;
+    const addMonths = originalDate.clone().add(monthsToSubtract, "months");
 
-    for (const userMembership of data) {
-      console.log("AAABBB", userMembership);
-      const originalDate = moment(userMembership.dateJoined);
-      const monthsToSubtract = userMembership.membership.duration;
-      const addMonths = originalDate.clone().add(monthsToSubtract, "months");
-  
-      const differenceInDays = addMonths.diff(moment(), "days");
-      if (differenceInDays <= 5) {
-        const warningMessage = `Your membership at ${userMembership.gym.name} expiring in ${differenceInDays} days`;
-  
-        const checkIfWarningExists = await prisma.warningNotifications.findFirst({
-          where: {
+    const differenceInDays = addMonths.diff(moment(), "days");
+    if (0<differenceInDays && differenceInDays<=5) {
+      const warningMessage = `Your membership at ${userMembership.gym.name} expiring in ${differenceInDays} days`;
+
+      const checkIfWarningExists = await prisma.warningNotifications.findFirst({
+        where: {
+          userId: Number(userMembership.userId),
+          gymId: userMembership.gymId,
+          resolved: false,
+        },
+      });
+      if (!checkIfWarningExists) {
+        await prisma.warningNotifications.create({
+          data: {
             userId: Number(userMembership.userId),
             gymId: userMembership.gymId,
+            message: warningMessage,
             resolved: false,
           },
         });
-        if (!checkIfWarningExists) {
-          await prisma.warningNotifications.create({
+      } else {
+        if (checkIfWarningExists.message !== warningMessage) {
+          await prisma.warningNotifications.update({
+            where: {
+              id: checkIfWarningExists.id,
+            },
             data: {
-              userId: Number(userMembership.userId),
-              gymId: userMembership.gymId,
               message: warningMessage,
-              resolved: false,
             },
           });
         }
       }
-      else if (differenceInDays<=0){
-        const warningMessage = `Your membership at ${userMembership.gym.name} has been expired`;
-  
-        const checkIfWarningExists = await prisma.warningNotifications.findFirst({
-          where: {
+    } else if (differenceInDays <= 0) {
+      const warningMessage = `Your membership at ${userMembership.gym.name} has been expired`;
+
+      const checkIfWarningExists = await prisma.warningNotifications.findFirst({
+        where: {
+          userId: Number(userMembership.userId),
+          gymId: userMembership.gymId,
+          resolved: false,
+        },
+      });
+      if (!checkIfWarningExists) {
+        await prisma.warningNotifications.create({
+          data: {
             userId: Number(userMembership.userId),
             gymId: userMembership.gymId,
+            message: warningMessage,
             resolved: false,
           },
         });
-        if (!checkIfWarningExists) {
-          await prisma.warningNotifications.create({
+      }
+      else{
+        if (checkIfWarningExists.message !== warningMessage) {
+          await prisma.warningNotifications.update({
+            where: {
+              id: checkIfWarningExists.id,
+            },
             data: {
-              userId: Number(userMembership.userId),
-              gymId: userMembership.gymId,
               message: warningMessage,
-              resolved: false,
             },
           });
         }
       }
     }
-  };
+  }
+};
