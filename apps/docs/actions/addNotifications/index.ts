@@ -5,7 +5,7 @@ import prisma from "@repo/db/client";
 import { getServerSession } from "next-auth"
 
 
-export const addNotifications =async(message:string,time:Date)=>{
+export const addNotifications =async(message:string,time:Date,personId:number)=>{
 try {
     const session = await getServerSession(authOptions);
     if(!session?.user.id){
@@ -14,7 +14,7 @@ try {
 
     const response=await prisma.notification.create({
         data:{
-            userId:Number(session?.user.id),
+            userId:Number(personId),
             message,
             createdAt:time,
             type:"ADMIN"

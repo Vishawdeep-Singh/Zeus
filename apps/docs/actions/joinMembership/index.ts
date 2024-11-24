@@ -26,7 +26,8 @@ try {
                 },
             },
             select:{
-                name:true
+                name:true,
+                ownerId:true
             }
         }),
     ])

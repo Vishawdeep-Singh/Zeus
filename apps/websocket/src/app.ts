@@ -33,7 +33,8 @@ wss.on("connection", (ws) => {
         data.gymId,
         data.userId,
         data.gymName,
-        data.userName
+        data.userName,
+        data.notificationMetaData
       );
     } else if (type === "membership-purchased") {
       console.log("here1")
@@ -41,7 +42,8 @@ wss.on("connection", (ws) => {
         data.gymId,
         data.userId,
         data.gymName,
-        data.userName
+        data.userName,
+       data.notificationMetaData
       );
     } else {
       console.log(type, data);

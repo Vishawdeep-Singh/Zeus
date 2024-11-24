@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { markAttendance } from "@/actions/markAttendance";
 import { useWebSocket } from "@/context/socketContext";
 import { useWebSockets } from "@/hooks/useWebSocket";
+import { getOwnerId } from "@/actions/getOwner_Given_gymId";
+import { addNotifications } from "@/actions/addNotifications";
 
 const fetcher = async (url: string | URL | Request) => {
   const response = await fetch(url);
@@ -55,19 +57,25 @@ export default function StylishAttendanceMarker({
 
         // Call the attendance marking function
         const response = await markAttendance(gymId);
-        if(response.data){
+        const response1= await getOwnerId(gymId)
+        if(response1.data && response.data){
+           let message = `${user?.name} with Id ${user?.id} checked in at ${name}`
+          const {data}= await addNotifications(message,new Date(),response1.data.ownerId)
           sendMessage("mark-attendance",{
             userId:user?.id,
             userName:user?.name,
             gymId:gymId,
-            gymName:name
+            gymName:name,
+            notificationMetaData:data
 
           })
+         
         }
+  
 
-        if (response.error) {
+        if (response.error || response1.error) {
           // Revert state if the request fails
-          toast.error(`Error: ${response.error}`, {
+          toast.error(`Error: ${response.error}`||`Error: ${response1.error}`, {
             closeButton: true,
             position: "top-center",
           });

@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useWebSocket } from "@/context/socketContext";
 import { usePathname } from "next/navigation";
 import { ChoosePlan } from "./choosePlan";
+import { addNotifications } from "@/actions/addNotifications";
 
 export function MembershipCard({
   id,
@@ -18,31 +19,34 @@ export function MembershipCard({
   color,
   index,
   gymId,
-  membershipUserDetails
+  membershipUserDetails,
 }: MembershipCardProps) {
-
   const url = usePathname();
 
-  const isUser = url.startsWith('/user/');
-  console.log('is user', isUser)
+  const isUser = url.startsWith("/user/");
+  console.log("is user", isUser);
 
-  const {sendMessage,user}= useWebSocket();
-  
+  const { sendMessage, user } = useWebSocket();
+
   async function handleChoosePlan() {
     console.log(id);
-    console.log(gymId)
+    console.log(gymId);
     const response = await joinMembership(id, gymId);
     if (response.data) {
-      sendMessage("membership-purchased",{
-        userId:user?.id,
-        userName:user?.name,
-        gymId:gymId,
-        gymName:response.gymDetails.name
-      })
+      let message = `${user?.name} with Id ${user?.id} joined at ${response.gymDetails.name}`;
+     const {data}= await addNotifications(message, new Date(), response.gymDetails.ownerId);
+      sendMessage("membership-purchased", {
+        userId: user?.id,
+        userName: user?.name,
+        gymId: gymId,
+        gymName: response.gymDetails.name,
+        notificationMetaData:data
+      });
       toast.success("Membership sucessfully purchased", {
         closeButton: true,
         position: "top-center",
       });
+     
     } else {
       toast.error(`${response.error}`, {
         closeButton: true,
@@ -50,8 +54,6 @@ export function MembershipCard({
       });
     }
   }
-
-
 
   const gifUrls = [
     "https://media1.tenor.com/m/MxTl6a26CpAAAAAC/lr-agl-super-saiyan-god-ss-goku-and-vegeta-lr-agl-ssb-goku-and-vegeta.gif",
@@ -61,20 +63,20 @@ export function MembershipCard({
 
   const getGifUrl = (index: any) => gifUrls[index % gifUrls.length];
   const gifUrl = getGifUrl(index);
-  const activeMembership = membershipUserDetails?.find((details) => details.membershipId === id);
-console.log(activeMembership)
+  const activeMembership = membershipUserDetails?.find(
+    (details) => details.membershipId === id
+  );
+  console.log(activeMembership);
 
   return (
     <div
       className="relative bg-black rounded-md"
       style={{
         boxShadow: `3px 10px 6px -1px black, 3px 8px 4px -1px black`,
-        
 
         // Shadow on container
       }}
     >
-     
       <Card
         className={cn(
           "group  w-full cursor-pointer overflow-hidden relative card rounded-md shadow-xl mx-auto flex flex-col justify-end p-4 border-2 border-black dark:border-neutral-800 bg-gray-300",
@@ -88,9 +90,11 @@ console.log(activeMembership)
           "hover:text-[rgba(0,0,0,0.7)] hover:shadow-[1px_1px_2px_rgba(0,0,0,0.3)]"
         )}
       >
-         {activeMembership && <div className="flex text-green-500 ">
-           <CheckCheckIcon className="text-green-500"></CheckCheckIcon>Active
-          </div> }  
+        {activeMembership && (
+          <div className="flex text-green-500 ">
+            <CheckCheckIcon className="text-green-500"></CheckCheckIcon>Active
+          </div>
+        )}
         {/* Card content here */}
         <CardHeader>
           <div className="flex justify-between items-center">
@@ -107,21 +111,20 @@ console.log(activeMembership)
 
           <p className="mt-4 text-2xl font-bold">₹ {price}</p>
           {isUser && (
-            <ChoosePlan handleChoosePlan={handleChoosePlan} activeMembership={activeMembership ? true : false} />
-              // <Button
-              // onClick={handleChoosePlan}
-              // className="mt-4  pointer-events-auto  z-30 w-full"
-              // disabled={activeMembership}
-              // >
-              //   {activeMembership ? <span className="text-green-400" >Active plan</span> : "Choose Plan"}
-              // </Button>
+            <ChoosePlan
+              handleChoosePlan={handleChoosePlan}
+              activeMembership={activeMembership ? true : false}
+            />
+            // <Button
+            // onClick={handleChoosePlan}
+            // className="mt-4  pointer-events-auto  z-30 w-full"
+            // disabled={activeMembership}
+            // >
+            //   {activeMembership ? <span className="text-green-400" >Active plan</span> : "Choose Plan"}
+            // </Button>
           )}
-
         </CardContent>
       </Card>
     </div>
   );
 }
-  
-
-

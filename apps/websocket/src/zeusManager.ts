@@ -100,7 +100,7 @@ import { WebSocket } from "ws";
           this.userSubscribers.get(gymId)!.add(ws);
       }
   
-      async notifyAdmins(gymId: string, message: string,type:string) {
+      async notifyAdmins(gymId: string, message: string,type:string, notificationMetaData:any) {
         console.log(gymId,message,type)
           const subscribers = this.adminSubscribers.get(gymId);
           if (subscribers) {
@@ -108,7 +108,8 @@ import { WebSocket } from "ws";
                 console.log("sending")
                       ws.send(JSON.stringify({ type, data:{
                         message,
-                        time:new Date()
+                        time:new Date(),
+                        notificationMetaData
                       } }));
                   
               });
@@ -126,26 +127,26 @@ import { WebSocket } from "ws";
           }
       }
   
-      async markUserAttendance(gymId: string, userId: string,gymName:string,userName:string) {
+      async markUserAttendance(gymId: string, userId: string,gymName:string,userName:string, notificationMetaData:any) {
          let user = this.users.get(userId);
          if(user){
           let gym = user.purchasedGyms.has(gymId);
           if(gym){
             let message = `${userName} with Id ${userId} checked in at ${gymName}`
-             this.notifyAdmins(gymId,message,"check-in")
+             this.notifyAdmins(gymId,message,"check-in", notificationMetaData)
           }
          }
 
       }
 
-      async joinGymMembership(gymId:string,userId:string,gymName:string,userName:string){
+      async joinGymMembership(gymId:string,userId:string,gymName:string,userName:string, notificationMetaData:any){
         console.log("here2")
         let user = this.users.get(userId);
         if(user){
          user.purchasedGyms.add(gymId);
         
            let message = `${userName} with Id ${userId} joined at ${gymName}`
-            this.notifyAdmins(gymId,message,"join-in")
+            this.notifyAdmins(gymId,message,"join-in",notificationMetaData)
         
         } 
       }

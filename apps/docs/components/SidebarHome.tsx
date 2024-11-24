@@ -84,18 +84,20 @@ export default function SidebarHome({ children, session }: any) {
             </div>,
             { duration: 5000, position: "top-right" }
           );
-          
-          const response = await addNotifications(data.message,data.time)
+          if(data.notificationMetaData){
+            setNotifications((prev) => [...prev,data.notificationMetaData]);
+          }
+          // const response = await addNotifications(data.message,data.time)
          
-          if(response.data){
-            setNotifications((prev) => [...prev,response?.data]);
-          }
-          if(response.error){
-            toast.error(`${response.error}`,{
-              closeButton:true,
-              position:"top-center"
-            })
-          }
+          // if(response.data){
+          //   setNotifications((prev) => [...prev,response?.data]);
+          // }
+          // if(response.error){
+          //   toast.error(`${response.error}`,{
+          //     closeButton:true,
+          //     position:"top-center"
+          //   })
+          // }
         }
         else if(type==="join-in"){
           const audio = new Audio(`/notifications.mp3`);
@@ -108,18 +110,21 @@ export default function SidebarHome({ children, session }: any) {
             </div>,
             { duration: 5000, position: "top-right" }
           );
+          if(data.notificationMetaData){
+            setNotifications((prev) => [...prev,data.notificationMetaData]);
+          }
           
-          const response = await addNotifications(data.message,data.time)
+          // const response = await addNotifications(data.message,data.time)
          
-          if(response.data){
-            setNotifications((prev) => [...prev,response?.data]);
-          }
-          if(response.error){
-            toast.error(`${response.error}`,{
-              closeButton:true,
-              position:"top-center"
-            })
-          }
+          // if(response.data){
+          //   setNotifications((prev) => [...prev,response?.data]);
+          // }
+          // if(response.error){
+          //   toast.error(`${response.error}`,{
+          //     closeButton:true,
+          //     position:"top-center"
+          //   })
+          // }
         }
       };
     }
