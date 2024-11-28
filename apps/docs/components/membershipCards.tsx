@@ -10,6 +10,9 @@ import { useWebSocket } from "@/context/socketContext";
 import { usePathname } from "next/navigation";
 import { ChoosePlan } from "./choosePlan";
 import { addNotifications } from "@/actions/addNotifications";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { warningNotificationsState } from "@/states/notifications";
 
 export function MembershipCard({
   id,
@@ -26,6 +29,9 @@ export function MembershipCard({
   const isUser = url.startsWith("/user/");
   console.log("is user", isUser);
 
+  const [warningNotification, setWarningNotifications] = useRecoilState(
+    warningNotificationsState
+  );
   const { sendMessage, user } = useWebSocket();
 
   async function handleChoosePlan() {
@@ -33,20 +39,31 @@ export function MembershipCard({
     console.log(gymId);
     const response = await joinMembership(id, gymId);
     if (response.data) {
+      if (response.warningNotifications.length > 0) {
+        const resolvedIds = new Set(
+          response.warningNotifications.map((n) => n.id)
+        );
+        setWarningNotifications((prev) =>
+          prev.filter((data) => !resolvedIds.has(data.id))
+        );
+      }
       let message = `${user?.name} with Id ${user?.id} joined at ${response.gymDetails.name}`;
-     const {data}= await addNotifications(message, new Date(), response.gymDetails.ownerId);
+      const { data } = await addNotifications(
+        message,
+        new Date(),
+        response.gymDetails.ownerId
+      );
       sendMessage("membership-purchased", {
         userId: user?.id,
         userName: user?.name,
         gymId: gymId,
         gymName: response.gymDetails.name,
-        notificationMetaData:data
+        notificationMetaData: data,
       });
       toast.success("Membership sucessfully purchased", {
         closeButton: true,
         position: "top-center",
       });
-     
     } else {
       toast.error(`${response.error}`, {
         closeButton: true,
@@ -64,7 +81,7 @@ export function MembershipCard({
   const getGifUrl = (index: any) => gifUrls[index % gifUrls.length];
   const gifUrl = getGifUrl(index);
   const activeMembership = membershipUserDetails?.find(
-    (details) => details.membershipId === id && details.expired===false
+    (details) => details.membershipId === id && details.expired === false
   );
   console.log(activeMembership);
 

@@ -10,6 +10,16 @@ export const membershipExpiryWarning = async (data: any) => {
     const addMonths = originalDate.clone().add(monthsToSubtract, "months");
 
     const differenceInDays = addMonths.diff(moment(), "days");
+    const checkIfActiveMembershipOfThisGymExists = await prisma.userMembership.findFirst({
+      where:{
+        userId:Number(userMembership.userId),
+        gymId:userMembership.gymId,
+        expired:false
+      }
+    })
+    if(checkIfActiveMembershipOfThisGymExists){
+      return
+    }
     if (0 < differenceInDays && differenceInDays <= 5) {
       const warningMessage = `Your membership at ${userMembership.gym.name} expiring in ${differenceInDays} days`;
 
@@ -42,6 +52,7 @@ export const membershipExpiryWarning = async (data: any) => {
         }
       }
     } else if (differenceInDays <= 0) {
+      console.log("Diff",differenceInDays)
       const warningMessage = `Your membership at ${userMembership.gym.name} has been expired`;
 
       const checkIfWarningExists = await prisma.warningNotifications.findFirst({

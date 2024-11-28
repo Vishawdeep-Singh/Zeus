@@ -12,6 +12,7 @@ import { updateNotifications } from "@/actions/updateNotifications";
 import { toast } from "sonner";
 import MultiAvatar from "./Multiavatar";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export const UserNotifications = ({name}:{name:string}) => {
 
@@ -76,10 +77,12 @@ export const UserNotifications = ({name}:{name:string}) => {
                 <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 text-primary-foreground rounded-full flex items-center justify-center font-semibold">
                      <TriangleAlert color="yellow"></TriangleAlert>
                     </div>
-                    <div className="flex-grow bg-yellow-400 text-center p-2 rounded-lg">
+                    <div className="flex-grow bg-yellow-400 space-y-2 text-center p-2 rounded-lg">
                       <p className="text-sm">{warningNotification.message}</p>
+                    <Link className="border-0" target="_blank" href={`/user/view/${warningNotification.gymId}`}>  <Button className="bg-green-500 hover:bg-green-700">Renew</Button></Link>
                       {/* <p className="text-xs text-muted-foreground mt-1">{notification}</p> */}
                     </div>
+                   
                 </li>
                })}
                 {unreadNotifications.length>0 && unreadNotifications.map((notification, index) => (

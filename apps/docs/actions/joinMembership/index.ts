@@ -16,17 +16,42 @@ try {
           expired: false, // Ensure we only check for active memberships
         },
       });
+
+    
   
       if (activeMembership) {
         return { error: "You already have an active membership at this gym" };
       }
+      const activeWarningAboutThisGym = await prisma.warningNotifications.findMany({
+        where:{
+            userId:Number(session?.user.id),
+            gymId,
+            resolved:false
+        },
+        select:{
+            id:true
+        }
+      })
+      
+      
     const [membership, gym] = await prisma.$transaction([
-        prisma.userMembership.create({
-            data: {
+        prisma.userMembership.upsert({
+            where:{
+                userId_membershipId:{
+                    userId:Number(session?.user.id),
+                    membershipId
+                }
+            },
+            update:{
+                expired:false,
+                dateJoined:new Date()
+            },
+            create: {
                 userId: Number(session?.user.id),
                 membershipId,
                 gymId,
                 dateJoined: new Date(),
+                expired:false
             },
         }),
         prisma.gym.update({
@@ -41,9 +66,29 @@ try {
                 ownerId:true
             }
         }),
-    ])
 
-    return { data: membership,gymDetails:gym }
+    ])
+    if (activeWarningAboutThisGym.length > 0) {
+        try {
+          await Promise.all(
+            activeWarningAboutThisGym.map((warningNotificationsData) => {
+              return prisma.warningNotifications.update({
+                where: {
+                  id: warningNotificationsData.id,
+                },
+                data: {
+                  resolved: true,
+                },
+              });
+            })
+          );
+          console.log("All warnings resolved successfully.");
+        } catch (error) {
+          console.error("Failed to resolve some warnings:", error);
+        }
+      }
+
+    return { data: membership,gymDetails:gym,warningNotifications:activeWarningAboutThisGym }
 } catch (error:any) {
      console.log(error)
     if (error.code === 'P2002') { // Prisma unique constraint violation error
