@@ -16,7 +16,8 @@ async function getMembership(id:string,gymId:string){
          },
          select:{
             membershipId:true,
-            userId:true
+            userId:true,
+            expired:true
          }
      })
      console.log("Inside User View",response)

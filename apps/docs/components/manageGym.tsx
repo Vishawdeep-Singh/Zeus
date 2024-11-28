@@ -10,7 +10,7 @@ import CardDemo from "./blocks/cards-demo-1";
 import { MembershipCard } from "./membershipCards";
 import { MembersofGym } from "./membersOfGym";
 import { ManageGymHero } from "./manageGymsHero";
-export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gymDetails: Gym,role:string,gymId:string,membershipUserDetails?:{membershipId:string,userId:number}[]}) => {
+export const ManageGym = ({ gymDetails,role,gymId,membershipUserDetails }: { gymDetails: Gym,role:string,gymId:string,membershipUserDetails?:{membershipId:string,userId:number,expired:Boolean}[]}) => {
   console.log("Inside Manage Gym",gymDetails);
   
   return (

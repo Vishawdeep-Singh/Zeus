@@ -9,6 +9,17 @@ export async function joinMembership(membershipId:string,gymId:string){
     const session = await getServerSession(authOptions)
     console.log(session?.user.id)
 try {
+    const activeMembership = await prisma.userMembership.findFirst({
+        where: {
+          userId:Number(session?.user.id),
+          gymId,
+          expired: false, // Ensure we only check for active memberships
+        },
+      });
+  
+      if (activeMembership) {
+        return { error: "You already have an active membership at this gym" };
+      }
     const [membership, gym] = await prisma.$transaction([
         prisma.userMembership.create({
             data: {

@@ -61,7 +61,7 @@ export const membershipExpiryConversion = (data: Gym1) => {
       const expirationDate = new Date(dateJoined);
       expirationDate.setMonth(expirationDate.getMonth() + membershipDuration);
 
-      const isExpired = new Date() < expirationDate;
+      const isExpired = new Date() > expirationDate;
       return isExpired;
     })
     .map((obj3) => {

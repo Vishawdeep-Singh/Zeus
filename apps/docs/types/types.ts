@@ -72,7 +72,7 @@ export type SignUp = {
     color:string,
     index:number,
     gymId:string,
-    membershipUserDetails: {membershipId:string , userId:number}[] | undefined
+    membershipUserDetails: {membershipId:string , userId:number , expired:Boolean}[] | undefined
   };
 
   export type Member = {

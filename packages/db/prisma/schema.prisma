@@ -77,8 +77,8 @@ model UserMembership {
   user          User       @relation(fields: [userId], references: [id])
   membership    Membership @relation(fields: [membershipId], references: [id])
   gym           Gym        @relation(fields: [gymId], references: [id])
+  expired      Boolean @default(false)
    @@id([userId, membershipId]) // Composite primary key
-   @@unique([userId,gymId])
 }
 
 model Attendance {
