@@ -58,7 +58,11 @@ export default async function({params}:{params:{id:string}}){
         </div>
     }
     
-    return <div className="space-y-5 p-4 h-screen overflow-auto ">
+    return <div className="space-y-5 p-4 h-screen overflow-auto [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-transparent
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
     <div className="animate-slide-up">
         <ManageGym role={"user"} membershipUserDetails={membershipUserDetails.data} gymDetails={gymsDetails.data as Gym} gymId={params.id}></ManageGym>
     </div>

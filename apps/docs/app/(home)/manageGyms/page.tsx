@@ -54,7 +54,11 @@ export default async function () {
   }
 
   return (
-    <div className="h-screen space-y-5 p-4 overflow-auto ">
+    <div className="h-screen space-y-5 p-4 overflow-auto [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-transparent
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
       <Navbar title={"Manage Gyms"}></Navbar>
       <Suspense fallback={<Loading></Loading>}>
         <GetGyms ownerId={session.user.id}></GetGyms>
