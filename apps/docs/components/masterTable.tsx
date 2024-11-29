@@ -212,7 +212,7 @@ export function MasterTable({
   membersData: MasterTableMember[];
   ownedGyms: { gymId: string; gymName: string }[];
 }) {
-  const router = useRouter()
+  const router = useRouter();
   console.log("Master table member data", membersData);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setGymFilter] = useRecoilState(GymFilterState);
@@ -290,11 +290,13 @@ export function MasterTable({
               placeholder=" Name"
             />
           </div>
-          <div className="max-h-96 overflow-y-auto [&::-webkit-scrollbar]:w-2
+          <div
+            className="max-h-96 overflow-y-auto [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
   [&::-webkit-scrollbar-thumb]:bg-gray-300
   [&::-webkit-scrollbar-thumb]:rounded-full
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+          >
             <Table className="">
               <TableHeader>
                 <TableRow>
@@ -305,24 +307,32 @@ export function MasterTable({
                   <TableHead>Gym Name</TableHead>
                   <TableHead>Memberhsip Duration</TableHead>
                   <TableHead>Days Left</TableHead>
-                  {dateFilter && <TableHead>Date</TableHead>}
+                  {dateFilter && <TableHead>Attendance Dates</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody className="font-medium">
                 {nameFilteredMembers &&
-                  nameFilteredMembers.map((member, i) =>  (
-                      <TableRow  onClick={()=>{
-                        router.push(`profile?userId=${member.id}`)
-                      }} className="hover:bg-gray-200 cursor-pointer" key={i}>
-                        <TableCell>{member.id}</TableCell>
-                        <TableCell>{member.name}</TableCell>
-                        <TableCell>{member.email}</TableCell>
-                        <TableCell>{member.phone}</TableCell>
-                        <TableCell>{member.gymName}</TableCell>
-                        <TableCell>{member.membershipDuration}</TableCell>
-                        <TableCell>{member.daysLeft}</TableCell>
-                        {dateFilter && <TableCell><AttendanceDropDown attendances={member.attendance} /></TableCell>}
-                      </TableRow>
+                  nameFilteredMembers.map((member, i) => (
+                    <TableRow
+                      onClick={() => {
+                        router.push(`profile?userId=${member.id}`);
+                      }}
+                      className="hover:bg-gray-200 cursor-pointer"
+                      key={i}
+                    >
+                      <TableCell>{member.id}</TableCell>
+                      <TableCell>{member.name}</TableCell>
+                      <TableCell>{member.email}</TableCell>
+                      <TableCell>{member.phone}</TableCell>
+                      <TableCell>{member.gymName}</TableCell>
+                      <TableCell>{member.membershipDuration}</TableCell>
+                      <TableCell>{member.daysLeft}</TableCell>
+                      {dateFilter && (
+                        <TableCell className="z-50">
+                          <AttendanceDropDown attendances={member.attendance} />
+                        </TableCell>
+                      )}
+                    </TableRow>
                   ))}
               </TableBody>
             </Table>
