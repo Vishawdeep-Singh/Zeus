@@ -11,9 +11,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import MultiAvatar from "./Multiavatar";
 import Image from "next/image";
+import Link from "next/link";
 
 export async function MembersofGym({ membersDetails, owner }: any) {
-  const session =await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
   console.log("Inside members of gym", membersDetails);
   return (
     <div className=" h-96 w-full mx-auto overflow-y-auto bg-transparent border-none bg-opacity-100 shadow-sm hover:border hover:shadow-2xl hover:shadow-primary/30  hover:scale-105 transition-all  duration-300 hover:bg-white rounded-xl border p-4">
@@ -40,8 +41,7 @@ export async function MembersofGym({ membersDetails, owner }: any) {
             <Popover key={i}>
               <PopoverTrigger>
                 <div className=" p-5 flex rounded-lg text-lg hover:bg-slate-50 space-x-5 items-center">
-                {session?.user.provider === "google" ? (
-             
+                  {session?.user.provider === "google" ? (
                     <Image
                       src={session.user.image as string}
                       className="h-7 w-7 flex-shrink-0 rounded-full"
@@ -49,21 +49,18 @@ export async function MembersofGym({ membersDetails, owner }: any) {
                       height={50}
                       alt="Avatar"
                     />
-                 
-            ) : (
-             
+                  ) : (
                     <MultiAvatar
                       name={member.name as string}
                       className="h-12 w-12"
                     ></MultiAvatar>
-                
-             
-            )}
+                  )}
                   <div>
-                  <p>{member.name}</p>
-                  {member.id == owner && <p className="text-sm text-start">Gym owner</p>}
+                    <p>{member.name}</p>
+                    {member.id == owner && (
+                      <p className="text-sm text-start">Gym owner</p>
+                    )}
                   </div>
-                  
                 </div>
               </PopoverTrigger>
 
@@ -73,7 +70,20 @@ export async function MembersofGym({ membersDetails, owner }: any) {
                   <div className="flex justify-between items-center">
                     {/* Profile section */}
                     <div className="flex items-center space-x-3">
-                      <div className="h-10 w-10 bg-black rounded-full flex-shrink-0"></div>
+                      {session?.user.provider === "google" ? (
+                        <Image
+                          src={session.user.image as string}
+                          className="h-7 w-7 flex-shrink-0 rounded-full"
+                          width={50}
+                          height={50}
+                          alt="Avatar"
+                        />
+                      ) : (
+                        <MultiAvatar
+                          name={member.name as string}
+                          className="h-12 w-12"
+                        ></MultiAvatar>
+                      )}
                       <div className="text-sm font-semibold text-gray-800">
                         {member.name}
                       </div>
@@ -110,6 +120,7 @@ export async function MembersofGym({ membersDetails, owner }: any) {
                       {member.memberships?.[0].membership.price}
                     </div>
                   </div>
+                  <Link href={`/profile?userId=${member.id}`}><Button>View Profile</Button></Link>
                 </div>
               </PopoverContent>
             </Popover>

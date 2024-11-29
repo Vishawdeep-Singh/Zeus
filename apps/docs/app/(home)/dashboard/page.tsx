@@ -84,6 +84,7 @@ select: {
                 gymId:true,
                 membershipId:true,
                 dateJoined:true,
+                expired:true,
                 membership:{
                   select:{
                     duration:true

@@ -20,6 +20,7 @@ import { GymsData, MasterTableMember } from "@/types/types";
 import BeatLoader from "react-spinners/BeatLoader";
 import { checkIfItLiesInRange } from "@/lib/helper";
 import { AttendanceDropDown } from "./AttendaceDropDown";
+import { useRouter } from "next/navigation";
 
 // const membersData = [
 //   {
@@ -211,6 +212,7 @@ export function MasterTable({
   membersData: MasterTableMember[];
   ownedGyms: { gymId: string; gymName: string }[];
 }) {
+  const router = useRouter()
   console.log("Master table member data", membersData);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setGymFilter] = useRecoilState(GymFilterState);
@@ -309,7 +311,9 @@ export function MasterTable({
               <TableBody className="font-medium">
                 {nameFilteredMembers &&
                   nameFilteredMembers.map((member, i) =>  (
-                      <TableRow key={i}>
+                      <TableRow  onClick={()=>{
+                        router.push(`profile?userId=${member.id}`)
+                      }} className="hover:bg-gray-200 cursor-pointer" key={i}>
                         <TableCell>{member.id}</TableCell>
                         <TableCell>{member.name}</TableCell>
                         <TableCell>{member.email}</TableCell>

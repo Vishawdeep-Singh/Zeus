@@ -17,12 +17,11 @@ export const masterTableDataConversion = async (gymsData: GymsData) => {
       let attendance = member.attendance
         .filter((attend) => gym.id === attend.gymId)
         .map((attend) => attend.date);
-      let duration = member.memberships.find((m) => m.gymId === gym.id)
-        ?.membership.duration;
-
-      let dateJoined = member.memberships.find(
-        (m) => m.gymId === gym.id
-      )?.dateJoined;
+      let userMemberships = member.memberships.find((m) => m.gymId === gym.id && m.expired===false)
+        ;
+    
+      let duration = userMemberships?.membership.duration
+      let dateJoined = userMemberships?.dateJoined;
 
       const originalDate = moment(dateJoined);
 
@@ -37,7 +36,7 @@ export const masterTableDataConversion = async (gymsData: GymsData) => {
         phone: member.cellPh,
         gymName: gym.name,
         membershipDuration: duration,
-        daysLeft: differenceInDays,
+        daysLeft: differenceInDays <=0 ? "Expired":differenceInDays,
         attendance: attendance,
       };
     });

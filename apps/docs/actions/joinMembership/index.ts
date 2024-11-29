@@ -13,7 +13,7 @@ try {
         where: {
           userId:Number(session?.user.id),
           gymId,
-          expired: false, // Ensure we only check for active memberships
+          expired: false,
         },
       });
 
@@ -35,6 +35,13 @@ try {
       
       
     const [membership, gym] = await prisma.$transaction([
+        prisma.userMembership.deleteMany({
+            where: {
+              userId: Number(session?.user.id),
+              gymId,
+              expired: true,
+            },
+          }),
         prisma.userMembership.upsert({
             where:{
                 userId_membershipId:{

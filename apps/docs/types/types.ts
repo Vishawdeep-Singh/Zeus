@@ -115,18 +115,19 @@ export type SignUp = {
     id: string;
     gymId: string;
     userId: number;
-    date: string; // Consider using Date if these strings will be parsed into dates
-    time: string; // Same consideration for time if needed
+    date: string;
+    time: string; 
   }
   
   interface Membership1 {
     gymId: string;
     membershipId: string;
     dateJoined: string;
+    expired:Boolean;
     membership: {
       duration: number;
     };
-    // Consider Date if it will be parsed
+  
   }
   
   interface Member1 {
@@ -144,14 +145,14 @@ export type SignUp = {
     members: Member1[];
   }
   export interface MasterTableMember {
-    id: number;              // Unique identifier for the member
-    name: string;            // Member's name
-    email: string;           // Member's email address
-    phone: string;           // Member's phone number (note: "phonw" might be a typo for "phone")
-    gymName: string;         // Name of the gym the member is associated with
-    membershipDuration: number; // Duration of membership in months
+    id: number;             
+    name: string;            
+    email: string;           
+    phone: string;           
+    gymName: string;         
+    membershipDuration: number; 
     daysLeft: number;    
-    attendance:string[]    // Number of days left in the membership
+    attendance:string[]   
   }
   export type GymsData = Gym1[];
  

@@ -13,6 +13,7 @@ import {
   Calendar,
 } from "lucide-react";
 import moment from "moment";
+import MultiAvatar from "./Multiavatar";
 
 // const generateAttendanceData = () => {
 //   const today = new Date()
@@ -142,11 +143,8 @@ export default function ProfilePage({ userProfileInfo }: any) {
         <CardHeader className="relative p-6 bg-gray-200 dark:bg-gray-800">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Avatar className="w-24 h-24 border-4 border-white dark:border-gray-900 shadow-md">
-              <AvatarImage
-                src={`https://api.multiavatar.com/${userProfileInfo.name}.png`}
-                alt="User"
-              />
-              <AvatarFallback>JD</AvatarFallback>
+             <MultiAvatar className="h-full w-full" name={userProfileInfo.name}></MultiAvatar>
+             
             </Avatar>
             <div className="flex-grow text-center sm:text-left">
               <CardTitle className="text-3xl font-bold mb-1 text-black dark:text-white">
@@ -233,7 +231,7 @@ export default function ProfilePage({ userProfileInfo }: any) {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <h3 className="text-xl font-semibold mb-4 text-black dark:text-white flex items-center">
               <Trophy className="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" />
               Stats
@@ -260,7 +258,7 @@ export default function ProfilePage({ userProfileInfo }: any) {
                 </CardContent>
               </Card>
             </div>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>
