@@ -80,9 +80,10 @@ export function MembershipCard({
 
   const getGifUrl = (index: any) => gifUrls[index % gifUrls.length];
   const gifUrl = getGifUrl(index);
-  const activeMembership = membershipUserDetails?.find(
-    (details) => details.membershipId === id && details.expired === false
-  );
+  const activeMembership =
+    membershipUserDetails?.find(
+      (details) => details.membershipId === id && details.expired === false
+    ) || false;
   console.log(activeMembership);
 
   return (
