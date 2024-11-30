@@ -17,8 +17,7 @@ export const connectionErrorState = atom({
   default: false,
 });
 
-
 export const loadingState = atom<boolean>({
-    key: 'loadingState',
-    default: true,
-  });
+  key: 'loadingState',
+  default: true,
+});

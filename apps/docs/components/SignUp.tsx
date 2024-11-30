@@ -1,7 +1,7 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -9,35 +9,35 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useState } from "react";
-import { LoaderCircle, Zap } from "lucide-react";
-import { Dumbbell } from "lucide-react";
-import { motion } from "framer-motion";
-import { SignUp } from "@/types/types";
-import { FlipWords } from "./ui/flip-words";
-import { signup } from "@/actions/signup/signup";
-import { Signin } from "./SignIn";
-import { signIn } from "next-auth/react";
-import { toast } from "sonner";
-import { generateOTP } from "@/actions/generateOTP/generateOtp";
-import { SendMail } from "@/actions/sendMail/mailer";
-import { useRouter } from "next/navigation";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { formDataAtom } from "@/states/signUpForm";
-import { signUpSchema } from "@/types/validations";
-import { checkEmailExists } from "@/actions/checkEmail";
+} from '@/components/ui/card';
+import { useState } from 'react';
+import { LoaderCircle, Zap } from 'lucide-react';
+import { Dumbbell } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { SignUp } from '@/types/types';
+import { FlipWords } from './ui/flip-words';
+import { signup } from '@/actions/signup/signup';
+import { Signin } from './SignIn';
+import { signIn } from 'next-auth/react';
+import { toast } from 'sonner';
+import { generateOTP } from '@/actions/generateOTP/generateOtp';
+import { SendMail } from '@/actions/sendMail/mailer';
+import { useRouter } from 'next/navigation';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { formDataAtom } from '@/states/signUpForm';
+import { signUpSchema } from '@/types/validations';
+import { checkEmailExists } from '@/actions/checkEmail';
 
 export const Signup = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useRecoilState(formDataAtom);
   const router = useRouter();
   const words = [
-    "Effortless Membership Tracking",
-    "Seamless Billing",
-    "User-Friendly Dashboard",
-    "Time-Saving Admin Tools",
-    "Performance Analytics",
+    'Effortless Membership Tracking',
+    'Seamless Billing',
+    'User-Friendly Dashboard',
+    'Time-Saving Admin Tools',
+    'Performance Analytics',
   ];
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -46,23 +46,23 @@ export const Signup = () => {
     const result = signUpSchema.safeParse(formData);
     const isEmailExists = await checkEmailExists(formData.email);
 
-    localStorage.setItem("formData", JSON.stringify(formData));
+    localStorage.setItem('formData', JSON.stringify(formData));
 
     if (result.success) {
       if (isEmailExists.data) {
         setLoading(false);
         toast.error(`Email Already Exists ! Sign In `, {
           closeButton: true,
-          position: "bottom-center",
+          position: 'bottom-center',
         });
       } else {
         const otpresponse = await generateOTP(formData.email);
-        localStorage.setItem("fromSignup", "true");
+        localStorage.setItem('fromSignup', 'true');
         if (otpresponse.data) {
           const sendmail = await SendMail({
             reciepientEmail: formData.email,
             otp: otpresponse.data.otp as string,
-            expiresAt: "30",
+            expiresAt: '30',
           });
 
           if (sendmail.success) {
@@ -88,7 +88,7 @@ export const Signup = () => {
 
       for (const field in errors) {
         console.log(field);
-        toast.error(`${field} : ${errors[field]?.join(",")}`, {
+        toast.error(`${field} : ${errors[field]?.join(',')}`, {
           closeButton: true,
         });
       }
@@ -113,7 +113,7 @@ export const Signup = () => {
         className="flex flex-col items-center space-y-10 justify-center min-h-screen"
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
       >
         <div className="flex items-center space-x-6">
           <Zap className="" fill="black" size={60} />
@@ -137,9 +137,9 @@ export const Signup = () => {
                 <Button
                   className="w-32"
                   onClick={async () => {
-                    await signIn("google", {
+                    await signIn('google', {
                       redirect: false,
-                      callbackUrl: "/user",
+                      callbackUrl: '/user',
                     });
                   }}
                   variant="outline"
@@ -218,7 +218,7 @@ export const Signup = () => {
             </CardContent>
             <CardFooter className="flex justify-center">
               <p className=" text-md text-muted-foreground">
-                Already a user ?{" "}
+                Already a user ?{' '}
                 <a
                   href="/signin"
                   className="underline underline-offset-4 hover:text-primary"

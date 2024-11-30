@@ -1,6 +1,6 @@
-"use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+'use client';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -8,19 +8,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Search, CalendarCheck } from "lucide-react";
-import { DatePicker } from "./datePicker";
-import { SelectGyms } from "./gymSelector";
-import { useEffect, useState } from "react";
-import { dateRange, GymFilterState } from "@/states/filters";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { GymsData, MasterTableMember } from "@/types/types";
-import BeatLoader from "react-spinners/BeatLoader";
-import { checkIfItLiesInRange } from "@/lib/helper";
-import { AttendanceDropDown } from "./AttendaceDropDown";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Search, CalendarCheck } from 'lucide-react';
+import { DatePicker } from './datePicker';
+import { SelectGyms } from './gymSelector';
+import { useEffect, useState } from 'react';
+import { dateRange, GymFilterState } from '@/states/filters';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { GymsData, MasterTableMember } from '@/types/types';
+import BeatLoader from 'react-spinners/BeatLoader';
+import { checkIfItLiesInRange } from '@/lib/helper';
+import { AttendanceDropDown } from './AttendaceDropDown';
+import { useRouter } from 'next/navigation';
 
 // const membersData = [
 //   {
@@ -213,8 +213,8 @@ export function MasterTable({
   ownedGyms: { gymId: string; gymName: string }[];
 }) {
   const router = useRouter();
-  console.log("Master table member data", membersData);
-  const [searchTerm, setSearchTerm] = useState("");
+  console.log('Master table member data', membersData);
+  const [searchTerm, setSearchTerm] = useState('');
   const [filter, setGymFilter] = useRecoilState(GymFilterState);
   const dateFilter = useRecoilValue(dateRange);
   const [dateFilteredData, setDateFilteredData] = useState<
@@ -238,7 +238,7 @@ export function MasterTable({
     const filteredMembers = dateToFilter.filter((member) => {
       // Optimised (ChatGPT version)
       const isGymMatch =
-        filter && filter !== "null"
+        filter && filter !== 'null'
           ? member.gymName.toLowerCase().includes(filter.toLowerCase())
           : true;
       const isNameMatch = member.name

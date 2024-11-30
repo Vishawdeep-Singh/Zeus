@@ -1,42 +1,43 @@
-import { Navbar } from "@/components/Navbar";
-import { Button } from "@/components/ui/button";
-import { authOptions } from "@/lib/auth";
-import { SendMail } from "@/actions/sendMail/mailer";
-import { getServerSession } from "next-auth";
-import { notFound, redirect } from "next/navigation";
-import { TabsDemo } from "@/components/demoTabs";
-import Component3 from "@/components/membershipExpiry";
-import { Component1 } from "@/components/revenueMonths";
-import { Component2 } from "@/components/todayAttendance";
-import Component from "@/components/attendanceWeeks";
-import prisma from "@repo/db/client";
-import { masterTableDataConversion, onwerGymsConversion } from "@/lib/helper";
-import { toast } from "sonner";
-import { GymsData } from "@/types/types";
-import React from "react";
+import { Navbar } from '@/components/Navbar';
+import { Button } from '@/components/ui/button';
+import { authOptions } from '@/lib/auth';
+import { SendMail } from '@/actions/sendMail/mailer';
+import { getServerSession } from 'next-auth';
+import { notFound, redirect } from 'next/navigation';
+import { TabsDemo } from '@/components/demoTabs';
+import Component3 from '@/components/membershipExpiry';
+import { Component1 } from '@/components/revenueMonths';
+import { Component2 } from '@/components/todayAttendance';
+import Component from '@/components/attendanceWeeks';
+import prisma from '@repo/db/client';
+import { masterTableDataConversion, onwerGymsConversion } from '@/lib/helper';
+import { toast } from 'sonner';
+import { GymsData } from '@/types/types';
+import React from 'react';
 
 export default async function () {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
-    redirect("/signin");
+    redirect('/signin');
   }
   const response = await getMembersOfAllGym(session.user.id);
-  if(response.error){
-    toast.error(`${response.data}`,{
-      closeButton:true,
-      position:"top-center"
-    })
+  if (response.error) {
+    toast.error(`${response.data}`, {
+      closeButton: true,
+      position: 'top-center',
+    });
   }
 
-
   return (
-    <div className="h-screen space-y-5 p-4 overflow-auto [&::-webkit-scrollbar]:w-2
+    <div
+      className="h-screen space-y-5 p-4 overflow-auto [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
   [&::-webkit-scrollbar-thumb]:bg-gray-300
   [&::-webkit-scrollbar-thumb]:rounded-full
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+    >
       <div>
-        <Navbar title={"Dashboard"}></Navbar>
+        <Navbar title={'Dashboard'}></Navbar>
       </div>
 
       <div>
@@ -55,7 +56,11 @@ export default async function () {
 
 
         </div> */}
-        <TabsDemo membershipExpiry={response.memberhshipExpiry} masterTableData={response.data} ownedGyms={response.ownedGyms}></TabsDemo>
+        <TabsDemo
+          membershipExpiry={response.memberhshipExpiry}
+          masterTableData={response.data}
+          ownedGyms={response.ownedGyms}
+        ></TabsDemo>
       </div>
       <div></div>
     </div>
@@ -68,9 +73,9 @@ async function getMembersOfAllGym(userId: string) {
     }
     const response = await prisma.gym.findMany({
       where: {
-        ownerId:Number(userId),
+        ownerId: Number(userId),
       },
-select: {
+      select: {
         id: true,
         name: true,
         members: {
@@ -80,17 +85,17 @@ select: {
             email: true,
             cellPh: true,
             memberships: {
-              select:{
-                gymId:true,
-                membershipId:true,
-                dateJoined:true,
-                expired:true,
-                membership:{
-                  select:{
-                    duration:true
-                  }
-                }
-              }
+              select: {
+                gymId: true,
+                membershipId: true,
+                dateJoined: true,
+                expired: true,
+                membership: {
+                  select: {
+                    duration: true,
+                  },
+                },
+              },
             },
             attendance: true,
           },
@@ -99,15 +104,14 @@ select: {
     });
 
     console.log(JSON.stringify(response, null, 2));
-    const memberhshipExpiry = response
-   const strucutedData= await masterTableDataConversion(response)
-   const ownedGyms = await onwerGymsConversion(response)
-   console.log("Ow",ownedGyms)
-   
-   return {data:strucutedData,ownedGyms,memberhshipExpiry}
+    const memberhshipExpiry = response;
+    const strucutedData = await masterTableDataConversion(response);
+    const ownedGyms = await onwerGymsConversion(response);
+    console.log('Ow', ownedGyms);
+
+    return { data: strucutedData, ownedGyms, memberhshipExpiry };
   } catch (error: any) {
     console.error(error.message);
-    return {error:"Not able to get Dashboard Data at the moment"}
+    return { error: 'Not able to get Dashboard Data at the moment' };
   }
 }
-

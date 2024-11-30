@@ -1,29 +1,29 @@
-import db from "@repo/db/client";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
-import GoogleProvider from "next-auth/providers/google";
-import { NextAuthOptions, User } from "next-auth";
-import { JWT } from "next-auth/jwt";
-import jwt from "jsonwebtoken";
-import { Credentials } from "../types/types";
-import prisma from "@repo/db/client";
-import { toast } from "sonner";
+import db from '@repo/db/client';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcrypt';
+import GoogleProvider from 'next-auth/providers/google';
+import { NextAuthOptions, User } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
+import jwt from 'jsonwebtoken';
+import { Credentials } from '../types/types';
+import prisma from '@repo/db/client';
+import { toast } from 'sonner';
 
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         email: {
-          label: "Email Address",
-          type: "email",
-          placeholder: "example@example.com",
+          label: 'Email Address',
+          type: 'email',
+          placeholder: 'example@example.com',
         },
-        password: { label: "Password", type: "password" },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials: any) {
         // console.log(credentials);
@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
 
         if (existingUser) {
           console.log(existingUser.email);
-      
+
           const passwordValidation = await bcrypt.compare(
             credentials.password,
             existingUser.password as string
@@ -67,36 +67,32 @@ export const authOptions: NextAuthOptions = {
         path: '/',
         httpOnly: true,
         sameSite: 'lax', // Adjust as per your app's requirements
-        secure: process.env.NODE_ENV === "production", // Secure in production
+        secure: process.env.NODE_ENV === 'production', // Secure in production
       },
     },
   },
-  
-  
-  
 
-  secret: process.env.JWT_SECRET || "secret",
-  session:{
-    strategy:"jwt"
+  secret: process.env.JWT_SECRET || 'secret',
+  session: {
+    strategy: 'jwt',
   },
 
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser,trigger ,session}) {
-     
-      if (account?.provider === "google") {
+    async jwt({ token, user, account, profile, isNewUser, trigger, session }) {
+      if (account?.provider === 'google') {
         const googleuser = await prisma.user.findUnique({
           where: {
             email: profile?.email,
           },
           select: {
             id: true,
-            roles:true
+            roles: true,
           },
         });
 
         console.log(user);
         console.log(profile);
-        token.provider = "google";
+        token.provider = 'google';
         token.sub = googleuser?.id.toString();
         token.email = profile?.email;
         token.name = profile?.name;
@@ -109,18 +105,17 @@ export const authOptions: NextAuthOptions = {
             id: Number(user.id),
           },
           select: {
-            roles:true
+            roles: true,
           },
         });
-        token.provider = "credentials";
+        token.provider = 'credentials';
         token.sub = user.id;
         token.name = user.name;
         token.email = user.email;
         token.number = user.number;
         token.role = credentialsuser?.roles;
       }
-      if (trigger === "update" && session) {
-       
+      if (trigger === 'update' && session) {
         token.role = session.user.role;
       }
 
@@ -129,7 +124,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token, user }) {
       console.log(token);
 
-      if (token.provider === "google") {
+      if (token.provider === 'google') {
         session.user = {
           id: token.sub as string,
           name: token.name as string,
@@ -154,17 +149,17 @@ export const authOptions: NextAuthOptions = {
     },
     async signIn({ user, account, profile, email, credentials }) {
       try {
-        if (account?.provider === "google") {
+        if (account?.provider === 'google') {
           const user = await prisma.user.findUnique({
             where: {
               email: profile?.email,
             },
           });
-          if (user?.provider === "credentials") {
-            toast.error("Email is Already in use", {
+          if (user?.provider === 'credentials') {
+            toast.error('Email is Already in use', {
               closeButton: true,
             });
-            console.log("gdfadsfasdfads");
+            console.log('gdfadsfasdfads');
             return false;
           }
           if (!user) {
@@ -172,8 +167,8 @@ export const authOptions: NextAuthOptions = {
               data: {
                 email: profile?.email as string,
                 name: profile?.name as string,
-                cellPh: "",
-                provider: "google",
+                cellPh: '',
+                provider: 'google',
               },
             });
           }
@@ -188,7 +183,7 @@ export const authOptions: NextAuthOptions = {
   },
 
   pages: {
-    signIn: "/signin",
-    error: "/error",
+    signIn: '/signin',
+    error: '/error',
   },
 };

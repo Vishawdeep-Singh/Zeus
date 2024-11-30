@@ -1,7 +1,7 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 import {
   Card,
@@ -10,30 +10,30 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useRef, useState } from "react";
-import { Check, LoaderCircle, Zap } from "lucide-react";
-import { Dumbbell } from "lucide-react";
-import { motion } from "framer-motion";
-import { SignIn } from "@/types/types";
-import { FlipWords } from "./ui/flip-words";
-import { signIn, signOut } from "next-auth/react";
-import { checkEmailExists } from "@/actions/checkEmail";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/card';
+import { useRef, useState } from 'react';
+import { Check, LoaderCircle, Zap } from 'lucide-react';
+import { Dumbbell } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { SignIn } from '@/types/types';
+import { FlipWords } from './ui/flip-words';
+import { signIn, signOut } from 'next-auth/react';
+import { checkEmailExists } from '@/actions/checkEmail';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export const Signin = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<SignIn>({
-    email: "",
+    email: '',
   });
   const words = [
-    "Effortless Membership Tracking",
-    "Seamless Billing",
-    "User-Friendly Dashboard",
-    "Time-Saving Admin Tools",
-    "Performance Analytics",
+    'Effortless Membership Tracking',
+    'Seamless Billing',
+    'User-Friendly Dashboard',
+    'Time-Saving Admin Tools',
+    'Performance Analytics',
   ];
   const [inputLoading, setInputLoading] = useState(false);
   const [inputError, setInputError] = useState<string | null>(null);
@@ -53,15 +53,13 @@ export const Signin = () => {
   async function checkEmail(value: string) {
     const response = await checkEmailExists(value);
     console.log(response);
-    if (response.data?.provider==="credentials") {
-      setInputError("ok");
+    if (response.data?.provider === 'credentials') {
+      setInputError('ok');
       setInputLoading(false);
-    } 
-    else if(response.data?.provider==="google"){
-      setInputError("This is your google email . Sign in with google");
+    } else if (response.data?.provider === 'google') {
+      setInputError('This is your google email . Sign in with google');
       setInputLoading(false);
-    }
-    else {
+    } else {
       setInputError(response.error as string);
       setInputLoading(false);
     }
@@ -70,20 +68,20 @@ export const Signin = () => {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    const response = await signIn("credentials", {
+    const response = await signIn('credentials', {
       email: formData.email,
       password: formData.password,
       redirect: false,
-      callbackUrl: "/user",
+      callbackUrl: '/user',
     });
     if (response?.ok) {
-      router.push("/user");
+      router.push('/user');
     }
     if (response?.error) {
-      toast.error("Password is wrong", {
+      toast.error('Password is wrong', {
         closeButton: true,
         duration: 10000,
-        position: "bottom-center",
+        position: 'bottom-center',
       });
     }
     console.log(response);
@@ -98,7 +96,7 @@ export const Signin = () => {
       ...prevData,
       [name]: value,
     }));
-    if (name === "email") debounceInput(value);
+    if (name === 'email') debounceInput(value);
   }
 
   return (
@@ -108,7 +106,7 @@ export const Signin = () => {
         className="flex flex-col items-center space-y-10 justify-center min-h-screen"
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
       >
         <div className="flex items-center space-x-6">
           <Zap className="" fill="black" size={60} />
@@ -132,9 +130,9 @@ export const Signin = () => {
                 <Button
                   className="w-32"
                   onClick={async () => {
-                    await signIn("google", {
+                    await signIn('google', {
                       redirect: false,
-                      callbackUrl: "/user",
+                      callbackUrl: '/user',
                     });
                   }}
                   variant="outline"
@@ -163,18 +161,19 @@ export const Signin = () => {
                       />
                     </div>
                   )}
-                  {inputError === "ok" && !inputLoading && (
+                  {inputError === 'ok' && !inputLoading && (
                     <div>
                       <Check color="green" className="h-4 w-4 mr-2"></Check>
                     </div>
                   )}
-                  {inputError === "Account does not exists" &&
+                  {inputError === 'Account does not exists' &&
                     !inputLoading && (
                       <div>
                         <p className="text-red-600">{inputError}</p>
                       </div>
                     )}
-                  {inputError === "This is you google email . Sign in with google" &&
+                  {inputError ===
+                    'This is you google email . Sign in with google' &&
                     !inputLoading && (
                       <div>
                         <p className="text-red-600">{inputError}</p>
@@ -200,7 +199,7 @@ export const Signin = () => {
                 <Button
                   className="w-full mt-4"
                   type="submit"
-                  disabled={loading || inputError!=="ok"}
+                  disabled={loading || inputError !== 'ok'}
                 >
                   {loading && (
                     <LoaderCircle
@@ -214,7 +213,7 @@ export const Signin = () => {
             </CardContent>
             <CardFooter className="flex justify-center">
               <p className=" text-md text-muted-foreground">
-                Not have an account ?{" "}
+                Not have an account ?{' '}
                 <a
                   href="/signup"
                   className="underline underline-offset-4 hover:text-primary"

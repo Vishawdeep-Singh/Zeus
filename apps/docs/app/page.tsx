@@ -1,13 +1,14 @@
-"use client"
-import Link from "next/link"
-import Image from "next/image"
-import { Dumbbell, Users, BarChart, ChevronRight, Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
+'use client';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Dumbbell, Users, BarChart, ChevronRight, Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+
 } from "@/components/ui/dropdown-menu"
 import AnimatedZeusImage from "./image1.png"
 import AnimatedZeusLogo from "./animated-zeus-logo"
@@ -19,6 +20,7 @@ import { StickyScrollRevealDemo } from "@/components/StickyScrollRevealDemo"
 
 export default function LandingPage() {
 
+
   return (
     <div className="flex flex-col min-h-screen [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
@@ -28,7 +30,9 @@ export default function LandingPage() {
       <header className="px-4 lg:px-6 h-16 flex items-center">
         <Link className="flex items-center justify-center" href="#">
           <AnimatedZeusLogo />
-          <span className="ml-2 text-2xl font-bold text-gray-900 dark:text-white">Zeus</span>
+          <span className="ml-2 text-2xl font-bold text-gray-900 dark:text-white">
+            Zeus
+          </span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <DropdownMenu>
@@ -58,6 +62,7 @@ export default function LandingPage() {
         </nav>
       </header>
       <main className="flex-1">
+
         <section>
           <LandingHero />
         </section>
@@ -66,39 +71,50 @@ export default function LandingPage() {
         </section>
         <section id="features" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Godly Features</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+              Godly Features
+            </h2>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               <div className="flex flex-col items-center space-y-2 border-gray-200 p-4 rounded-lg shadow-sm">
                 <Dumbbell className="h-12 w-12 text-yellow-500" />
                 <h3 className="text-xl font-bold">Olympian Workouts</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Access a vast library of workouts designed by professional trainers, fit for the gods themselves.
+                  Access a vast library of workouts designed by professional
+                  trainers, fit for the gods themselves.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-2 border-gray-200 p-4 rounded-lg shadow-sm">
                 <Users className="h-12 w-12 text-yellow-500" />
                 <h3 className="text-xl font-bold">Divine Community</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Connect with fellow demigods, share your progress, and motivate each other on your fitness quests.
+                  Connect with fellow demigods, share your progress, and
+                  motivate each other on your fitness quests.
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-2 border-gray-200 p-4 rounded-lg shadow-sm">
                 <BarChart className="h-12 w-12 text-yellow-500" />
-                <h3 className="text-xl font-bold">Immortal Progress Tracking</h3>
+                <h3 className="text-xl font-bold">
+                  Immortal Progress Tracking
+                </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  Monitor your gains with advanced analytics and visualizations worthy of Mount Olympus.
+                  Monitor your gains with advanced analytics and visualizations
+                  worthy of Mount Olympus.
                 </p>
               </div>
             </div>
           </div>
         </section>
+
         <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Join the Pantheon of Fitness</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Join the Pantheon of Fitness
+                </h2>
                 <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                  Embark on your legendary fitness journey with Zeus. Sign up now and transform yourself into a god among mortals.
+                  Embark on your legendary fitness journey with Zeus. Sign up
+                  now and transform yourself into a god among mortals.
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
@@ -109,10 +125,12 @@ export default function LandingPage() {
                     type="email"
                     required
                   />
-                  <Button type="submit" className="w-full">Ascend to Greatness</Button>
+                  <Button type="submit" className="w-full">
+                    Ascend to Greatness
+                  </Button>
                 </form>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  By signing up, you agree to our{" "}
+                  By signing up, you agree to our{' '}
                   <Link className="underline underline-offset-2" href="#">
                     Terms & Conditions
                   </Link>
@@ -123,7 +141,9 @@ export default function LandingPage() {
         </section>
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">© 2024 Zeus Fitness App. All rights reserved.</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          © 2024 Zeus Fitness App. All rights reserved.
+        </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link className="text-xs hover:underline underline-offset-4" href="#">
             Terms of Service
@@ -137,5 +157,5 @@ export default function LandingPage() {
         </nav>
       </footer>
     </div>
-  )
+  );
 }

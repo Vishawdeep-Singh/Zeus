@@ -1,14 +1,13 @@
-
 import {
   ExpiredMembers,
   Gym1,
   GymsData,
   MasterTableMember,
-} from "@/types/types";
-import prisma from "@repo/db/client";
-import moment from "moment";
-import { DateRange } from "react-day-picker";
-import { current } from "tailwindcss/colors";
+} from '@/types/types';
+import prisma from '@repo/db/client';
+import moment from 'moment';
+import { DateRange } from 'react-day-picker';
+import { current } from 'tailwindcss/colors';
 
 export const masterTableDataConversion = async (gymsData: GymsData) => {
   let newData;
@@ -17,18 +16,18 @@ export const masterTableDataConversion = async (gymsData: GymsData) => {
       let attendance = member.attendance
         .filter((attend) => gym.id === attend.gymId)
         .map((attend) => attend.date);
-      let userMemberships = member.memberships.find((m) => m.gymId === gym.id && m.expired===false)
-        ;
-    
-      let duration = userMemberships?.membership.duration
+      let userMemberships = member.memberships.find(
+        (m) => m.gymId === gym.id && m.expired === false
+      );
+      let duration = userMemberships?.membership.duration;
       let dateJoined = userMemberships?.dateJoined;
 
       const originalDate = moment(dateJoined);
 
       const monthsToSubtract = duration;
-      const addMonths = originalDate.clone().add(monthsToSubtract, "months");
+      const addMonths = originalDate.clone().add(monthsToSubtract, 'months');
 
-      const differenceInDays = addMonths.diff(moment(), "days");
+      const differenceInDays = addMonths.diff(moment(), 'days');
       return {
         id: member.id,
         name: member.name,
@@ -36,7 +35,7 @@ export const masterTableDataConversion = async (gymsData: GymsData) => {
         phone: member.cellPh,
         gymName: gym.name,
         membershipDuration: duration,
-        daysLeft: differenceInDays <=0 ? "Expired":differenceInDays,
+        daysLeft: differenceInDays <= 0 ? 'Expired' : differenceInDays,
         attendance: attendance,
       };
     });
@@ -117,6 +116,3 @@ export const checkIfItLiesInRange = (
 
   return membersExistBetweenDate;
 };
-
-
-

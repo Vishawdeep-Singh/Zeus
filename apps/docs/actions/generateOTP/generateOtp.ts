@@ -1,6 +1,6 @@
-"use server";
+'use server';
 
-import prisma from "@repo/db/client";
+import prisma from '@repo/db/client';
 
 export async function generateOTP(email: string) {
   try {
@@ -24,7 +24,7 @@ export async function generateOTP(email: string) {
     return { data: response };
   } catch (error) {
     console.error(error);
-    return { error: "Not able to generate otp at the moment" };
+    return { error: 'Not able to generate otp at the moment' };
   }
   // Generate a random 6-digit OTP
 }

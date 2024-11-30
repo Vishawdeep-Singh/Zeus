@@ -1,16 +1,16 @@
-import { FloatingDockDemo } from "@/components/floatingDock";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import StylishAttendanceMarker from "@/components/userAttendance";
-import { authOptions } from "@/lib/auth";
-import prisma from "@repo/db/client";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { FloatingDockDemo } from '@/components/floatingDock';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import StylishAttendanceMarker from '@/components/userAttendance';
+import { authOptions } from '@/lib/auth';
+import prisma from '@repo/db/client';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 export default async function () {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
-    redirect("/signin");
+    redirect('/signin');
   }
   const response = await getUsersRegisteredGyms(session.user.id);
 
@@ -75,10 +75,10 @@ async function getUsersRegisteredGyms(id: string) {
     //         gymId:true
     //     }
     // })
-    console.log("Gym assigned", response);
+    console.log('Gym assigned', response);
     return { data: response };
   } catch (error) {
     console.error(error);
-    return { error: "Not able to process Attendances at the moment" };
+    return { error: 'Not able to process Attendances at the moment' };
   }
 }

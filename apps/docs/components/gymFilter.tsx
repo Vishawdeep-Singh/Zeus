@@ -1,6 +1,6 @@
-"use client"
-import * as React from "react"
- 
+'use client';
+import * as React from 'react';
+
 import {
   Select,
   SelectContent,
@@ -9,18 +9,22 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { useRecoilState } from "recoil"
-import { AttedanceGymFilterState } from "@/states/filters"
-export const GymFilter=({ownedGyms}:{ownedGyms:{gymId:string,gymName:string}[]})=>{
-  const [gymFilter,setGymFilter]=useRecoilState(AttedanceGymFilterState)
+} from '@/components/ui/select';
+import { useRecoilState } from 'recoil';
+import { AttedanceGymFilterState } from '@/states/filters';
+export const GymFilter = ({
+  ownedGyms,
+}: {
+  ownedGyms: { gymId: string; gymName: string }[];
+}) => {
+  const [gymFilter, setGymFilter] = useRecoilState(AttedanceGymFilterState);
   const defaultGymId = ownedGyms?.[0]?.gymId || '';
-  React.useEffect(()=>{
-    if(ownedGyms?.[0]?.gymId){
-      setGymFilter(ownedGyms?.[0]?.gymId)
+  React.useEffect(() => {
+    if (ownedGyms?.[0]?.gymId) {
+      setGymFilter(ownedGyms?.[0]?.gymId);
     }
-  },[ownedGyms])
-  console.log(gymFilter)
+  }, [ownedGyms]);
+  console.log(gymFilter);
   return (
     <Select
       value={gymFilter || defaultGymId} // Use gymFilter if it's set, else use defaultGymId
@@ -40,5 +44,5 @@ export const GymFilter=({ownedGyms}:{ownedGyms:{gymId:string,gymName:string}[]})
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
-}
+  );
+};

@@ -1,9 +1,9 @@
-import { BackgroundGradientDemo } from "@/components/backgroundGradient";
-import { FloatingDockDemo } from "@/components/floatingDock";
-import { authOptions } from "@/lib/auth";
-import prisma from "@repo/db/client";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { BackgroundGradientDemo } from '@/components/backgroundGradient';
+import { FloatingDockDemo } from '@/components/floatingDock';
+import { authOptions } from '@/lib/auth';
+import prisma from '@repo/db/client';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 async function getMembership(id: string) {
   try {
@@ -20,7 +20,7 @@ async function getMembership(id: string) {
       },
     });
     const distinctGymCount = await prisma.userMembership.groupBy({
-      by: ["gymId"],
+      by: ['gymId'],
       where: { userId: Number(id) },
       _count: true,
     });
@@ -47,21 +47,20 @@ async function getMembership(id: string) {
       return true;
     });
 
-  
     return { data: filteredGym };
   } catch (error) {
     console.error(error);
-    return { error: "Not able to process memberships at the moment" };
+    return { error: 'Not able to process memberships at the moment' };
   }
 }
 export default async function () {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
-    redirect("/signin");
+    redirect('/signin');
   }
 
   const response = await getMembership(session.user.id);
-  console.log("User Side Memberhsips Data", response.data);
+  console.log('User Side Memberhsips Data', response.data);
   if (response.error) {
     return (
       <div className="text-5xl font-bold text-center">{response.error}</div>

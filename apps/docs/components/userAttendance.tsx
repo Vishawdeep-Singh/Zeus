@@ -1,20 +1,22 @@
-"use client";
-import useSWR from "swr";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, XCircle, Loader } from "lucide-react";
-import { toast } from "sonner";
-import { markAttendance } from "@/actions/markAttendance";
-import { useWebSocket } from "@/context/socketContext";
-import { useWebSockets } from "@/hooks/useWebSocket";
-import { getOwnerId } from "@/actions/getOwner_Given_gymId";
-import { addNotifications } from "@/actions/addNotifications";
+'use client';
+import useSWR from 'swr';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, XCircle, Loader } from 'lucide-react';
+import { toast } from 'sonner';
+import { markAttendance } from '@/actions/markAttendance';
+import { useWebSocket } from '@/context/socketContext';
+import { useWebSockets } from '@/hooks/useWebSocket';
+import { getOwnerId } from '@/actions/getOwner_Given_gymId';
+import { addNotifications } from '@/actions/addNotifications';
 
 const fetcher = async (url: string | URL | Request) => {
   const response = await fetch(url);
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.error || "An error occurred while fetching attendance.");
+    throw new Error(
+      data.error || 'An error occurred while fetching attendance.'
+    );
   }
   return data;
 };
@@ -28,7 +30,7 @@ export default function StylishAttendanceMarker({
   address: string;
   gymId: string;
 }) {
-  const {user,sendMessage}=useWebSocket()
+  const { user, sendMessage } = useWebSocket();
   const { data, error, mutate, isValidating } = useSWR(
     `/api/attendanceDate?gymId=${gymId}`,
     fetcher,
@@ -50,35 +52,39 @@ export default function StylishAttendanceMarker({
     mutate(
       async () => {
         // Show optimistic update by setting `isMarked` to `true`
-        toast.success("Your attendance has been successfully marked", {
+        toast.success('Your attendance has been successfully marked', {
           closeButton: true,
-          position: "top-center",
+          position: 'top-center',
         });
 
         // Call the attendance marking function
         const response = await markAttendance(gymId);
-        const response1= await getOwnerId(gymId)
-        if(response1.data && response.data){
-           let message = `${user?.name} with Id ${user?.id} checked in at ${name}`
-          const {data}= await addNotifications(message,new Date(),response1.data.ownerId)
-          sendMessage("mark-attendance",{
-            userId:user?.id,
-            userName:user?.name,
-            gymId:gymId,
-            gymName:name,
-            notificationMetaData:data
-
-          })
-         
+        const response1 = await getOwnerId(gymId);
+        if (response1.data && response.data) {
+          let message = `${user?.name} with Id ${user?.id} checked in at ${name}`;
+          const { data } = await addNotifications(
+            message,
+            new Date(),
+            response1.data.ownerId
+          );
+          sendMessage('mark-attendance', {
+            userId: user?.id,
+            userName: user?.name,
+            gymId: gymId,
+            gymName: name,
+            notificationMetaData: data,
+          });
         }
-  
 
         if (response.error || response1.error) {
           // Revert state if the request fails
-          toast.error(`Error: ${response.error}`||`Error: ${response1.error}`, {
-            closeButton: true,
-            position: "top-center",
-          });
+          toast.error(
+            `Error: ${response.error}` || `Error: ${response1.error}`,
+            {
+              closeButton: true,
+              position: 'top-center',
+            }
+          );
           throw new Error(response.error);
         }
 
@@ -123,15 +129,15 @@ export default function StylishAttendanceMarker({
             disabled={isMarked || isValidating}
             className={`px-6 py-2 rounded-full transition-all duration-300 ${
               isMarked
-                ? "bg-green-500 hover:bg-green-600"
-                : "bg-primary hover:bg-primary/90"
+                ? 'bg-green-500 hover:bg-green-600'
+                : 'bg-primary hover:bg-primary/90'
             }`}
           >
             {isValidating
-              ? "Loading..."
+              ? 'Loading...'
               : isMarked
-              ? "Marked for Today"
-              : "Mark Attendance"}
+                ? 'Marked for Today'
+                : 'Mark Attendance'}
           </Button>
         </div>
       </CardContent>

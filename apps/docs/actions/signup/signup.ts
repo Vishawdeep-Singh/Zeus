@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { SignUp } from "@/types/types";
-import prisma from "@repo/db/client";
-import bcrypt from "bcrypt";
-import { signUpSchema } from "@/types/validations";
+import { SignUp } from '@/types/types';
+import prisma from '@repo/db/client';
+import bcrypt from 'bcrypt';
+import { signUpSchema } from '@/types/validations';
 
 export const signup = async (formData: SignUp) => {
   try {
@@ -22,7 +22,7 @@ export const signup = async (formData: SignUp) => {
     });
     if (isExists) {
       return {
-        error: "User Already Exists",
+        error: 'User Already Exists',
       };
     }
     const response = await prisma.user.create({
@@ -31,12 +31,12 @@ export const signup = async (formData: SignUp) => {
         email: formData.email,
         cellPh: formData.cellPh,
         password: hashedPassword,
-        provider: "credentials",
+        provider: 'credentials',
       },
     });
     return { data: response };
   } catch (error: any) {
     console.error(error.message);
-    return { error: "Failed To Process The Request for signUp" };
+    return { error: 'Failed To Process The Request for signUp' };
   }
 };

@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { TrendingUp } from 'lucide-react';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 import {
   Card,
@@ -10,40 +10,38 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from '@/components/ui/chart';
 
-export const description = "A simple area chart"
+export const description = 'A simple area chart';
 
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+  { month: 'January', desktop: 186 },
+  { month: 'February', desktop: 305 },
+  { month: 'March', desktop: 237 },
+  { month: 'April', desktop: 73 },
+  { month: 'May', desktop: 209 },
+  { month: 'June', desktop: 214 },
+];
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    label: 'Desktop',
+    color: 'hsl(var(--chart-1))',
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function Component1() {
   return (
     <Card className="w-[40%] bg-[#f7f7f7] hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
       <CardHeader>
         <CardTitle>Revenue Chart</CardTitle>
-        <CardDescription>
-          Showing revenue for the last 6 months
-        </CardDescription>
+        <CardDescription>Showing revenue for the last 6 months</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="w-full h-[250px]">
@@ -90,5 +88,5 @@ export function Component1() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

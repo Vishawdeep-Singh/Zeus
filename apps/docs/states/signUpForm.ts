@@ -6,8 +6,7 @@ export const formDataAtom = atom<SignUp>({
   default: {
     email: '',
     name: '',
-    cellPh:'',
-    password:''
-
+    cellPh: '',
+    password: '',
   }, // Default value (aka initial value)
 });

@@ -1,15 +1,15 @@
-import { atom } from "recoil";
-import { DateRange } from "react-day-picker";
+import { atom } from 'recoil';
+import { DateRange } from 'react-day-picker';
 export const GymFilterState = atom<string | null>({
-    key:"gymFilter",
-    default:null
-})
+  key: 'gymFilter',
+  default: null,
+});
 export const AttedanceGymFilterState = atom<string | null>({
-    key:"AttedanceGymFilterState",
-    default:null
-})
+  key: 'AttedanceGymFilterState',
+  default: null,
+});
 
 export const dateRange = atom<DateRange | undefined>({
-    key:"dateRange", 
-    default:undefined
+  key: 'dateRange',
+  default: undefined,
 });

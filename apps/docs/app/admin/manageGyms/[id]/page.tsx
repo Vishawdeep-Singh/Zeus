@@ -1,11 +1,11 @@
-import { ManageGym } from "@/components/manageGym";
-import { Navbar } from "@/components/Navbar";
-import { authOptions } from "@/lib/auth";
-import { Gym } from "@/types/types";
-import { paramsId } from "@/types/validations";
-import prisma from "@repo/db/client";
-import { getServerSession } from "next-auth";
-import { notFound, redirect } from "next/navigation";
+import { ManageGym } from '@/components/manageGym';
+import { Navbar } from '@/components/Navbar';
+import { authOptions } from '@/lib/auth';
+import { Gym } from '@/types/types';
+import { paramsId } from '@/types/validations';
+import prisma from '@repo/db/client';
+import { getServerSession } from 'next-auth';
+import { notFound, redirect } from 'next/navigation';
 
 async function getGymDetails(id: string) {
   try {
@@ -39,19 +39,19 @@ async function getGymDetails(id: string) {
       },
     });
     if (!response) {
-      return { error: "Gym Details doest not exist" };
+      return { error: 'Gym Details doest not exist' };
     }
     return { data: response };
   } catch (error) {
     console.error(error);
-    return { error: "Cannot Process Request at the moment" };
+    return { error: 'Cannot Process Request at the moment' };
   }
 }
 export default async function ({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
-    redirect("/signin");
+    redirect('/signin');
   }
 
   const { id } = params;
@@ -79,15 +79,24 @@ export default async function ({ params }: { params: { id: string } }) {
     );
   }
 
-return <div className="space-y-5 p-4 h-screen overflow-auto [&::-webkit-scrollbar]:w-2
+  return (
+    <div
+      className="space-y-5 p-4 h-screen overflow-auto [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
   [&::-webkit-scrollbar-thumb]:bg-gray-300
   [&::-webkit-scrollbar-thumb]:rounded-full
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"><Navbar title={""} ></Navbar>
-<div className="animate-slide-up">
-    <ManageGym role="admin" gymDetails={gymsDetails.data as Gym} gymId={""}></ManageGym>
-</div>
-</div>
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+    >
+      <Navbar title={''}></Navbar>
+      <div className="animate-slide-up">
+        <ManageGym
+          role="admin"
+          gymDetails={gymsDetails.data as Gym}
+          gymId={''}
+        ></ManageGym>
+      </div>
+    </div>
+  );
 }
 
 const awaiter = (ms: number): Promise<void> => {

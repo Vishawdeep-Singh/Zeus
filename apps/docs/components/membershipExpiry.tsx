@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -10,16 +10,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
-import { membershipExpiryConversion } from "@/lib/helper";
-import { GymFilter } from "./gymFilter";
-import { AttedanceGymFilterState, GymFilterState } from "@/states/filters";
-import { useRecoilValue } from "recoil";
-import exp from "constants";
-import { toast } from "sonner";
-import { ExpiredMembers, GymsData } from "@/types/types";
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { membershipExpiryConversion } from '@/lib/helper';
+import { GymFilter } from './gymFilter';
+import { AttedanceGymFilterState, GymFilterState } from '@/states/filters';
+import { useRecoilValue } from 'recoil';
+import exp from 'constants';
+import { toast } from 'sonner';
+import { ExpiredMembers, GymsData } from '@/types/types';
 
 // // Mock data for demonstration
 // const mockMembers = [
@@ -47,7 +47,7 @@ export default function Component3({
   const [currentMembers, setCurrentMembers] = useState<null | ExpiredMembers[]>(
     null
   );
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 5;
@@ -60,7 +60,7 @@ export default function Component3({
 
       if (selectedGymData) {
         const expiredMembers = membershipExpiryConversion(selectedGymData);
-        console.log("Membership Expiry", expiredMembers);
+        console.log('Membership Expiry', expiredMembers);
         if (expiredMembers.length > 0) {
           setExpiredMembers(expiredMembers);
         } else {
@@ -135,7 +135,7 @@ export default function Component3({
             ) : (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-gray-500">
-                  {expiredMembers === null && "No Results Found"}
+                  {expiredMembers === null && 'No Results Found'}
                 </TableCell>
               </TableRow>
             )}

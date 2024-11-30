@@ -1,6 +1,6 @@
-import { Calendar } from "lucide-react";
+import { Calendar } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,10 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { dateRange } from "@/states/filters";
-import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
+} from '@/components/ui/dropdown-menu';
+import { dateRange } from '@/states/filters';
+import { useRecoilValue } from 'recoil';
+import { useEffect, useState } from 'react';
 
 export function AttendanceDropDown({ attendances }: { attendances: string[] }) {
   const dateFilter = useRecoilValue(dateRange);

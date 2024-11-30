@@ -1,18 +1,18 @@
-"use client";
-import { Badge, CheckCheckIcon, Zap } from "lucide-react";
-import { Button } from "./ui/button";
-import { CardHeader, CardContent, Card, CardTitle } from "./ui/card";
-import { cn } from "@/lib/utils";
-import { MembershipCardProps } from "@/types/types";
-import { joinMembership } from "@/actions/joinMembership";
-import { toast } from "sonner";
-import { useWebSocket } from "@/context/socketContext";
-import { usePathname } from "next/navigation";
-import { ChoosePlan } from "./choosePlan";
-import { addNotifications } from "@/actions/addNotifications";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { warningNotificationsState } from "@/states/notifications";
+'use client';
+import { Badge, CheckCheckIcon, Zap } from 'lucide-react';
+import { Button } from './ui/button';
+import { CardHeader, CardContent, Card, CardTitle } from './ui/card';
+import { cn } from '@/lib/utils';
+import { MembershipCardProps } from '@/types/types';
+import { joinMembership } from '@/actions/joinMembership';
+import { toast } from 'sonner';
+import { useWebSocket } from '@/context/socketContext';
+import { usePathname } from 'next/navigation';
+import { ChoosePlan } from './choosePlan';
+import { addNotifications } from '@/actions/addNotifications';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { warningNotificationsState } from '@/states/notifications';
 
 export function MembershipCard({
   id,
@@ -26,8 +26,8 @@ export function MembershipCard({
 }: MembershipCardProps) {
   const url = usePathname();
 
-  const isUser = url.startsWith("/user/");
-  console.log("is user", isUser);
+  const isUser = url.startsWith('/user/');
+  console.log('is user', isUser);
 
   const [warningNotification, setWarningNotifications] = useRecoilState(
     warningNotificationsState
@@ -53,29 +53,29 @@ export function MembershipCard({
         new Date(),
         response.gymDetails.ownerId
       );
-      sendMessage("membership-purchased", {
+      sendMessage('membership-purchased', {
         userId: user?.id,
         userName: user?.name,
         gymId: gymId,
         gymName: response.gymDetails.name,
         notificationMetaData: data,
       });
-      toast.success("Membership sucessfully purchased", {
+      toast.success('Membership sucessfully purchased', {
         closeButton: true,
-        position: "top-center",
+        position: 'top-center',
       });
     } else {
       toast.error(`${response.error}`, {
         closeButton: true,
-        position: "top-center",
+        position: 'top-center',
       });
     }
   }
 
   const gifUrls = [
-    "https://media1.tenor.com/m/MxTl6a26CpAAAAAC/lr-agl-super-saiyan-god-ss-goku-and-vegeta-lr-agl-ssb-goku-and-vegeta.gif",
-    "https://media1.tenor.com/m/899ZxzqJhs0AAAAC/lr-agl-goku-carnival.gif",
-    "https://media1.tenor.com/m/AtiBkSK7X3IAAAAC/dokkan-dokkan-battle.gif",
+    'https://media1.tenor.com/m/MxTl6a26CpAAAAAC/lr-agl-super-saiyan-god-ss-goku-and-vegeta-lr-agl-ssb-goku-and-vegeta.gif',
+    'https://media1.tenor.com/m/899ZxzqJhs0AAAAC/lr-agl-goku-carnival.gif',
+    'https://media1.tenor.com/m/AtiBkSK7X3IAAAAC/dokkan-dokkan-battle.gif',
   ];
 
   const getGifUrl = (index: any) => gifUrls[index % gifUrls.length];
@@ -97,15 +97,15 @@ export function MembershipCard({
     >
       <Card
         className={cn(
-          "group  w-full cursor-pointer overflow-hidden relative card rounded-md shadow-xl mx-auto flex flex-col justify-end p-4 border-2 border-black dark:border-neutral-800 bg-gray-300",
+          'group  w-full cursor-pointer overflow-hidden relative card rounded-md shadow-xl mx-auto flex flex-col justify-end p-4 border-2 border-black dark:border-neutral-800 bg-gray-300',
 
           // Preload hover image by setting it in a pseudo-element
-          "before:bg-[url(https://media1.tenor.com/m/h04_fXuPkZQAAAAC/dbz-goku.gif)] before:fixed before:inset-0 before:opacity-0 before:z-[-1]",
-          "hover:bg-[url(https://media1.tenor.com/m/h04_fXuPkZQAAAAC/dbz-goku.gif)]  hover:translate-x-[-50px] hover:translate-y-[-50px] hover:scale-110 hover:z-10",
+          'before:bg-[url(https://media1.tenor.com/m/h04_fXuPkZQAAAAC/dbz-goku.gif)] before:fixed before:inset-0 before:opacity-0 before:z-[-1]',
+          'hover:bg-[url(https://media1.tenor.com/m/h04_fXuPkZQAAAAC/dbz-goku.gif)]  hover:translate-x-[-50px] hover:translate-y-[-50px] hover:scale-110 hover:z-10',
           "hover:after:content-[''] hover:after:absolute  hover:after:bg-black hover:after:opacity-10",
-          "transition-all duration-500",
+          'transition-all duration-500',
           //text
-          "hover:text-[rgba(0,0,0,0.7)] hover:shadow-[1px_1px_2px_rgba(0,0,0,0.3)]"
+          'hover:text-[rgba(0,0,0,0.7)] hover:shadow-[1px_1px_2px_rgba(0,0,0,0.3)]'
         )}
       >
         {activeMembership && (

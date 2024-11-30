@@ -1,4 +1,4 @@
-import multiavatar from "@multiavatar/multiavatar/esm";
+import multiavatar from '@multiavatar/multiavatar/esm';
 export default function MultiAvatar({
   name,
   className,

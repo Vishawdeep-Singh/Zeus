@@ -4,8 +4,8 @@
  * Mobile navbar is better positioned at bottom right.
  **/
 
-import { cn } from "@/lib/utils";
-import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
+import { cn } from '@/lib/utils';
+import { IconLayoutNavbarCollapse } from '@tabler/icons-react';
 import {
   AnimatePresence,
   MotionValue,
@@ -13,9 +13,9 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
-} from "framer-motion";
-import Link from "next/link";
-import { useRef, useState } from "react";
+} from 'framer-motion';
+import Link from 'next/link';
+import { useRef, useState } from 'react';
 
 export const FloatingDock = ({
   items,
@@ -43,7 +43,7 @@ const FloatingDockMobile = ({
 }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className={cn("relative block md:hidden", className)}>
+    <div className={cn('relative block md:hidden', className)}>
       <AnimatePresence>
         {open && (
           <motion.div
@@ -102,7 +102,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
+        'mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3',
         className
       )}
     >
@@ -178,9 +178,9 @@ function IconContainer({
         <AnimatePresence>
           {hovered && (
             <motion.div
-              initial={{ opacity: 0, y: 10, x: "-50%" }}
-              animate={{ opacity: 1, y: 0, x: "-50%" }}
-              exit={{ opacity: 0, y: 2, x: "-50%" }}
+              initial={{ opacity: 0, y: 10, x: '-50%' }}
+              animate={{ opacity: 1, y: 0, x: '-50%' }}
+              exit={{ opacity: 0, y: 2, x: '-50%' }}
               className="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border dark:bg-neutral-800 dark:border-neutral-900 dark:text-white border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
             >
               {title}

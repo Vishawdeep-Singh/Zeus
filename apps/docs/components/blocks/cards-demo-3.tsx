@@ -1,8 +1,8 @@
-"use client";
-import { animate, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import { GoCopilot } from "react-icons/go";
+'use client';
+import { animate, motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { GoCopilot } from 'react-icons/go';
 
 export default function CardDemo() {
   return (
@@ -21,10 +21,10 @@ export default function CardDemo() {
 
 const Skeleton = () => {
   const scale = [1, 1.1, 1];
-  const transform = ["translateY(0px)", "translateY(-4px)", "translateY(0px)"];
+  const transform = ['translateY(0px)', 'translateY(-4px)', 'translateY(0px)'];
   const sequence = [
     [
-      ".circle-1",
+      '.circle-1',
       {
         scale,
         transform,
@@ -32,7 +32,7 @@ const Skeleton = () => {
       { duration: 0.8 },
     ],
     [
-      ".circle-2",
+      '.circle-2',
       {
         scale,
         transform,
@@ -40,7 +40,7 @@ const Skeleton = () => {
       { duration: 0.8 },
     ],
     [
-      ".circle-3",
+      '.circle-3',
       {
         scale,
         transform,
@@ -48,7 +48,7 @@ const Skeleton = () => {
       { duration: 0.8 },
     ],
     [
-      ".circle-4",
+      '.circle-4',
       {
         scale,
         transform,
@@ -56,7 +56,7 @@ const Skeleton = () => {
       { duration: 0.8 },
     ],
     [
-      ".circle-5",
+      '.circle-5',
       {
         scale,
         transform,
@@ -118,15 +118,15 @@ const Sparkles = () => {
           transition={{
             duration: random() * 2 + 4,
             repeat: Infinity,
-            ease: "linear",
+            ease: 'linear',
           }}
           style={{
-            position: "absolute",
+            position: 'absolute',
             top: `${random() * 100}%`,
             left: `${random() * 100}%`,
             width: `2px`,
             height: `2px`,
-            borderRadius: "50%",
+            borderRadius: '50%',
             zIndex: 1,
           }}
           className="inline-block bg-black dark:bg-white"
@@ -146,7 +146,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "max-w-sm w-full mx-auto p-8 rounded-xl border border-[rgba(255,255,255,0.10)] dark:bg-[rgba(40,40,40,0.70)] bg-gray-100 shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group",
+        'max-w-sm w-full mx-auto p-8 rounded-xl border border-[rgba(255,255,255,0.10)] dark:bg-[rgba(40,40,40,0.70)] bg-gray-100 shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group',
         className
       )}
     >
@@ -165,7 +165,7 @@ export const CardTitle = ({
   return (
     <h3
       className={cn(
-        "text-lg font-semibold text-gray-800 dark:text-white py-2",
+        'text-lg font-semibold text-gray-800 dark:text-white py-2',
         className
       )}
     >
@@ -184,7 +184,7 @@ export const CardDescription = ({
   return (
     <p
       className={cn(
-        "text-sm font-normal text-neutral-600 dark:text-neutral-400 max-w-sm",
+        'text-sm font-normal text-neutral-600 dark:text-neutral-400 max-w-sm',
         className
       )}
     >
@@ -205,10 +205,10 @@ export const CardSkeletonContainer = ({
   return (
     <div
       className={cn(
-        "h-[15rem] md:h-[20rem] rounded-xl z-40",
+        'h-[15rem] md:h-[20rem] rounded-xl z-40',
         className,
         showGradient &&
-          "bg-neutral-300 dark:bg-[rgba(40,40,40,0.70)] [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]"
+          'bg-neutral-300 dark:bg-[rgba(40,40,40,0.70)] [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]'
       )}
     >
       {children}

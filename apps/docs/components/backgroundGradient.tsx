@@ -1,22 +1,22 @@
-"use client";
-import React from "react";
-import { BackgroundGradient } from "./ui/background-gradient";
-import { IconAppWindow } from "@tabler/icons-react";
-import Image from "next/image";
-import moment from "moment";
-import { CheckIcon, CircleX, CrossIcon } from "lucide-react";
-import Link from "next/link";
+'use client';
+import React from 'react';
+import { BackgroundGradient } from './ui/background-gradient';
+import { IconAppWindow } from '@tabler/icons-react';
+import Image from 'next/image';
+import moment from 'moment';
+import { CheckIcon, CircleX, CrossIcon } from 'lucide-react';
+import Link from 'next/link';
 
 export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
   const originalDate = moment(dateJoined);
 
   const monthsToSubtract = membershipDetails.duration;
-  const addMonths = originalDate.clone().add(monthsToSubtract, "months");
-  console.log(moment(addMonths).format("DD/MM/YYYY")); // Number of months to subtract
+  const addMonths = originalDate.clone().add(monthsToSubtract, 'months');
+  console.log(moment(addMonths).format('DD/MM/YYYY')); // Number of months to subtract
 
   // Calculate the difference in days
-  const differenceInDays = addMonths.diff(moment(), "days");
-  console.log(moment().format("DD/MM/YY"));
+  const differenceInDays = addMonths.diff(moment(), 'days');
+  console.log(moment().format('DD/MM/YY'));
   return (
     <div>
       <BackgroundGradient
@@ -42,7 +42,7 @@ export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
         </p>
         <p className="text-md font-bold mt-5">Membership Details</p>
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          <b className="text-black"> Duration:</b> {membershipDetails.duration}{" "}
+          <b className="text-black"> Duration:</b> {membershipDetails.duration}{' '}
           months
         </p>
 
@@ -52,16 +52,17 @@ export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           <div className="flex space-x-2">
             <b className="text-black"> isActive :</b>
-            {
-              differenceInDays > 0 ? <div className="flex items-center bg-green-500 h-5 w-30 text-white font-semibold px-2 rounded-full">
-              <CheckIcon className="h-5 w-5 mr-2" />
-              <span>{differenceInDays} Days Left</span>
-            </div> : <div className="flex items-center bg-red-500 h-5 w-30 text-white font-semibold px-2 rounded-full">
-              <CircleX className="h-5 w-5 mr-2" />
-              <span>Expired</span>
-            </div>
-            }
-            
+            {differenceInDays > 0 ? (
+              <div className="flex items-center bg-green-500 h-5 w-30 text-white font-semibold px-2 rounded-full">
+                <CheckIcon className="h-5 w-5 mr-2" />
+                <span>{differenceInDays} Days Left</span>
+              </div>
+            ) : (
+              <div className="flex items-center bg-red-500 h-5 w-30 text-white font-semibold px-2 rounded-full">
+                <CircleX className="h-5 w-5 mr-2" />
+                <span>Expired</span>
+              </div>
+            )}
           </div>
         </p>
         <Link

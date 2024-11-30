@@ -1,6 +1,9 @@
-import { FloatingDockDemo } from "@/components/floatingDock";
-import { UserHomePage } from "@/components/userHomePage";
-import prisma from "@repo/db/client";
+
+import { FloatingDockDemo } from '@/components/floatingDock';
+import { ExpandableCardDemo } from '@/components/userCards';
+import { UserHomePage } from '@/components/userHomePage';
+import prisma from '@repo/db/client';
+
 
 async function getGymDetails() {
   try {
@@ -8,7 +11,9 @@ async function getGymDetails() {
     return { data: response };
   } catch (error) {
     console.error(error);
+
     return { error: "Not able to Process at moment" };
+
   }
 }
 

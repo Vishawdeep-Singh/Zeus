@@ -1,40 +1,45 @@
-"use client";
+'use client';
 
-import { Bell } from "lucide-react";
-import { Button } from "./ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { notificationsState, unreadNotificationsSelector } from "@/states/notifications";
-import { ScrollArea } from "./ui/scroll-area";
-import { Badge } from "./ui/badge";
-import { set } from "zod";
-import { updateNotifications } from "@/actions/updateNotifications";
-import { toast } from "sonner";
+import { Bell } from 'lucide-react';
+import { Button } from './ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  notificationsState,
+  unreadNotificationsSelector,
+} from '@/states/notifications';
+import { ScrollArea } from './ui/scroll-area';
+import { Badge } from './ui/badge';
+import { set } from 'zod';
+import { updateNotifications } from '@/actions/updateNotifications';
+import { toast } from 'sonner';
 
 export const Notifications = () => {
-
-    async function handleClick() {
-        const notificationIds = unreadNotifications.map(notification => notification.id);
-        setNotifications(prev => 
-            prev.map(notification => 
-              notificationIds.includes(notification.id)
-                ? { ...notification, isRead: true } // Update isRead to true
-                : notification // Keep the original notification
-            )
-          );
-          const response = await updateNotifications(notificationIds)
-          if(response.error){
-            toast.error(`${response.error}`,{
-                closeButton:true,
-                position:"top-center"
-            })
-          }
+  async function handleClick() {
+    const notificationIds = unreadNotifications.map(
+      (notification) => notification.id
+    );
+    setNotifications((prev) =>
+      prev.map(
+        (notification) =>
+          notificationIds.includes(notification.id)
+            ? { ...notification, isRead: true } // Update isRead to true
+            : notification // Keep the original notification
+      )
+    );
+    const response = await updateNotifications(notificationIds);
+    if (response.error) {
+      toast.error(`${response.error}`, {
+        closeButton: true,
+        position: 'top-center',
+      });
     }
+  }
   const [notifications, setNotifications] = useRecoilState(notificationsState);
   const unreadNotifications = useRecoilValue(unreadNotificationsSelector);
-  console.log("Filtered Notifications",unreadNotifications);
-  console.log("Notifications",notifications)
- 
+  console.log('Filtered Notifications', unreadNotifications);
+  console.log('Notifications', notifications);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -44,13 +49,14 @@ export const Notifications = () => {
           className="relative hover:bg-slate-800"
         >
           <Bell className="h-5 w-5" color="white" />
-        {unreadNotifications.length>0 && <Badge
-         
-         variant="destructive"
-         className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-       >
-         {unreadNotifications.length}
-       </Badge> }  
+          {unreadNotifications.length > 0 && (
+            <Badge
+              variant="destructive"
+              className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
+            >
+              {unreadNotifications.length}
+            </Badge>
+          )}
           <span className="sr-only">Notifications</span>
         </Button>
       </PopoverTrigger>
@@ -78,7 +84,12 @@ export const Notifications = () => {
               No new notifications
             </p>
           )}
-          <Button onClick={handleClick} disabled={unreadNotifications.length===0} variant="outline" className="w-full">
+          <Button
+            onClick={handleClick}
+            disabled={unreadNotifications.length === 0}
+            variant="outline"
+            className="w-full"
+          >
             Mark all as read
           </Button>
         </div>
@@ -86,5 +97,3 @@ export const Notifications = () => {
     </Popover>
   );
 };
-
-
