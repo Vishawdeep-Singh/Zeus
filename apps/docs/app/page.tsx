@@ -8,24 +8,25 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import AnimatedZeusImage from './image1.png';
-import AnimatedZeusLogo from './animated-zeus-logo';
-import { FlipWords } from '@/components/ui/flip-words';
-import Autoplay from 'embla-carousel-autoplay';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+
+} from "@/components/ui/dropdown-menu"
+import AnimatedZeusImage from "./image1.png"
+import AnimatedZeusLogo from "./animated-zeus-logo"
+import { FlipWords } from "@/components/ui/flip-words"
+import Autoplay from "embla-carousel-autoplay"
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
+import { LandingHero } from "@/components/LandingHero"
+import { StickyScrollRevealDemo } from "@/components/StickyScrollRevealDemo"
 
 export default function LandingPage() {
-  const words = ['Zeus', 'Kratos', 'Hera', 'Poseidon', 'Athena', 'Hades'];
+
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-transparent
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
       <header className="px-4 lg:px-6 h-16 flex items-center">
         <Link className="flex items-center justify-center" href="#">
           <AnimatedZeusLogo />
@@ -43,106 +44,30 @@ export default function LandingPage() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-                <Link href="#features">Features</Link>
+                <Link href="/signup">Sign up</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="#pricing">Pricing</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="#testimonials">Testimonials</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="#contact">Contact</Link>
+                <Link href="/signin">Sign in</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="hidden md:flex gap-4 sm:gap-6">
-            <Link
-              className="text-sm font-medium hover:underline underline-offset-4"
-              href="#features"
-            >
-              Features
+            <Link className="text-sm font-medium hover:underline underline-offset-4" href="/signup">
+              Sign up
             </Link>
-            <Link
-              className="text-sm font-medium hover:underline underline-offset-4"
-              href="#pricing"
-            >
-              Pricing
-            </Link>
-            <Link
-              className="text-sm font-medium hover:underline underline-offset-4"
-              href="#testimonials"
-            >
-              Testimonials
-            </Link>
-            <Link
-              className="text-sm font-medium hover:underline underline-offset-4"
-              href="#contact"
-            >
-              Contact
+            <Link className="text-sm font-medium hover:underline underline-offset-4" href="/signin">
+              Sign in
             </Link>
           </div>
         </nav>
       </header>
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-100 dark:bg-gray-800">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_800px]">
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Unleash Your Inner God with Zeus
-                  </h1>
-                  <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
-                    Transform your body and mind with Zeus - the ultimate gym
-                    companion app that brings the power of{' '}
-                    <FlipWords
-                      className="text-black font-bold"
-                      duration={1000}
-                      words={words}
-                    />{' '}
-                    to your workouts.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button size="lg">Start Free Trial</Button>
-                  <Button variant="outline" size="lg">
-                    Learn More
-                  </Button>
-                </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <Carousel
-                  plugins={[
-                    Autoplay({
-                      delay: 3000,
-                      stopOnInteraction: true,
-                    }),
-                  ]}
-                >
-                  <CarouselContent className="">
-                    <CarouselItem>
-                      <img
-                        src="/image1.png"
-                        className="rounded-2xl h-[800px] object-cover w-[800px]"
-                        alt=""
-                      />
-                    </CarouselItem>
-                    <CarouselItem>
-                      <img
-                        src="/image2.png"
-                        className="rounded-2xl h-[800px] object-cover w-[800px]"
-                        alt=""
-                      />
-                    </CarouselItem>
-                    <CarouselItem>
-                      <img src="/image5.jpg" className="rounded-2xl" alt="" />
-                    </CarouselItem>
-                  </CarouselContent>
-                </Carousel>
-              </div>
-            </div>
-          </div>
+
+        <section>
+          <LandingHero />
+        </section>
+        <section>
+          <StickyScrollRevealDemo />
         </section>
         <section id="features" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
@@ -179,157 +104,8 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <section
-          id="pricing"
-          className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
-        >
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
-              Choose Your Destiny
-            </h2>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="flex flex-col p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold text-center mb-4">Mortal</h3>
-                <p className="text-center text-gray-500 dark:text-gray-400 mb-4">
-                  For those beginning their ascent
-                </p>
-                <p className="text-4xl font-bold text-center mb-6">
-                  $9.99<span className="text-sm font-normal">/month</span>
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 text-yellow-500 mr-2" />
-                    Basic workout tracking
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 text-yellow-500 mr-2" />
-                    Access to community forums
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 text-yellow-500 mr-2" />5
-                    Olympian workouts per month
-                  </li>
-                </ul>
-                <Button className="mt-auto">Choose Plan</Button>
-              </div>
-              <div className="flex flex-col p-6 bg-yellow-500 text-white rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold text-center mb-4">Demigod</h3>
-                <p className="text-center mb-4">
-                  For serious fitness enthusiasts
-                </p>
-                <p className="text-4xl font-bold text-center mb-6">
-                  $19.99<span className="text-sm font-normal">/month</span>
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 mr-2" />
-                    All Mortal features
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 mr-2" />
-                    Advanced progress analytics
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 mr-2" />
-                    Unlimited Olympian workouts
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 mr-2" />
-                    Personalized training plans
-                  </li>
-                </ul>
-                <Button className="mt-auto bg-white text-yellow-500 hover:bg-gray-100">
-                  Choose Plan
-                </Button>
-              </div>
-              <div className="flex flex-col p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold text-center mb-4">
-                  Olympian
-                </h3>
-                <p className="text-center text-gray-500 dark:text-gray-400 mb-4">
-                  For those seeking godly perfection
-                </p>
-                <p className="text-4xl font-bold text-center mb-6">
-                  $29.99<span className="text-sm font-normal">/month</span>
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 text-yellow-500 mr-2" />
-                    All Demigod features
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 text-yellow-500 mr-2" />
-                    1-on-1 coaching sessions
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 text-yellow-500 mr-2" />
-                    Exclusive Zeus challenges
-                  </li>
-                  <li className="flex items-center">
-                    <ChevronRight className="h-5 w-5 text-yellow-500 mr-2" />
-                    Priority support from Hermes
-                  </li>
-                </ul>
-                <Button className="mt-auto">Choose Plan</Button>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
-              Praise from Olympus
-            </h2>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="flex flex-col items-center space-y-2 border-gray-200 p-4 rounded-lg shadow-sm">
-                <Image
-                  src="/placeholder.svg?height=100&width=100"
-                  alt="Hercules"
-                  width={100}
-                  height={100}
-                  className="rounded-full"
-                />
-                <h3 className="text-xl font-bold">Hercules</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  "Zeus has taken my strength to new heights. I couldn't have
-                  completed my 12 labors without it!"
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 border-gray-200 p-4 rounded-lg shadow-sm">
-                <Image
-                  src="/placeholder.svg?height=100&width=100"
-                  alt="Athena"
-                  width={100}
-                  height={100}
-                  className="rounded-full"
-                />
-                <h3 className="text-xl font-bold">Athena</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  "The wisdom in Zeus's training plans is unparalleled. It's not
-                  just about strength, but strategy too."
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 border-gray-200 p-4 rounded-lg shadow-sm">
-                <Image
-                  src="/placeholder.svg?height=100&width=100"
-                  alt="Apollo"
-                  width={100}
-                  height={100}
-                  className="rounded-full"
-                />
-                <h3 className="text-xl font-bold">Apollo</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                  "As the god of physical perfection, I approve. Zeus has helped
-                  me maintain my godly physique."
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section
-          id="contact"
-          className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
-        >
+
+        <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">

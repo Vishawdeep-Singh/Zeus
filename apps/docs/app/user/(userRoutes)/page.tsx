@@ -1,7 +1,9 @@
+
 import { FloatingDockDemo } from '@/components/floatingDock';
 import { ExpandableCardDemo } from '@/components/userCards';
 import { UserHomePage } from '@/components/userHomePage';
 import prisma from '@repo/db/client';
+
 
 async function getGymDetails() {
   try {
@@ -9,7 +11,9 @@ async function getGymDetails() {
     return { data: response };
   } catch (error) {
     console.error(error);
-    return { error: 'Not able to Process at moment' };
+
+    return { error: "Not able to Process at moment" };
+
   }
 }
 
@@ -19,6 +23,7 @@ export default async function UserHome() {
   return (
     <div className="">
       <div className="text-center text-6xl p-10 font-bold">Gyms</div>
+
       <div>
         <UserHomePage gymDetails={gymDetails.data}></UserHomePage>
       </div>
