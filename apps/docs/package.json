@@ -6,7 +6,8 @@
     "dev": "next dev --turbo --port 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettify": "prettier --write \"{app,components,lib,styles,actions,context,hooks,states,types}/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
     "@multiavatar/multiavatar": "^1.0.7",

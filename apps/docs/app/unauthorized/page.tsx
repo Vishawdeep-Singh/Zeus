@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { Lock } from 'lucide-react'
+import Link from 'next/link';
+import { Lock } from 'lucide-react';
 
 export default function UnauthorizedPage() {
   return (
@@ -15,7 +15,7 @@ export default function UnauthorizedPage() {
           Oops! It seems you don't have permission to access this page.
         </p>
         <div className="mt-8">
-          <Link 
+          <Link
             href="/user"
             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-300"
           >
@@ -27,6 +27,5 @@ export default function UnauthorizedPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

@@ -1,10 +1,10 @@
-"use server";
-"use server";
+'use server';
+'use server';
 
-import { authOptions } from "@/lib/auth";
-import prisma from "@repo/db/client";
-import { error } from "console";
-import { getServerSession } from "next-auth";
+import { authOptions } from '@/lib/auth';
+import prisma from '@repo/db/client';
+import { error } from 'console';
+import { getServerSession } from 'next-auth';
 
 export const addPhone = async (cellPh: string | null, mail: string | null) => {
   const session = await getServerSession(authOptions);
@@ -28,7 +28,7 @@ export const addPhone = async (cellPh: string | null, mail: string | null) => {
           cellPh: true,
         },
       });
-      if (isnewUser?.cellPh === "") {
+      if (isnewUser?.cellPh === '') {
         return { newUser: true };
       } else {
         return { newUser: false };
@@ -36,6 +36,6 @@ export const addPhone = async (cellPh: string | null, mail: string | null) => {
     }
   } catch (error) {
     console.error(error);
-    return { error: "Not able to process addPhone at the moment" };
+    return { error: 'Not able to process addPhone at the moment' };
   }
 };

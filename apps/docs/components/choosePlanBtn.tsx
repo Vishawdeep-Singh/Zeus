@@ -1,8 +1,8 @@
 // components/ClientButton.tsx
-"use client"; // This makes it a client component
+'use client'; // This makes it a client component
 
-import * as React from "react";
-import { Button } from "./ui/button"
+import * as React from 'react';
+import { Button } from './ui/button';
 
 interface ClientButtonProps {
   id: string;
@@ -16,10 +16,7 @@ export const ChoosePlanButton: React.FC<ClientButtonProps> = ({
   handleChoosePlan,
 }) => {
   return (
-    <Button
-      className="mt-4 w-full"
-      onClick={() => handleChoosePlan(id, gymId)}
-    >
+    <Button className="mt-4 w-full" onClick={() => handleChoosePlan(id, gymId)}>
       Choose Plan
     </Button>
   );

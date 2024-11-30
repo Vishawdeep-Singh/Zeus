@@ -1,6 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   CalendarDays,
   Trophy,
@@ -11,9 +11,9 @@ import {
   Phone,
   Flame,
   Calendar,
-} from "lucide-react";
-import moment from "moment";
-import MultiAvatar from "./Multiavatar";
+} from 'lucide-react';
+import moment from 'moment';
+import MultiAvatar from './Multiavatar';
 
 // const generateAttendanceData = () => {
 //   const today = new Date()
@@ -28,8 +28,8 @@ const transformAttendanceData = (attendance: any[]) => {
   const data = {};
 
   attendance.forEach((record: { date: string }) => {
-    const dateParts = record.date.split("/");
-    const dateString = `${dateParts[2]}-${dateParts[0].padStart(2, "0")}-${dateParts[1].padStart(2, "0")}`; // Convert to 'YYYY-MM-DD'
+    const dateParts = record.date.split('/');
+    const dateString = `${dateParts[2]}-${dateParts[0].padStart(2, '0')}-${dateParts[1].padStart(2, '0')}`; // Convert to 'YYYY-MM-DD'
 
     if (data[dateString]) {
       data[dateString] += 1; // Increment count if date already exists
@@ -42,18 +42,18 @@ const transformAttendanceData = (attendance: any[]) => {
 };
 
 const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 export default function ProfilePage({ userProfileInfo }: any) {
@@ -72,16 +72,16 @@ export default function ProfilePage({ userProfileInfo }: any) {
   const originalDate = moment(userProfileInfo.memberships?.[0].dateJoined);
 
   const monthsToSubtract = userProfileInfo.memberships?.[0].membership.duration;
-  const addMonths = originalDate.clone().add(monthsToSubtract, "months");
+  const addMonths = originalDate.clone().add(monthsToSubtract, 'months');
 
   // Calculate the difference in days
-  const differenceInDays = addMonths.diff(moment(), "days");
+  const differenceInDays = addMonths.diff(moment(), 'days');
 
   const getColor = (count: number) => {
-    if (count === 0) return "bg-gray-200 dark:bg-gray-700";
-    if (count === 1) return "bg-gray-800 dark:bg-gray-200";
-    if (count === 2) return "bg-gray-600 dark:bg-gray-400";
-    return "bg-gray-800 dark:bg-gray-200";
+    if (count === 0) return 'bg-gray-200 dark:bg-gray-700';
+    if (count === 1) return 'bg-gray-800 dark:bg-gray-200';
+    if (count === 2) return 'bg-gray-600 dark:bg-gray-400';
+    return 'bg-gray-800 dark:bg-gray-200';
   };
 
   const renderAttendanceBoard = () => {
@@ -97,7 +97,7 @@ export default function ProfilePage({ userProfileInfo }: any) {
           today.getMonth(),
           today.getDate() - (i * 7 + j)
         );
-        const dateString = date.toISOString().split("T")[0];
+        const dateString = date.toISOString().split('T')[0];
         const count = attendanceDataTransformed[dateString] || 0;
         week.push(
           <div
@@ -114,7 +114,7 @@ export default function ProfilePage({ userProfileInfo }: any) {
               className="absolute text-xs text-gray-500 dark:text-gray-400"
               style={{
                 left: `${(51 - i) * 16}px`,
-                top: "-20px",
+                top: '-20px',
               }}
             >
               {MONTHS[date.getMonth()]}
@@ -143,8 +143,10 @@ export default function ProfilePage({ userProfileInfo }: any) {
         <CardHeader className="relative p-6 bg-gray-200 dark:bg-gray-800">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Avatar className="w-24 h-24 border-4 border-white dark:border-gray-900 shadow-md">
-             <MultiAvatar className="h-full w-full" name={userProfileInfo.name}></MultiAvatar>
-             
+              <MultiAvatar
+                className="h-full w-full"
+                name={userProfileInfo.name}
+              ></MultiAvatar>
             </Avatar>
             <div className="flex-grow text-center sm:text-left">
               <CardTitle className="text-3xl font-bold mb-1 text-black dark:text-white">
@@ -176,22 +178,22 @@ export default function ProfilePage({ userProfileInfo }: any) {
                 {userProfileInfo.member?.[0].name}
               </p>
               <Badge
-                variant={isActive ? "success" : "destructive"}
-                className={`${isActive ? "mt-1 text-lg text-green-400" : "mt-1 text-red-600"}`}
+                variant={isActive ? 'success' : 'destructive'}
+                className={`${isActive ? 'mt-1 text-lg text-green-400' : 'mt-1 text-red-600'}`}
               >
-                {isActive ? "Active" : "Expired"}
+                {isActive ? 'Active' : 'Expired'}
               </Badge>
               {isActive && (
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center justify-end">
                   <Clock className="w-3 h-3 mr-1 text-gray-500 dark:text-gray-400" />
-                 Membership Expires in {differenceInDays} days
+                  Membership Expires in {differenceInDays} days
                 </p>
-                
               )}
-               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center justify-end">
-                  <Calendar className="w-3 h-3 mr-1 text-gray-500 dark:text-gray-400" />
-                 Membership Plan : {userProfileInfo.memberships?.[0].membership.duration} months
-                </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center justify-end">
+                <Calendar className="w-3 h-3 mr-1 text-gray-500 dark:text-gray-400" />
+                Membership Plan :{' '}
+                {userProfileInfo.memberships?.[0].membership.duration} months
+              </p>
             </div>
           </div>
         </CardHeader>

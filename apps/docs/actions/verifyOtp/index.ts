@@ -1,7 +1,7 @@
-"use server";
+'use server';
 
-import prisma from "@repo/db/client";
-import { error } from "console";
+import prisma from '@repo/db/client';
+import { error } from 'console';
 
 export const verifyOtp = async (otp: string, email: string) => {
   try {
@@ -11,17 +11,17 @@ export const verifyOtp = async (otp: string, email: string) => {
       },
     });
     if (!response) {
-      return { error: "OTP Does not exists for this email" };
+      return { error: 'OTP Does not exists for this email' };
     }
     if (response.otp !== otp) {
-      return { error: "Invalid OTP" };
+      return { error: 'Invalid OTP' };
     }
     if (response.expiresAt < new Date()) {
-      return { error: "OTP expired" };
+      return { error: 'OTP expired' };
     }
     return { isVerified: true };
   } catch (error) {
     console.error(error);
-    return { error: "Not able to process verify otp for a moment" };
+    return { error: 'Not able to process verify otp for a moment' };
   }
 };

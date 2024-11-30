@@ -1,4 +1,4 @@
-import { Zap } from "lucide-react"
+import { Zap } from 'lucide-react';
 
 export default function AnimatedZeusLogo() {
   return (
@@ -11,5 +11,5 @@ export default function AnimatedZeusLogo() {
         <Zap className="h-8 w-8 text-yellow-500 opacity-50" />
       </div>
     </div>
-  )
+  );
 }

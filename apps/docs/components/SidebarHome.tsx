@@ -1,6 +1,6 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/sidebar';
 import {
   Bell,
   Plus,
@@ -13,37 +13,37 @@ import {
   Pencil,
   Trash2,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   IconArrowLeft,
   IconBrandTabler,
   IconSettings,
   IconUserBolt,
-} from "@tabler/icons-react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { signOut } from "next-auth/react";
-import multiavatar from "@multiavatar/multiavatar/esm";
-import MultiAvatar from "./Multiavatar";
-import { useRouter } from "next/navigation";
-import { useWebSocket } from "@/context/socketContext";
-import { getGymsOfOwner } from "@/actions/getGymsOfOwner";
-import { toast } from "sonner";
-import { useWebSockets } from "@/hooks/useWebSocket";
-import { useRecoilState } from "recoil";
-import { notificationsState } from "@/states/notifications";
-import { addNotifications } from "@/actions/addNotifications";
-import { useNotifications } from "@/hooks/useNotifications";
-import { Notification } from "@/types/types";
+} from '@tabler/icons-react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { signOut } from 'next-auth/react';
+import multiavatar from '@multiavatar/multiavatar/esm';
+import MultiAvatar from './Multiavatar';
+import { useRouter } from 'next/navigation';
+import { useWebSocket } from '@/context/socketContext';
+import { getGymsOfOwner } from '@/actions/getGymsOfOwner';
+import { toast } from 'sonner';
+import { useWebSockets } from '@/hooks/useWebSocket';
+import { useRecoilState } from 'recoil';
+import { notificationsState } from '@/states/notifications';
+import { addNotifications } from '@/actions/addNotifications';
+import { useNotifications } from '@/hooks/useNotifications';
+import { Notification } from '@/types/types';
 
 export default function SidebarHome({ children, session }: any) {
   const router = useRouter();
   const avatar = multiavatar(session.name);
   const { socket, user } = useWebSocket();
   const [gymIds, setGymIds] = useState<string[]>([]);
-  const notifications=useNotifications()
+  const notifications = useNotifications();
   const [, setNotifications] = useRecoilState(notificationsState);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function SidebarHome({ children, session }: any) {
       if (response.error) {
         toast.error(`${response.error}`, {
           closeButton: true,
-          position: "top-center",
+          position: 'top-center',
         });
       } else {
         setGymIds(response.data as []);
@@ -61,16 +61,15 @@ export default function SidebarHome({ children, session }: any) {
     fetchGymIds();
   }, []);
 
-
   useEffect(() => {
     if (socket) {
-      console.log("here");
+      console.log('here');
       socket.onmessage = async (event) => {
         console.log(JSON.parse(event.data));
 
         const { type, data } = JSON.parse(event.data) || {};
         console.log(type, data);
-        if (type === "check-in") {
+        if (type === 'check-in') {
           const audio = new Audio(`/notifications.mp3`);
           await audio.play();
           // toast.info(`${data.message}`,{
@@ -82,13 +81,13 @@ export default function SidebarHome({ children, session }: any) {
               <Bell size={20} fill="black"></Bell>
               <div className="font-semibold">{data.message}</div>
             </div>,
-            { duration: 5000, position: "top-right" }
+            { duration: 5000, position: 'top-right' }
           );
-          if(data.notificationMetaData){
-            setNotifications((prev) => [...prev,data.notificationMetaData]);
+          if (data.notificationMetaData) {
+            setNotifications((prev) => [...prev, data.notificationMetaData]);
           }
           // const response = await addNotifications(data.message,data.time)
-         
+
           // if(response.data){
           //   setNotifications((prev) => [...prev,response?.data]);
           // }
@@ -98,24 +97,23 @@ export default function SidebarHome({ children, session }: any) {
           //     position:"top-center"
           //   })
           // }
-        }
-        else if(type==="join-in"){
+        } else if (type === 'join-in') {
           const audio = new Audio(`/notifications.mp3`);
           await audio.play();
 
-             toast(
+          toast(
             <div className="space-x-2 space-y-1 flex items-center">
               <Bell size={20} fill="black"></Bell>
               <div className="font-semibold">{data.message}</div>
             </div>,
-            { duration: 5000, position: "top-right" }
+            { duration: 5000, position: 'top-right' }
           );
-          if(data.notificationMetaData){
-            setNotifications((prev) => [...prev,data.notificationMetaData]);
+          if (data.notificationMetaData) {
+            setNotifications((prev) => [...prev, data.notificationMetaData]);
           }
-          
+
           // const response = await addNotifications(data.message,data.time)
-         
+
           // if(response.data){
           //   setNotifications((prev) => [...prev,response?.data]);
           // }
@@ -134,7 +132,7 @@ export default function SidebarHome({ children, session }: any) {
     if (user && socket && gymIds?.length > 0) {
       socket.send(
         JSON.stringify({
-          type: "join-notifications-admin",
+          type: 'join-notifications-admin',
           data: {
             gymIds: gymIds,
             ownerId: user.id,
@@ -148,42 +146,42 @@ export default function SidebarHome({ children, session }: any) {
 
   const links = [
     {
-      label: "Dashboard",
-      href: "/admin/dashboard",
+      label: 'Dashboard',
+      href: '/admin/dashboard',
       icon: (
         <Dumbbell className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Manage Gyms",
-      href: "/admin/manageGyms",
+      label: 'Manage Gyms',
+      href: '/admin/manageGyms',
       icon: (
         <Building2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Go To User Site",
-      href: "/user",
+      label: 'Go To User Site',
+      href: '/user',
       icon: (
         <Users className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Settings",
-      href: "#",
+      label: 'Settings',
+      href: '#',
       icon: (
         <Settings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Logout",
-      href: "#",
+      label: 'Logout',
+      href: '#',
       icon: (
         <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
       onClick: async () => {
         signOut();
-        router.push("/signin");
+        router.push('/signin');
       },
     },
   ];
@@ -191,8 +189,8 @@ export default function SidebarHome({ children, session }: any) {
   return (
     <div
       className={cn(
-        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-        "h-screen" // for your use case, use `h-screen` instead of `h-[60vh]`
+        'rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 border border-neutral-200 dark:border-neutral-700 overflow-hidden',
+        'h-screen' // for your use case, use `h-screen` instead of `h-[60vh]`
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
@@ -206,11 +204,11 @@ export default function SidebarHome({ children, session }: any) {
             </div>
           </div>
           <div>
-            {session.user.provider === "google" ? (
+            {session.user.provider === 'google' ? (
               <SidebarLink
                 link={{
                   label: session.user.name,
-                  href: "#",
+                  href: '#',
                   icon: (
                     <Image
                       src={session.user.image}
@@ -226,7 +224,7 @@ export default function SidebarHome({ children, session }: any) {
               <SidebarLink
                 link={{
                   label: session.user.name,
-                  href: "#",
+                  href: '#',
                   icon: (
                     <MultiAvatar
                       name={session.user.name}

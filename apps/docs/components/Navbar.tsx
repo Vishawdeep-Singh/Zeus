@@ -1,5 +1,5 @@
-"use client";
-import { Button } from "@/components/ui/button";
+'use client';
+import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -7,39 +7,35 @@ import {
   AlertDialogTrigger,
   AlertDialogAction,
   AlertDialogCancel,
-} from "@/components/ui/alert-dialog"; // Import alert dialog components
-import { Bell, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Input } from "./ui/input";
-import { FileUpload } from "./ui/file-upload";
-import { TAddForm } from "@/types/types";
-import { addFormSchema } from "@/types/validations";
-import { toast } from "sonner";
-import { addGym } from "@/actions/addGym";
-import { useWebSocket } from "@/context/socketContext";
-import { useWebSockets } from "@/hooks/useWebSocket";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Notifications } from "./notifications";
-import { useRecoilState } from "recoil";
-import { notificationsState } from "@/states/notifications";
+} from '@/components/ui/alert-dialog'; // Import alert dialog components
+import { Bell, Plus } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Input } from './ui/input';
+import { FileUpload } from './ui/file-upload';
+import { TAddForm } from '@/types/types';
+import { addFormSchema } from '@/types/validations';
+import { toast } from 'sonner';
+import { addGym } from '@/actions/addGym';
+import { useWebSocket } from '@/context/socketContext';
+import { useWebSockets } from '@/hooks/useWebSocket';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Notifications } from './notifications';
+import { useRecoilState } from 'recoil';
+import { notificationsState } from '@/states/notifications';
 
 export const Navbar = ({ title }: { title: string }) => {
   const [gymFormData, setGymFormData] = useState<TAddForm>({
-    name: "",
-    address: "",
-    phoneNumber: ""
+    name: '',
+    address: '',
+    phoneNumber: '',
   });
   const [file, setFile] = useState<File>();
-  
-  const [notifications,setNotifications]=useRecoilState(notificationsState)
 
-  console.log(notifications)
+  const [notifications, setNotifications] = useRecoilState(notificationsState);
 
+  console.log(notifications);
 
-  
- 
-
-  const [dialogOpen,setDialogOpen]=useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false);
   const handleFileUpload = (file: File) => {
     setFile(file);
     console.log(file);
@@ -58,48 +54,42 @@ export const Navbar = ({ title }: { title: string }) => {
     const result = addFormSchema.safeParse(gymFormData);
     if (result.success) {
       const response = await addGym(gymFormData);
-      if(response.data){
-        console.log(response)
-        toast.success("Gym added successfully",{
-          position:"top-center",
-          closeButton:true,
-          duration:5000
-        })
-      
-        setDialogOpen(false)
-        setGymFormData(
-          {
-            name: "",
-            address: "",
-            phoneNumber: ""
-          }
-        )
-      }
-      else if(response.errors){
-        const errors = response.errors
-      for (const field in errors) {
-        console.log(field);
-        toast.error(`${field} : ${errors[field]?.join(",")}`, {
+      if (response.data) {
+        console.log(response);
+        toast.success('Gym added successfully', {
+          position: 'top-center',
           closeButton: true,
-          
+          duration: 5000,
         });
-      }
-      }
-      else {
+
+        setDialogOpen(false);
+        setGymFormData({
+          name: '',
+          address: '',
+          phoneNumber: '',
+        });
+      } else if (response.errors) {
+        const errors = response.errors;
+        for (const field in errors) {
+          console.log(field);
+          toast.error(`${field} : ${errors[field]?.join(',')}`, {
+            closeButton: true,
+          });
+        }
+      } else {
         toast.error(`${response.error}`, {
           closeButton: true,
-          
         });
       }
-
-      
     } else {
-      const errors = result.error.flatten().fieldErrors as Record<string, string[]>;
+      const errors = result.error.flatten().fieldErrors as Record<
+        string,
+        string[]
+      >;
       for (const field in errors) {
         console.log(field);
-        toast.error(`${field} : ${errors[field]?.join(",")}`, {
+        toast.error(`${field} : ${errors[field]?.join(',')}`, {
           closeButton: true,
-          
         });
       }
     }
@@ -109,12 +99,17 @@ export const Navbar = ({ title }: { title: string }) => {
     <nav className="p-3 bg-black rounded-3xl">
       <div className="flex justify-between">
         <div className="text-3xl font-bold text-white">{title}</div>
-    
+
         <div className="space-x-7">
           <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <AlertDialogTrigger asChild>
-              <Button className="hover:bg-slate-800"  onClick={()=>{setDialogOpen(true)}}>
-                <Plus className="mr-2"  size={20} />
+              <Button
+                className="hover:bg-slate-800"
+                onClick={() => {
+                  setDialogOpen(true);
+                }}
+              >
+                <Plus className="mr-2" size={20} />
                 Add Gym
               </Button>
             </AlertDialogTrigger>
@@ -126,22 +121,48 @@ export const Navbar = ({ title }: { title: string }) => {
                   <FileUpload onChange={handleFileUpload} />
                 </div>
                 <div>
-                  <label htmlFor="gymName" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="gymName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Gym Name
                   </label>
-                  <Input id="gymName" name="name" placeholder="Enter gym name" onChange={handleChange} />
+                  <Input
+                    id="gymName"
+                    name="name"
+                    placeholder="Enter gym name"
+                    onChange={handleChange}
+                  />
                 </div>
                 <div>
-                  <label htmlFor="gymAddress" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="gymAddress"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Address
                   </label>
-                  <Input id="gymAddress" name="address" placeholder="Enter gym address" onChange={handleChange} />
+                  <Input
+                    id="gymAddress"
+                    name="address"
+                    placeholder="Enter gym address"
+                    onChange={handleChange}
+                  />
                 </div>
                 <div>
-                  <label htmlFor="gymPhone" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="gymPhone"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Phone Number
                   </label>
-                  <Input max="9999999999" id="gymPhone" type="number" name="phoneNumber" placeholder="Enter phone number..." onChange={handleChange} />
+                  <Input
+                    max="9999999999"
+                    id="gymPhone"
+                    type="number"
+                    name="phoneNumber"
+                    placeholder="Enter phone number..."
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="flex justify-end space-x-4">
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -151,7 +172,6 @@ export const Navbar = ({ title }: { title: string }) => {
             </AlertDialogContent>
           </AlertDialog>
           <Notifications></Notifications>
-
         </div>
       </div>
     </nav>

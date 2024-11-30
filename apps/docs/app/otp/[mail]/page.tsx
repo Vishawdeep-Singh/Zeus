@@ -1,68 +1,68 @@
-"use client";
+'use client';
 
-import { signup } from "@/actions/signup/signup";
-import { verifyOtp } from "@/actions/verifyOtp";
-import { Button } from "@/components/ui/button";
+import { signup } from '@/actions/signup/signup';
+import { verifyOtp } from '@/actions/verifyOtp';
+import { Button } from '@/components/ui/button';
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { formDataAtom } from "@/states/signUpForm";
-import { signIn } from "next-auth/react";
-import router, { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { toast } from "sonner";
+} from '@/components/ui/input-otp';
+import { formDataAtom } from '@/states/signUpForm';
+import { signIn } from 'next-auth/react';
+import router, { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { toast } from 'sonner';
 
 export default function ({ params }: { params: { mail: string } }) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const router = useRouter();
   const [formData, setFormData] = useRecoilState(formDataAtom);
   console.log(formData);
   useEffect(() => {
     // Only access localStorage on the client side
-    if (typeof window !== "undefined") {
-      const storedFormData = localStorage.getItem("formData");
+    if (typeof window !== 'undefined') {
+      const storedFormData = localStorage.getItem('formData');
       if (storedFormData) {
         setFormData(JSON.parse(storedFormData)); // Safely parse and set formData
       } else {
-        router.push("/signup"); // Redirect if no formData
+        router.push('/signup'); // Redirect if no formData
       }
 
-      const fromSignup = localStorage.getItem("fromSignup");
+      const fromSignup = localStorage.getItem('fromSignup');
       if (!fromSignup) {
-        router.push("/signup"); // Redirect if not coming from signup
+        router.push('/signup'); // Redirect if not coming from signup
       }
     }
 
     return () => {
       // Clean up localStorage if needed
-      localStorage.removeItem("fromSignup");
-      localStorage.removeItem("formData");
+      localStorage.removeItem('fromSignup');
+      localStorage.removeItem('formData');
     };
   }, [router]);
   async function handleSubmit() {
-    const toastId = toast.loading("Verifying OTP", {
+    const toastId = toast.loading('Verifying OTP', {
       closeButton: true,
-      position: "bottom-center",
+      position: 'bottom-center',
     });
     const response = await verifyOtp(value, formData.email);
     if (response.isVerified) {
       toast.dismiss(toastId);
 
-      toast.success("OTP verified successfully!", {
+      toast.success('OTP verified successfully!', {
         closeButton: true,
-        position: "bottom-center",
+        position: 'bottom-center',
       });
       const response = await signup(formData);
       if (response.data) {
-        const signinresponse = await signIn("credentials", {
+        const signinresponse = await signIn('credentials', {
           email: response.data.email,
           password: formData.password,
           redirect: false,
-          callbackUrl: "/user",
+          callbackUrl: '/user',
         });
         if (signinresponse?.ok) {
           router.push(`/user`);
@@ -72,7 +72,7 @@ export default function ({ params }: { params: { mail: string } }) {
 
         for (const field in errors) {
           console.log(field);
-          toast.error(`${field} : ${errors[field]?.join(",")}`, {
+          toast.error(`${field} : ${errors[field]?.join(',')}`, {
             closeButton: true,
           });
         }
@@ -85,7 +85,7 @@ export default function ({ params }: { params: { mail: string } }) {
       toast.dismiss(toastId);
       toast.error(`${response.error}`, {
         closeButton: true,
-        position: "bottom-center",
+        position: 'bottom-center',
       });
     }
   }

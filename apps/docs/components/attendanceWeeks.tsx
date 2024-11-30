@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { TrendingUp } from "lucide-react";
+import { TrendingUp } from 'lucide-react';
 import {
   Bar,
   BarChart,
@@ -8,7 +8,7 @@ import {
   LabelList,
   ResponsiveContainer,
   XAxis,
-} from "recharts";
+} from 'recharts';
 
 import {
   Card,
@@ -17,19 +17,23 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useEffect, useState } from "react";
-import { getLastSevenDaysAttendance } from "@/actions/Last7DaysAttendance";
-import { useRecoilValue } from "recoil";
-import { AttedanceGymFilterState } from "@/states/filters";
+} from '@/components/ui/chart';
+import { useEffect, useState } from 'react';
+import { getLastSevenDaysAttendance } from '@/actions/Last7DaysAttendance';
+import { useRecoilValue } from 'recoil';
+import { AttedanceGymFilterState } from '@/states/filters';
+import MultiAvatar from './Multiavatar';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { current } from 'tailwindcss/colors';
+import { DialogDescription } from '@radix-ui/react-dialog';
 // const chartData = [
-//   { day: "Monday", attendance: 186 },
+//   { day: "Monday", attendance: 186 , members:[]},
 //   { day: "Tuesday", attendance: 305 },
 //   { day: "Wednesday", attendance: 237 },
 //   { day: "Thursday", attendance: 473 },
@@ -40,16 +44,59 @@ import { AttedanceGymFilterState } from "@/states/filters";
 
 const chartConfig = {
   attendance: {
-    label: "Attendance",
-    color: "hsl(var(--chart-1))",
+    label: 'Attendance',
+    color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig;
-
+type DayEntry = {
+  day: string;
+  attendance: number;
+  members: User[];
+};
+type User = {
+  userId: Number;
+  userName: string;
+};
 export default function Component() {
+  const [selectedDayMembers, setSelectedDayMembers] = useState<User[] | null>(
+    null
+  );
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+
+      return (
+        <div className="bg-white overflow-auto h-fit border rounded-lg  shadow-xl p-4">
+          <p className="font-bold text-sm">{label}</p>
+          <p className="text-primary text-sm">Attendances: {data.attendance}</p>
+          <p className="font-bold text-xl mt-5">Members</p>
+
+          <div className="h-full w-full mt-5">
+            <ul className="space-y-3 overflow-auto">
+              {data.members.length > 0 &&
+                data.members.map((data: any) => {
+                  return (
+                    <li className="flex  space-x-5 items-center">
+                      <MultiAvatar
+                        className="h-10 w-10"
+                        name={data.userName}
+                      ></MultiAvatar>
+                      <p className="text-base">{data.userName}</p>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
   const gymFilterValue = useRecoilValue(AttedanceGymFilterState);
-  const [chartData, setChartData] = useState<
-    { day: string; attendance: number }[] | null
-  >(null);
+  const [chartData, setChartData] = useState<DayEntry[] | null>(null);
+  const [selectedDay, setSelectedDay] = useState<String | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -75,21 +122,22 @@ export default function Component() {
         })
         .map((attendance, i) => {
           const attendDate = new Date(attendance.date);
-
-          const newDate = attendDate.toLocaleDateString("en-us", {
-            weekday: "long",
+          const userId = attendance.users.id;
+          const userName = attendance.users.name;
+          const newDate = attendDate.toLocaleDateString('en-us', {
+            weekday: 'long',
           });
-          return newDate;
+          return { newDate, userId, userName };
         });
-      const getLast7Days = () => {
-        const days = [];
+      const getLast7Days = (): DayEntry[] => {
+        const days: DayEntry[] = [];
         const today = new Date();
 
         for (let i = 1; i < 7; i++) {
           const day = new Date(today);
           day.setDate(today.getDate() - i);
-          const dayName = day.toLocaleDateString("en-us", { weekday: "long" });
-          days.push({ day: dayName, attendance: 0 });
+          const dayName = day.toLocaleDateString('en-us', { weekday: 'long' });
+          days.push({ day: dayName, attendance: 0, members: [] });
         }
 
         return days;
@@ -98,9 +146,14 @@ export default function Component() {
       const last7Days = getLast7Days();
       console.log(last7Days);
       sevenDaysAgoAttendances?.forEach((day) => {
-        const dayEntry = last7Days.find((d) => d.day === day);
+        const dayEntry = last7Days.find((d) => d.day === day.newDate);
         if (dayEntry) {
           dayEntry.attendance += 1;
+          const userobj = {
+            userId: day.userId,
+            userName: day.userName,
+          };
+          dayEntry.members.push(userobj);
         }
       });
       // console.log(last7Days)
@@ -112,7 +165,7 @@ export default function Component() {
   }, [gymFilterValue]);
 
   return (
-    <div className="w-[50%]   h-full">
+    <div className="w-[50%]  h-full">
       <Card className=" w-[100%] bg-[#f7f7f7] h-full hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
         <CardHeader>
           <CardTitle>Daily Attendance Chart</CardTitle>
@@ -139,7 +192,20 @@ export default function Component() {
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="attendance" fill="black" radius={8}>
+              <Bar
+                className="cursor-pointer"
+                onClick={(data) => {
+                  const dayData = data;
+                  if (dayData && dayData.members.length > 0) {
+                    setSelectedDayMembers(dayData.members);
+                    setIsDialogOpen(true);
+                    setSelectedDay(data.day);
+                  }
+                }}
+                dataKey="attendance"
+                fill="black"
+                radius={8}
+              >
                 <LabelList
                   position="top"
                   offset={12}
@@ -159,6 +225,28 @@ export default function Component() {
           </div>
         </CardFooter>
       </Card>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-md max-h-[500px] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Members Present on {selectedDay}</DialogTitle>
+            <DialogDescription>
+              {selectedDayMembers?.length} Attendances
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            {selectedDayMembers?.map((member) => (
+              <a
+                href={`/profile?userId=${member.userId}`}
+                key={member.userId.toString()}
+                className="flex items-center space-x-4 p-2 hover:bg-gray-100 rounded-lg"
+              >
+                <MultiAvatar className="h-10 w-10" name={member.userName} />
+                <span className="text-base">{member.userName}</span>
+              </a>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
