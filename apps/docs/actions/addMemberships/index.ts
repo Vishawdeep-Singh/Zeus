@@ -24,7 +24,7 @@ try {
             gymId
         }
     })
-    revalidatePath(`/manageGyms/${gymId}`)
+    revalidatePath(`/admin/manageGyms/${gymId}`)
     revalidatePath(`/user/view/${gymId}`)
     return {data:response}
     

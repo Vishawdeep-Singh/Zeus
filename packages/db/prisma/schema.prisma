@@ -19,7 +19,7 @@ name String
 email String @unique
 cellPh String @unique
 password String?
-roles Role[] @relation("User Roles")
+roles Roles @default(USER)
 owner Gym[] @relation("Gym Owner")
 member Gym[] @relation("Gym member")
 memberships UserMembership[] // Explicit Many to Many Relation
@@ -29,11 +29,7 @@ notifications Notification[]
 warningNotifications WarningNotifications[]
 }
 
-model Role {
-  id   String @id @default(uuid())
-  roleName Roles
-  users User[] @relation("User Roles")
-}
+
 
 model Gym {
 id String @id @default(uuid())

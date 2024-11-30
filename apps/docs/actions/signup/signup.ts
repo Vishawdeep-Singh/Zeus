@@ -31,11 +31,6 @@ export const signup = async (formData: SignUp) => {
         email: formData.email,
         cellPh: formData.cellPh,
         password: hashedPassword,
-        roles: {
-          create: {
-            roleName: "ADMIN",
-          },
-        },
         provider: "credentials",
       },
     });

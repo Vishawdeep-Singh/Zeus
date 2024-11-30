@@ -149,21 +149,21 @@ export default function SidebarHome({ children, session }: any) {
   const links = [
     {
       label: "Dashboard",
-      href: "/dashboard",
+      href: "/admin/dashboard",
       icon: (
         <Dumbbell className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Manage Gyms",
-      href: "/manageGyms",
+      href: "/admin/manageGyms",
       icon: (
         <Building2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Members",
-      href: "#",
+      label: "Go To User Site",
+      href: "/user",
       icon: (
         <Users className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),

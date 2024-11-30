@@ -74,10 +74,10 @@ export const Signin = () => {
       email: formData.email,
       password: formData.password,
       redirect: false,
-      callbackUrl: "/dashboard",
+      callbackUrl: "/user",
     });
     if (response?.ok) {
-      router.push("/dashboard");
+      router.push("/user");
     }
     if (response?.error) {
       toast.error("Password is wrong", {
@@ -134,7 +134,7 @@ export const Signin = () => {
                   onClick={async () => {
                     await signIn("google", {
                       redirect: false,
-                      callbackUrl: "/dashboard",
+                      callbackUrl: "/user",
                     });
                   }}
                   variant="outline"

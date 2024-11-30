@@ -315,7 +315,7 @@ export function MasterTable({
                   nameFilteredMembers.map((member, i) => (
                     <TableRow
                       onClick={() => {
-                        router.push(`profile?userId=${member.id}`);
+                        router.push(`/profile?userId=${member.id}`);
                       }}
                       className="hover:bg-gray-200 cursor-pointer"
                       key={i}

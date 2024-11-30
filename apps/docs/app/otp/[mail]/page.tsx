@@ -62,10 +62,10 @@ export default function ({ params }: { params: { mail: string } }) {
           email: response.data.email,
           password: formData.password,
           redirect: false,
-          callbackUrl: "/dashboard",
+          callbackUrl: "/user",
         });
         if (signinresponse?.ok) {
-          router.push(`/dashboard`);
+          router.push(`/user`);
         }
       } else if (response.errors) {
         const errors = response.errors as Record<string, string[]>;

@@ -45,7 +45,7 @@ export default async function({params}:{params:{id:string}}){
         return    <div className="flex flex-col text-xl items-center justify-center h-screen">
         <h1 className="text-2xl font-bold">Invalid Id Error</h1>
       Invalid Gym Id 
-        <a href="/manageGyms" className="mt-4 text-blue-600">Go back to homw</a>
+        <a href="/admin/manageGyms" className="mt-4 text-blue-600">Go back to homw</a>
       </div>
     }
     

@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 const SignInPage=async()=>{
     const session = await getServerSession(authOptions)
     if(session?.user){
-      redirect('/dashboard')
+      redirect('/user')
     }
 return <Signin></Signin>
 }

@@ -139,7 +139,7 @@ export const Signup = () => {
                   onClick={async () => {
                     await signIn("google", {
                       redirect: false,
-                      callbackUrl: "/dashboard",
+                      callbackUrl: "/user",
                     });
                   }}
                   variant="outline"

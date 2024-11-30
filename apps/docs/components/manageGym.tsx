@@ -1,4 +1,4 @@
-import loading from "@/app/(home)/manageGyms/loading";
+import loading from "@/app/admin/manageGyms/loading";
 import { Gym } from "@/types/types";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { LoaderCircle } from "lucide-react";

@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
 
         if (existingUser) {
           console.log(existingUser.email);
-          // Compare the provided password with the stored hashed password
+      
           const passwordValidation = await bcrypt.compare(
             credentials.password,
             existingUser.password as string
@@ -60,22 +60,29 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  //   cookies: {
-  //     sessionToken: {
-  //       name: 'next-auth.session-token-user-app',
-  //       options: {
-  //         path: '/',
-  //         httpOnly: true,
-  //         sameSite: 'lax',
-  //         secure: process.env.NODE_ENV==="production",
-  //       },
-  //     },
-  //   },
+  cookies: {
+    sessionToken: {
+      name: 'zeus-auth.session-token',
+      options: {
+        path: '/',
+        httpOnly: true,
+        sameSite: 'lax', // Adjust as per your app's requirements
+        secure: process.env.NODE_ENV === "production", // Secure in production
+      },
+    },
+  },
+  
+  
+  
 
   secret: process.env.JWT_SECRET || "secret",
+  session:{
+    strategy:"jwt"
+  },
 
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account, profile, isNewUser,trigger ,session}) {
+     
       if (account?.provider === "google") {
         const googleuser = await prisma.user.findUnique({
           where: {
@@ -83,6 +90,7 @@ export const authOptions: NextAuthOptions = {
           },
           select: {
             id: true,
+            roles:true
           },
         });
 
@@ -93,18 +101,27 @@ export const authOptions: NextAuthOptions = {
         token.email = profile?.email;
         token.name = profile?.name;
         token.picture = user?.image as string;
-        token.role = "ADMIN";
+        token.role = googleuser?.roles;
         console.log(token);
-        return token;
       } else if (user) {
+        const credentialsuser = await prisma.user.findUnique({
+          where: {
+            id: Number(user.id),
+          },
+          select: {
+            roles:true
+          },
+        });
         token.provider = "credentials";
         token.sub = user.id;
         token.name = user.name;
         token.email = user.email;
         token.number = user.number;
-        token.role = "ADMIN";
-        console.log(token);
-        return token;
+        token.role = credentialsuser?.roles;
+      }
+      if (trigger === "update" && session) {
+       
+        token.role = session.user.role;
       }
 
       return token;
@@ -156,11 +173,6 @@ export const authOptions: NextAuthOptions = {
                 email: profile?.email as string,
                 name: profile?.name as string,
                 cellPh: "",
-                roles: {
-                  create: {
-                    roleName: "ADMIN",
-                  },
-                },
                 provider: "google",
               },
             });

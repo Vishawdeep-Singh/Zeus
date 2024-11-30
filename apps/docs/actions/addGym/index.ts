@@ -29,7 +29,7 @@ try {
             ownerId:Number(session?.user.id)
         }
     })
-    revalidatePath('/manageGyms')
+    revalidatePath('/admin/manageGyms')
     return {data:response}
 
 } catch (error) {

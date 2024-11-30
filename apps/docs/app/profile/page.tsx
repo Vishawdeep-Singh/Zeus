@@ -16,6 +16,7 @@ export default async function UserProfilePage({searchParams}:{searchParams:{user
     if(!session?.user) {
         redirect('/')
     }
+    
     const userId =searchParams.userId
     const userIdNumber = Number(userId)
     if(isNaN(userIdNumber)){

@@ -25,7 +25,7 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <Link
-          href= {`/manageGyms/${item?.id}`}
+          href= {`/admin/manageGyms/${item?.id}`}
           key={item?.id}
          
           className="relative group  block p-2 h-full w-full"
