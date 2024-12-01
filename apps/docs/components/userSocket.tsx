@@ -1,11 +1,9 @@
 'use client';
 
-import { getGymsOfOwner } from '@/actions/getGymsOfOwner';
 import { getPurchasedGymsOfUser } from '@/actions/getPurchasedGyms';
 import { useWebSocket } from '@/context/socketContext';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import { MembershipExpiringWarning } from './membershipExpiringWarning';
 import { useWarningNotifications } from '@/hooks/useWarningNotifications';
 
 export function UserSocket({ children }: any) {

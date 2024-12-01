@@ -1,6 +1,4 @@
 import { FloatingDockDemo } from '@/components/floatingDock';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import StylishAttendanceMarker from '@/components/userAttendance';
 import { authOptions } from '@/lib/auth';
 import prisma from '@repo/db/client';

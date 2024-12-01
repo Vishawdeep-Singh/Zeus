@@ -1,17 +1,12 @@
-import { CardBody, CardContainer, CardItem } from '@/components/ui/3d-card';
 import { authOptions } from '@/lib/auth';
-import { AwardIcon, Link } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import Image from 'next/image';
 import { ManageGyms } from '@/components/manageGyms';
 import { Navbar } from '@/components/Navbar';
 import prisma from '@repo/db/client';
-import { error } from 'console';
 import { toast } from 'sonner';
 import { Gym } from '@/types/types';
 import { Suspense } from 'react';
-import { StoreID } from 'recoil';
 import Loading from './loading';
 import React from 'react';
 

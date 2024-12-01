@@ -6,9 +6,8 @@ import Image from 'next/image';
 import MultiAvatar from '@/components/Multiavatar';
 import Link from 'next/link';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
-import { ExternalLink, MapPin, Dumbbell, Badge } from 'lucide-react';
-import { Button } from 'react-day-picker';
+import { Avatar } from '@radix-ui/react-avatar';
+import { MapPin } from 'lucide-react';
 
 export default async function UserProfilePage({
   searchParams,
@@ -38,14 +37,18 @@ export default async function UserProfilePage({
         <CardHeader className="relative pb-0">
           <div className="flex flex-col sm:flex-row items-center">
             <Avatar className="w-32 h-32 border-4 border-background -mt-16 relative z-10 transition-transform duration-300 ease-in-out hover:scale-105 rounded-full">
-              {user?.provider ==="google" ?  <Image
-                          src={user.image as string}
-                          className="rounded-full object-cover"
-                          width={1000}
-                          height={1000}
-                          alt="Avatar"
-                        /> :    <MultiAvatar name={user?.name as string} />}
-           
+              {user?.provider === 'google' ? (
+                <Image
+                  src={user.image as string}
+                  className="rounded-full object-cover"
+                  width={1000}
+                  height={1000}
+                  alt="Avatar"
+                />
+              ) : (
+                <MultiAvatar name={user?.name as string} />
+              )}
+
               {/* <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback> */}
             </Avatar>
             <div className="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left">

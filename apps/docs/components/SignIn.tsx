@@ -13,11 +13,10 @@ import {
 } from '@/components/ui/card';
 import { useRef, useState } from 'react';
 import { Check, LoaderCircle, Zap } from 'lucide-react';
-import { Dumbbell } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { SignIn } from '@/types/types';
 import { FlipWords } from './ui/flip-words';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { checkEmailExists } from '@/actions/checkEmail';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';

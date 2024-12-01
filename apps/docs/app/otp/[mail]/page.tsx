@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/input-otp';
 import { formDataAtom } from '@/states/signUpForm';
 import { signIn } from 'next-auth/react';
-import router, { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { toast } from 'sonner';
 
 export default function ({ params }: { params: { mail: string } }) {

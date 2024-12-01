@@ -1,25 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/sidebar';
-import {
-  Bell,
-  Plus,
-  Dumbbell,
-  Users,
-  Calendar,
-  Settings,
-  LogOut,
-  Building2,
-  Pencil,
-  Trash2,
-  Zap,
-} from 'lucide-react';
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
-} from '@tabler/icons-react';
+import { Bell, Dumbbell, Users, Settings, Building2, Zap } from 'lucide-react';
+import { IconArrowLeft } from '@tabler/icons-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -31,12 +14,9 @@ import { useRouter } from 'next/navigation';
 import { useWebSocket } from '@/context/socketContext';
 import { getGymsOfOwner } from '@/actions/getGymsOfOwner';
 import { toast } from 'sonner';
-import { useWebSockets } from '@/hooks/useWebSocket';
 import { useRecoilState } from 'recoil';
 import { notificationsState } from '@/states/notifications';
-import { addNotifications } from '@/actions/addNotifications';
 import { useNotifications } from '@/hooks/useNotifications';
-import { Notification } from '@/types/types';
 
 export default function SidebarHome({ children, session }: any) {
   const router = useRouter();

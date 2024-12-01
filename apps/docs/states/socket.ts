@@ -1,5 +1,5 @@
 // state/socketAtom.js
-import { Session, User } from 'next-auth';
+import { User } from 'next-auth';
 import { atom } from 'recoil';
 
 export const socketState = atom<WebSocket | null>({

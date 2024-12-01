@@ -5,7 +5,6 @@ import { warningNotificationsState } from '@/states/notifications';
 import { WarningNotification } from '@/types/types';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { toast } from 'sonner';
 
 export function WarningShower({ data }: { data: any }) {
   const [warningNotifications, setWarningNotifications] = useRecoilState(

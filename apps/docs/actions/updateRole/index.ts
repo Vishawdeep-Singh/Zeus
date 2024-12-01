@@ -1,10 +1,7 @@
 'use server';
 import { authOptions } from '@/lib/auth';
 import prisma from '@repo/db/client';
-import { error } from 'console';
 import { getServerSession } from 'next-auth';
-import { getToken } from 'next-auth/jwt';
-import { NextRequest } from 'next/server';
 
 export const handleAccessingAdminTools = async () => {
   try {

@@ -6,7 +6,6 @@ import { CheckCircle, XCircle, Loader } from 'lucide-react';
 import { toast } from 'sonner';
 import { markAttendance } from '@/actions/markAttendance';
 import { useWebSocket } from '@/context/socketContext';
-import { useWebSockets } from '@/hooks/useWebSocket';
 import { getOwnerId } from '@/actions/getOwner_Given_gymId';
 import { addNotifications } from '@/actions/addNotifications';
 

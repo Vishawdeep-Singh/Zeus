@@ -5,20 +5,16 @@ import {
   AlertDialogContent,
   AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog'; // Import alert dialog components
-import { Bell, Plus } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
 import { Input } from './ui/input';
 import { FileUpload } from './ui/file-upload';
 import { TAddForm } from '@/types/types';
 import { addFormSchema } from '@/types/validations';
 import { toast } from 'sonner';
 import { addGym } from '@/actions/addGym';
-import { useWebSocket } from '@/context/socketContext';
-import { useWebSockets } from '@/hooks/useWebSocket';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Notifications } from './notifications';
 import { useRecoilState } from 'recoil';
 import { notificationsState } from '@/states/notifications';

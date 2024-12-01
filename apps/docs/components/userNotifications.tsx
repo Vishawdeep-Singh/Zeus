@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, TriangleAlert } from 'lucide-react';
+import { TriangleAlert } from 'lucide-react';
 import { Button } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -11,11 +11,9 @@ import {
 } from '@/states/notifications';
 import { ScrollArea } from './ui/scroll-area';
 import { Badge } from './ui/badge';
-import { set } from 'zod';
 import { updateNotifications } from '@/actions/updateNotifications';
 import { toast } from 'sonner';
 import MultiAvatar from './Multiavatar';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 

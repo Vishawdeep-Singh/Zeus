@@ -1,5 +1,5 @@
 'use client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -9,14 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Search, CalendarCheck } from 'lucide-react';
 import { DatePicker } from './datePicker';
 import { SelectGyms } from './gymSelector';
 import { useEffect, useState } from 'react';
 import { dateRange, GymFilterState } from '@/states/filters';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { GymsData, MasterTableMember } from '@/types/types';
+import { MasterTableMember } from '@/types/types';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { checkIfItLiesInRange } from '@/lib/helper';
 import { AttendanceDropDown } from './AttendaceDropDown';

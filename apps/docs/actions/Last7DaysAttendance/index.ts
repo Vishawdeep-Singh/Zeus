@@ -22,8 +22,8 @@ export const getLastSevenDaysAttendance = async () => {
               select: {
                 id: true,
                 name: true,
-                provider:true,
-                image:true
+                provider: true,
+                image: true,
               },
             },
           },

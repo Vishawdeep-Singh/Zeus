@@ -10,7 +10,6 @@ import {
 } from '@/states/notifications';
 import { ScrollArea } from './ui/scroll-area';
 import { Badge } from './ui/badge';
-import { set } from 'zod';
 import { updateNotifications } from '@/actions/updateNotifications';
 import { toast } from 'sonner';
 

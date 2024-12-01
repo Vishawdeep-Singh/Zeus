@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -14,11 +14,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { membershipExpiryConversion } from '@/lib/helper';
-import { GymFilter } from './gymFilter';
-import { AttedanceGymFilterState, GymFilterState } from '@/states/filters';
+import { AttedanceGymFilterState } from '@/states/filters';
 import { useRecoilValue } from 'recoil';
-import exp from 'constants';
-import { toast } from 'sonner';
 import { ExpiredMembers, GymsData } from '@/types/types';
 
 // // Mock data for demonstration

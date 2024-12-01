@@ -1,8 +1,6 @@
-import { authOptions } from '@/lib/auth';
 import prisma from '@repo/db/client';
 import moment from 'moment';
-import { getServerSession } from 'next-auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
