@@ -48,6 +48,8 @@ async function getUserProfileInfo(userId: number, gymId: string) {
         name: true,
         cellPh: true,
         email: true,
+        provider:true,
+        image:true,
         member: {
           where: {
             id: gymId,

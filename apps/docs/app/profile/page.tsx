@@ -38,7 +38,14 @@ export default async function UserProfilePage({
         <CardHeader className="relative pb-0">
           <div className="flex flex-col sm:flex-row items-center">
             <Avatar className="w-32 h-32 border-4 border-background -mt-16 relative z-10 transition-transform duration-300 ease-in-out hover:scale-105 rounded-full">
-              <MultiAvatar name={user?.name as string} />
+              {user?.provider ==="google" ?  <Image
+                          src={user.image as string}
+                          className="rounded-full object-cover"
+                          width={1000}
+                          height={1000}
+                          alt="Avatar"
+                        /> :    <MultiAvatar name={user?.name as string} />}
+           
               {/* <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback> */}
             </Avatar>
             <div className="mt-4 sm:mt-0 sm:ml-6 text-center sm:text-left">

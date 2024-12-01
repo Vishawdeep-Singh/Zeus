@@ -41,10 +41,10 @@ export async function MembersofGym({ membersDetails, owner }: any) {
             <Popover key={i}>
               <PopoverTrigger>
                 <div className=" p-5 flex rounded-lg text-lg hover:bg-slate-50 space-x-5 items-center">
-                  {session?.user.provider === 'google' ? (
+                  {member.provider === 'google' ? (
                     <Image
-                      src={session.user.image as string}
-                      className="h-7 w-7 flex-shrink-0 rounded-full"
+                      src={member.image as string}
+                      className="h-12 w-12 flex-shrink-0 rounded-full"
                       width={50}
                       height={50}
                       alt="Avatar"
@@ -70,10 +70,10 @@ export async function MembersofGym({ membersDetails, owner }: any) {
                   <div className="flex justify-between items-center">
                     {/* Profile section */}
                     <div className="flex items-center space-x-3">
-                      {session?.user.provider === 'google' ? (
+                      {member.provider === 'google' ? (
                         <Image
-                          src={session.user.image as string}
-                          className="h-7 w-7 flex-shrink-0 rounded-full"
+                          src={member.image as string}
+                          className="h-12 w-12 flex-shrink-0 rounded-full"
                           width={50}
                           height={50}
                           alt="Avatar"

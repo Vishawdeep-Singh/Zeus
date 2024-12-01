@@ -17,8 +17,17 @@ import { toast } from 'sonner';
 import MultiAvatar from './Multiavatar';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-export const UserNotifications = ({ name }: { name: string }) => {
+export const UserNotifications = ({
+  name,
+  provider,
+  image,
+}: {
+  name: string;
+  provider: string | undefined;
+  image?: string | null | undefined;
+}) => {
   async function handleClick() {
     const notificationIds = unreadNotifications.map(
       (notification) => notification.id
@@ -49,7 +58,18 @@ export const UserNotifications = ({ name }: { name: string }) => {
     <Popover>
       <PopoverTrigger asChild>
         <div className="relative h-14 w-14 hover:border-2 p-[2px] rounded-full border-black hover:cursor-pointer">
-          <MultiAvatar className="" name={name}></MultiAvatar>
+          {provider === 'google' ? (
+            <Image
+              src={image as string}
+              className="rounded-full"
+              width={50}
+              height={50}
+              alt="Avatar"
+            />
+          ) : (
+            <MultiAvatar className="" name={name}></MultiAvatar>
+          )}
+
           {unreadNotifications.length > 0 && (
             <Badge
               variant="destructive"

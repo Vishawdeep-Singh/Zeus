@@ -19,6 +19,7 @@ name String
 email String @unique
 cellPh String @unique
 password String?
+image String?
 roles Roles @default(USER)
 owner Gym[] @relation("Gym Owner")
 member Gym[] @relation("Gym member")

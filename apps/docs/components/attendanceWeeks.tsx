@@ -32,6 +32,7 @@ import MultiAvatar from './Multiavatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { current } from 'tailwindcss/colors';
 import { DialogDescription } from '@radix-ui/react-dialog';
+import Image from 'next/image';
 // const chartData = [
 //   { day: "Monday", attendance: 186 , members:[]},
 //   { day: "Tuesday", attendance: 305 },
@@ -56,6 +57,8 @@ type DayEntry = {
 type User = {
   userId: Number;
   userName: string;
+  provider :string;
+  image?:string | null | undefined
 };
 export default function Component() {
   const [selectedDayMembers, setSelectedDayMembers] = useState<User[] | null>(
@@ -124,10 +127,12 @@ export default function Component() {
           const attendDate = new Date(attendance.date);
           const userId = attendance.users.id;
           const userName = attendance.users.name;
+          const provider = attendance.users.provider;
+          const image = attendance.users.image
           const newDate = attendDate.toLocaleDateString('en-us', {
             weekday: 'long',
           });
-          return { newDate, userId, userName };
+          return { newDate, userId, userName,provider,image };
         });
       const getLast7Days = (): DayEntry[] => {
         const days: DayEntry[] = [];
@@ -152,6 +157,9 @@ export default function Component() {
           const userobj = {
             userId: day.userId,
             userName: day.userName,
+            provider: day.provider,
+            image: day.image
+
           };
           dayEntry.members.push(userobj);
         }
@@ -240,7 +248,14 @@ export default function Component() {
                 key={member.userId.toString()}
                 className="flex items-center space-x-4 p-2 hover:bg-gray-100 rounded-lg"
               >
-                <MultiAvatar className="h-10 w-10" name={member.userName} />
+                {member.provider==="google" ? <Image
+                      src={member.image as string}
+                      className="h-10 w-10 flex-shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    /> :  <MultiAvatar className="h-10 w-10" name={member.userName} />}
+               
                 <span className="text-base">{member.userName}</span>
               </a>
             ))}

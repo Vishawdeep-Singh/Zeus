@@ -52,6 +52,8 @@ export default async function RootLayout({
         <div className="border border-black bg-slate-100 fixed right-5 z-50 top-2  rounded-3xl px-4 space-x-5 py-2 flex items-center ">
           <UserNotifications
             name={session?.user.name as string}
+            provider={session.user.provider}
+            image={session.user.image}
           ></UserNotifications>
           <p className="font-bold text-lg">{session.user.name}</p>
           <UserLogOut></UserLogOut>

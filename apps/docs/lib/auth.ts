@@ -148,27 +148,30 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async signIn({ user, account, profile, email, credentials }) {
+      console.log("User Image",user?.image)
+
       try {
         if (account?.provider === 'google') {
-          const user = await prisma.user.findUnique({
+          const user1 = await prisma.user.findUnique({
             where: {
               email: profile?.email,
             },
           });
-          if (user?.provider === 'credentials') {
+          if (user1?.provider === 'credentials') {
             toast.error('Email is Already in use', {
               closeButton: true,
             });
             console.log('gdfadsfasdfads');
             return false;
           }
-          if (!user) {
+          if (!user1) {
             const newuser = await prisma.user.create({
               data: {
                 email: profile?.email as string,
                 name: profile?.name as string,
                 cellPh: '',
                 provider: 'google',
+                image:user.image
               },
             });
           }

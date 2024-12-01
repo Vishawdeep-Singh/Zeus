@@ -26,6 +26,7 @@ import { useRecoilValue } from 'recoil';
 import { Attendances } from '@/types/types';
 import MultiAvatar from './Multiavatar';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export const description = 'A radial chart with text';
 
@@ -42,6 +43,8 @@ const chartConfig = {
 type User = {
   userId: number;
   userName: string;
+  provider: string;
+  image?: string | null | undefined;
 };
 export function Component2() {
   const router = useRouter();
@@ -87,9 +90,13 @@ export function Component2() {
       const members = finalFilterdAttendance?.map((attendanceData) => {
         const userName = attendanceData.users.name;
         const userId = attendanceData.userId;
+        const provider = attendanceData.users.provider;
+        const image = attendanceData.users.image;
         return {
           userId,
           userName,
+          provider,
+          image,
         };
       });
       if (members) {
@@ -186,10 +193,20 @@ export function Component2() {
                   key={userData.userId}
                   className="flex items-center space-x-10 hover:bg-white p-3 rounded-md cursor-pointer"
                 >
-                  <MultiAvatar
-                    className="h-14 w-14"
-                    name={userData.userName}
-                  ></MultiAvatar>
+                  {userData.provider === 'google' ? (
+                    <Image
+                      src={userData.image as string}
+                      className="h-10 w-10 flex-shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    />
+                  ) : (
+                    <MultiAvatar
+                      className="h-10 w-10"
+                      name={userData.userName}
+                    />
+                  )}
                   <p className="font-semibold">{userData.userName}</p>
                 </a>
               );

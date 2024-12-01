@@ -44,7 +44,7 @@ export function MembershipCard({
           response.warningNotifications.map((n) => n.id)
         );
         setWarningNotifications((prev) =>
-          prev.filter((data) => !resolvedIds.has(data.id))
+          prev.filter((data) => !resolvedIds.has(data.id!))
         );
       }
       let message = `${user?.name} with Id ${user?.id} joined at ${response.gymDetails.name}`;

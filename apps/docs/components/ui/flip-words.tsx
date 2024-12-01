@@ -17,6 +17,7 @@ export const FlipWords = ({
 
   // thanks for the fix Julian - https://github.com/Julian-AT
   const startAnimation = useCallback(() => {
+    // @ts-ignore
     const word = words[words.indexOf(currentWord) + 1] || words[0];
     setCurrentWord(word);
     setIsAnimating(true);
@@ -63,7 +64,9 @@ export const FlipWords = ({
         )}
         key={currentWord}
       >
+        
         {/* edit suggested by Sajal: https://x.com/DewanganSajal */}
+        {/* @ts-ignore */}
         {currentWord.split(' ').map((word, wordIndex) => (
           <motion.span
             key={word + wordIndex}

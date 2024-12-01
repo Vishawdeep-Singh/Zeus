@@ -144,6 +144,7 @@ const ChartTooltipContent = React.forwardRef<
       }
 
       const [item] = payload
+      // @ts-ignore
       const key = `${labelKey || item.dataKey || item.name || "value"}`
       const itemConfig = getPayloadConfigFromPayload(config, item, key)
       const value =

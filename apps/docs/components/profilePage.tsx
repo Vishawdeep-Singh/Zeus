@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import moment from 'moment';
 import MultiAvatar from './Multiavatar';
+import Image from 'next/image';
 
 // const generateAttendanceData = () => {
 //   const today = new Date()
@@ -25,11 +26,11 @@ import MultiAvatar from './Multiavatar';
 //   return data
 // }
 const transformAttendanceData = (attendance: any[]) => {
-  const data = {};
+  const data: any = {};
 
   attendance.forEach((record: { date: string }) => {
     const dateParts = record.date.split('/');
-    const dateString = `${dateParts[2]}-${dateParts[0].padStart(2, '0')}-${dateParts[1].padStart(2, '0')}`; // Convert to 'YYYY-MM-DD'
+    const dateString = `${dateParts[2]}-${dateParts[0]?.padStart(2, '0')}-${dateParts[1]?.padStart(2, '0')}`; // Convert to 'YYYY-MM-DD'
 
     if (data[dateString]) {
       data[dateString] += 1; // Increment count if date already exists
@@ -98,7 +99,7 @@ export default function ProfilePage({ userProfileInfo }: any) {
           today.getDate() - (i * 7 + j)
         );
         const dateString = date.toISOString().split('T')[0];
-        const count = attendanceDataTransformed[dateString] || 0;
+        const count = attendanceDataTransformed[dateString!] || 0;
         week.push(
           <div
             key={dateString}
@@ -143,10 +144,19 @@ export default function ProfilePage({ userProfileInfo }: any) {
         <CardHeader className="relative p-6 bg-gray-200 dark:bg-gray-800">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Avatar className="w-24 h-24 border-4 border-white dark:border-gray-900 shadow-md">
-              <MultiAvatar
-                className="h-full w-full"
-                name={userProfileInfo.name}
-              ></MultiAvatar>
+              {userProfileInfo?.provider === 'google' ? (
+                <Image
+                  src={userProfileInfo.image as string}
+                  className="rounded-full  object-cover"
+                  width={1000}
+                  height={1000}
+                  alt="Avatar"
+                />
+              ) : (
+                <MultiAvatar name={userProfileInfo.name as string} />
+              )}
+
+              {/* <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback> */}
             </Avatar>
             <div className="flex-grow text-center sm:text-left">
               <CardTitle className="text-3xl font-bold mb-1 text-black dark:text-white">
@@ -178,6 +188,7 @@ export default function ProfilePage({ userProfileInfo }: any) {
                 {userProfileInfo.member?.[0].name}
               </p>
               <Badge
+                // @ts-ignore
                 variant={isActive ? 'success' : 'destructive'}
                 className={`${isActive ? 'mt-1 text-lg text-green-400' : 'mt-1 text-red-600'}`}
               >

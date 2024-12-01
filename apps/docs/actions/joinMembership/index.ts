@@ -31,7 +31,7 @@ export async function joinMembership(membershipId: string, gymId: string) {
         },
       });
 
-    const [membership, gym] = await prisma.$transaction([
+    const [deleteResult,membership, gym] = await prisma.$transaction([
       prisma.userMembership.deleteMany({
         where: {
           userId: Number(session?.user.id),

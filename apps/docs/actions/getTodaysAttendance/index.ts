@@ -24,6 +24,8 @@ export const getTodayAttendance = async () => {
             users: {
               select: {
                 name: true,
+                provider:true,
+                image:true
               },
             },
           },

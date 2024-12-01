@@ -30,6 +30,7 @@ export const StickyScroll = ({
     const closestBreakpointIndex = cardsBreakpoints.reduce(
       (acc, breakpoint, index) => {
         const distance = Math.abs(latest - breakpoint);
+        // @ts-ignore
         if (distance < Math.abs(latest - cardsBreakpoints[acc])) {
           return index;
         }
@@ -109,6 +110,7 @@ export const StickyScroll = ({
           contentClassName
         )}
       >
+        {/* @ts-ignore */}
         {content[activeCard].content ?? null}
       </div>
     </motion.div>
