@@ -36,18 +36,6 @@ export function FloatingDockDemo() {
       ),
       href: '/user/attendances',
     },
-    {
-      title: 'Aceternity UI',
-      icon: (
-        <Image
-          src="https://assets.aceternity.com/logo-dark.png"
-          width={20}
-          height={20}
-          alt="Aceternity Logo"
-        />
-      ),
-      href: '#',
-    },
   ];
   return (
     <div className="flex z-50 relative justify-center h-fit w-full">
