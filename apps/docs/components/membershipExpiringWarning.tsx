@@ -40,7 +40,7 @@ async function getMembership(id: string) {
         },
       },
     });
-    console.log(response);
+    console.log("Warning",response);
     return { data: response };
   } catch (error) {
     console.error(error);

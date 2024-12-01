@@ -170,9 +170,9 @@ export type ExpiredMembers = {
 };
 
 export type WarningNotification = {
-  gymId: string;
-  id: string;
-  userId: number;
-  message: string;
-  resolved: boolean;
+  gymId?: string;
+  id?: string;
+  userId?: number;
+  message?: string;
+  resolved?: boolean;
 };

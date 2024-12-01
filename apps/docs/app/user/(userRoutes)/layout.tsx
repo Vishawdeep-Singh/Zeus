@@ -23,6 +23,8 @@ import { handleAccessingAdminTools } from '@/actions/updateRole';
 import { toast } from 'sonner';
 import { AccessAdmin } from '@/components/accessAdminTools';
 import { UserLogOut } from '@/components/userLogoutButton';
+import prisma from '@repo/db/client';
+import { WarningShower } from '@/components/warningShower';
 
 export default async function RootLayout({
   children,
@@ -33,10 +35,11 @@ export default async function RootLayout({
   if (!session?.user.id) {
     redirect('/signin');
   }
+  const response = await getMembership(session.user.id);
   return (
     <>
       <div className="p-5 flex">
-        <MembershipExpiringWarning></MembershipExpiringWarning>
+      <WarningShower data={response.data}/>
         <Link className="flex items-center justify-center" href="#">
           <Zap fill="Black" size={50}></Zap>
           <span className="ml-2 text-4xl font-bold text-gray-900 dark:text-white">
@@ -57,4 +60,34 @@ export default async function RootLayout({
       <div>{children}</div>
     </>
   );
+}
+
+
+
+
+async function getMembership(id: string) {
+try {
+  const response = await prisma.userMembership.findMany({
+    where: {
+      userId: Number(id),
+    },
+    include: {
+      gym: {
+        select: {
+          name: true,
+        },
+      },
+      membership: {
+        select: {
+          duration: true,
+        },
+      },
+    },
+  });
+  console.log("Warning",response);
+  return { data: response };
+} catch (error) {
+  console.error(error);
+  return { error: 'Not able to process memberships at the moment' };
+}
 }

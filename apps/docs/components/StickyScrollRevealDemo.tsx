@@ -5,25 +5,15 @@ import Image from "next/image";
 
 const content = [
   {
-    title: "Collaborative Editing",
+    title: "Comprehensive Analytics at Your Fingertips",
     description:
-      "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
-    content: (
-      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-        Collaborative Editing
-      </div>
-    ),
-  },
-  {
-    title: "Real time changes",
-    description:
-      "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
+      "Gain insights into your gym's performance with detailed analytics. View attendance data for the last 7 days and revenue trends over the past 6 months. Easily filter results to track multiple gym locations separately for better decision-making.",
     content: (
       <div className="h-full w-full flex items-center justify-center text-white">
         <Image
-          src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFuaW1lJTIwZ3ltfGVufDB8fDB8fHww"
-          width={300}
-          height={300}
+          src={'/scroll01.png'}
+          width={1000}
+          height={1000}
           className="h-full w-full object-cover"
           alt="linear board demo"
         />
@@ -31,26 +21,167 @@ const content = [
     ),
   },
   {
-    title: "Version control",
+    title: "Stay Ahead of Membership Expirations",
     description:
-      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+      "Keep track of expiring memberships effortlessly. When a user's membership nears its end, they’re added to the membership expiry table for timely reminders, ensuring no one misses out on renewing.",
     content: (
-      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-        Version control
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll02.png'}
+          width={1000}
+          height={1000}
+          className="h-full w-full object-cover"
+          alt="linear board demo"
+        />
       </div>
     ),
   },
   {
-    title: "Running out of content",
+    title: "Real-Time Attendance Tracking",
     description:
-      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+      "Get live updates on your gym’s attendance. See who has visited, track member check-ins, and stay on top of your gym’s activity to ensure smooth operations.",
     content: (
-      <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-        Running out of content
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll3.png'}
+          width={1000}
+          height={1000}
+          className="h-full w-full object-cover"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Effortless Member Search with Advanced Filters",
+    description:
+      "Quickly find members using a powerful search tool with filters like date, gym name, and user name. View attendance records for specific dates or ranges, ensuring accurate tracking of gym activity.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll4.png'}
+          width={2000}
+          height={2000}
+          className="h-full w-full object-fill"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Simplified Gym Management",
+    description:
+      "Easily manage all of your gyms in one place. View and control key information for each location, ensuring smooth operations across your gym empire.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll5.png'}
+          width={2000}
+          height={2000}
+          className="h-full w-full object-fill"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Seamless Membership Management",
+    description:
+      "Effortlessly add new memberships to any of your gyms. Within each gym, you can manage memberships directly, giving you full control over your gym's membership base.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll6.png'}
+          width={2000}
+          height={2000}
+          className="h-full w-full object-fill"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Member Profiles & Insights",
+    description:
+      "Gain a deeper understanding of your gym members. View detailed stats and information for each member, making it easy to track their engagement and manage memberships efficiently.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll7.png'}
+          width={2000}
+          height={2000}
+          className="h-full w-full object-fill"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "User-Friendly Interface for Members",
+    description:
+      "A clean, intuitive user interface for your gym members. Users can easily join gyms, track memberships, and engage with your gym’s services from their own dashboard.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll8.png'}
+          width={2000}
+          height={2000}
+          className="h-full w-full object-fill"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Monitor Your Gym Memberships",
+    description:
+      "Users can track their memberships across all gyms. With clear indicators of days left until expiry, users are notified of upcoming renewals, so they never miss a beat.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll9.png'}
+          width={2000}
+          height={2000}
+          className="h-full w-full object-fill"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Effortless Attendance Tracking for Members",
+    description:
+      "Users can quickly mark their attendance at joined gyms. Gym admins and owners receive notifications in real time, ensuring accurate tracking of attendance for all members.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll10.png'}
+          width={2000}
+          height={2000}
+          className="h-full w-full object-fill"
+          alt="linear board demo"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Advanced Search for Members & Attendance",
+    description:
+      "Utilize a robust search engine to find specific member attendance data. With multiple filters, including date, gym name, and user, you can access tailored results for precise record-keeping.",
+    content: (
+      <div className="h-full w-full flex items-center justify-center text-white">
+        <Image
+          src={'/scroll4.png'}
+          width={1000}
+          height={1000}
+          className="h-full w-full object-contain"
+          alt="linear board demo"
+        />
       </div>
     ),
   },
 ];
+
 export function StickyScrollRevealDemo() {
   return (
     <div className="p-10">

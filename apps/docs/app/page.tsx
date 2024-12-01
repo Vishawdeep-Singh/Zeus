@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Dumbbell, Users, BarChart, ChevronRight, Menu } from 'lucide-react';
+import { Dumbbell, Users, BarChart, ChevronRight, Menu, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -29,8 +29,8 @@ export default function LandingPage() {
   dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
       <header className="px-4 lg:px-6 h-16 flex items-center">
         <Link className="flex items-center justify-center" href="#">
-          <AnimatedZeusLogo />
-          <span className="ml-2 text-2xl font-bold text-gray-900 dark:text-white">
+          <Zap fill='black' size={40}></Zap>
+          <span className="ml-2 text-3xl font-bold text-gray-900 dark:text-white">
             Zeus
           </span>
         </Link>
@@ -52,10 +52,10 @@ export default function LandingPage() {
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="hidden md:flex gap-4 sm:gap-6">
-            <Link className="text-sm font-medium hover:underline underline-offset-4" href="/signup">
+            <Link className="text-base font-medium hover:underline underline-offset-4" href="/signup">
               Sign up
             </Link>
-            <Link className="text-sm font-medium hover:underline underline-offset-4" href="/signin">
+            <Link className="text-base font-medium hover:underline underline-offset-4" href="/signin">
               Sign in
             </Link>
           </div>
