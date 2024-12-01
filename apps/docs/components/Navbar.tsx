@@ -8,7 +8,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog'; // Import alert dialog components
-import { Bell, Plus } from 'lucide-react';
+import { Bell, Loader2, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Input } from './ui/input';
 import { FileUpload } from './ui/file-upload';
@@ -22,6 +22,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Notifications } from './notifications';
 import { useRecoilState } from 'recoil';
 import { notificationsState } from '@/states/notifications';
+import { getSignedURL } from '@/actions/getSignedUrls';
 
 export const Navbar = ({ title }: { title: string }) => {
   const [gymFormData, setGymFormData] = useState<TAddForm>({
@@ -30,6 +31,7 @@ export const Navbar = ({ title }: { title: string }) => {
     phoneNumber: '',
   });
   const [file, setFile] = useState<File>();
+  const [loading, setLoading] = useState(false);
 
   const [notifications, setNotifications] = useRecoilState(notificationsState);
 
@@ -50,48 +52,78 @@ export const Navbar = ({ title }: { title: string }) => {
   };
 
   const handleFormSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); 
     const result = addFormSchema.safeParse(gymFormData);
-    if (result.success) {
-      const response = await addGym(gymFormData);
-      if (response.data) {
-        console.log(response);
-        toast.success('Gym added successfully', {
-          position: 'top-center',
-          closeButton: true,
-          duration: 5000,
-        });
+    setLoading(true);
+    try {
+      if (result.success && file) {
+        const signedUrlResult = await getSignedURL();
+        if (signedUrlResult.failure) {
+          toast.error('Error getting signed Urls', {
+            closeButton: true,
+            position: 'top-center',
+          });
+          return;
+        }
 
-        setDialogOpen(false);
-        setGymFormData({
-          name: '',
-          address: '',
-          phoneNumber: '',
-        });
-      } else if (response.errors) {
-        const errors = response.errors;
+        const url = signedUrlResult.success?.url;
+        if (url) {
+          console.log({ url });
+          await fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': file.type,
+            },
+            body: file,
+          });
+
+          const response = await addGym(gymFormData, url.split('?')[0]);
+          if (response.data) {
+            console.log(response);
+            toast.success('Gym added successfully', {
+              position: 'top-center',
+              closeButton: true,
+              duration: 5000,
+            });
+            setLoading(false);
+
+            setDialogOpen(false);
+            setGymFormData({
+              name: '',
+              address: '',
+              phoneNumber: '',
+            });
+          } else if (response.errors) {
+            const errors = response.errors;
+            for (const field in errors) {
+              console.log(field);
+              toast.error(`${field} : ${errors[field]?.join(',')}`, {
+                closeButton: true,
+              });
+            }
+          } else {
+            toast.error(`${response.error}`, {
+              closeButton: true,
+            });
+          }
+        }
+      } else {
+        const errors = result.error?.flatten().fieldErrors as Record<
+          string,
+          string[]
+        >;
         for (const field in errors) {
           console.log(field);
           toast.error(`${field} : ${errors[field]?.join(',')}`, {
             closeButton: true,
           });
         }
-      } else {
-        toast.error(`${response.error}`, {
-          closeButton: true,
-        });
       }
-    } else {
-      const errors = result.error.flatten().fieldErrors as Record<
-        string,
-        string[]
-      >;
-      for (const field in errors) {
-        console.log(field);
-        toast.error(`${field} : ${errors[field]?.join(',')}`, {
-          closeButton: true,
-        });
-      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,6 +146,7 @@ export const Navbar = ({ title }: { title: string }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="pointer-events-auto">
+              {loading &&  <div className='flex space-x-5 justify-center'> <Loader2 className='w-6 h-6 text-black animate-spin'></Loader2><div className='text-xl text-center'>Uploading....</div></div>}
               <AlertDialogTitle>Add New Gym</AlertDialogTitle>
               <form className="space-y-4" onSubmit={handleFormSubmit}>
                 <div>
