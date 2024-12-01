@@ -1,6 +1,3 @@
-import { Link } from 'lucide-react';
-import { CardBody, CardContainer, CardItem } from './ui/3d-card';
-import Image from 'next/image';
 import { HoverEffect } from './ui/card-hover-effect';
 import { Gym } from '@/types/types';
 

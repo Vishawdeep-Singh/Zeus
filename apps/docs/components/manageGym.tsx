@@ -1,12 +1,5 @@
-import loading from '@/app/admin/manageGyms/loading';
 import { Gym } from '@/types/types';
-import { Label } from '@radix-ui/react-dropdown-menu';
-import { LoaderCircle } from 'lucide-react';
-import { signIn } from 'next-auth/react';
-import Image from 'next/image';
-import { Button } from './ui/button';
 import AddMembership from './addMembership';
-import CardDemo from './blocks/cards-demo-1';
 import { MembershipCard } from './membershipCards';
 import { MembersofGym } from './membersOfGym';
 import { ManageGymHero } from './manageGymsHero';

@@ -1,6 +1,5 @@
 import { Zap } from 'lucide-react';
 import { Button } from './ui/button';
-import { ScrollArea } from './ui/scroll-area';
 import moment from 'moment';
 import {
   Popover,

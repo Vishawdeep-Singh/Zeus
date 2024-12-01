@@ -2,10 +2,7 @@ import db from '@repo/db/client';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 import GoogleProvider from 'next-auth/providers/google';
-import { NextAuthOptions, User } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
-import jwt from 'jsonwebtoken';
-import { Credentials } from '../types/types';
+import { NextAuthOptions } from 'next-auth';
 import prisma from '@repo/db/client';
 import { toast } from 'sonner';
 
@@ -148,7 +145,7 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("User Image",user?.image)
+      console.log('User Image', user?.image);
 
       try {
         if (account?.provider === 'google') {
@@ -171,7 +168,7 @@ export const authOptions: NextAuthOptions = {
                 name: profile?.name as string,
                 cellPh: '',
                 provider: 'google',
-                image:user.image
+                image: user.image,
               },
             });
           }

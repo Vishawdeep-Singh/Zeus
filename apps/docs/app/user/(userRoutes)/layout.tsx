@@ -1,26 +1,9 @@
 import { Zap } from 'lucide-react';
-import AnimatedZeusLogo from '../../animated-zeus-logo';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-import MultiAvatar from '@/components/Multiavatar';
-import { MembershipExpiringWarning } from '@/components/membershipExpiringWarning';
 import { UserNotifications } from '@/components/userNotifications';
-import { Button } from '@/components/ui/button';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { handleAccessingAdminTools } from '@/actions/updateRole';
-import { toast } from 'sonner';
 import { AccessAdmin } from '@/components/accessAdminTools';
 import { UserLogOut } from '@/components/userLogoutButton';
 import prisma from '@repo/db/client';
@@ -39,7 +22,7 @@ export default async function RootLayout({
   return (
     <>
       <div className="p-5 flex">
-      <WarningShower data={response.data}/>
+        <WarningShower data={response.data} />
         <Link className="flex items-center justify-center" href="#">
           <Zap fill="Black" size={50}></Zap>
           <span className="ml-2 text-4xl font-bold text-gray-900 dark:text-white">
@@ -64,32 +47,29 @@ export default async function RootLayout({
   );
 }
 
-
-
-
 async function getMembership(id: string) {
-try {
-  const response = await prisma.userMembership.findMany({
-    where: {
-      userId: Number(id),
-    },
-    include: {
-      gym: {
-        select: {
-          name: true,
+  try {
+    const response = await prisma.userMembership.findMany({
+      where: {
+        userId: Number(id),
+      },
+      include: {
+        gym: {
+          select: {
+            name: true,
+          },
+        },
+        membership: {
+          select: {
+            duration: true,
+          },
         },
       },
-      membership: {
-        select: {
-          duration: true,
-        },
-      },
-    },
-  });
-  console.log("Warning",response);
-  return { data: response };
-} catch (error) {
-  console.error(error);
-  return { error: 'Not able to process memberships at the moment' };
-}
+    });
+    console.log('Warning', response);
+    return { data: response };
+  } catch (error) {
+    console.error(error);
+    return { error: 'Not able to process memberships at the moment' };
+  }
 }

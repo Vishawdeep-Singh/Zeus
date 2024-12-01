@@ -1,6 +1,5 @@
 'use client';
-import { Badge, CheckCheckIcon, Zap } from 'lucide-react';
-import { Button } from './ui/button';
+import { CheckCheckIcon, Zap } from 'lucide-react';
 import { CardHeader, CardContent, Card, CardTitle } from './ui/card';
 import { cn } from '@/lib/utils';
 import { MembershipCardProps } from '@/types/types';
@@ -10,7 +9,6 @@ import { useWebSocket } from '@/context/socketContext';
 import { usePathname } from 'next/navigation';
 import { ChoosePlan } from './choosePlan';
 import { addNotifications } from '@/actions/addNotifications';
-import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { warningNotificationsState } from '@/states/notifications';
 

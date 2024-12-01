@@ -1,6 +1,6 @@
 'use client';
 import { handleAccessingAdminTools } from '@/actions/updateRole';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { toast } from 'sonner';
 import {
@@ -14,10 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './ui/alert-dialog';
-import { NextRequest } from 'next/server';
-import { request } from 'http';
 import { useSession } from 'next-auth/react';
-import { revalidatePath } from 'next/cache';
 import { useEffect, useState } from 'react';
 
 export const AccessAdmin = () => {

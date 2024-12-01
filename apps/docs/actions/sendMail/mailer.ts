@@ -4,11 +4,9 @@ import nodemailer from 'nodemailer';
 export async function SendMail({
   reciepientEmail,
   otp,
-  expiresAt,
 }: {
   reciepientEmail: string;
   otp: string;
-  expiresAt: string;
 }) {
   try {
     const transporter = nodemailer.createTransport({

@@ -26,8 +26,7 @@ export const membershipExpiryWarning = async (data: any) => {
       continue;
     }
 
-   
-    let warningMessage = "";
+    let warningMessage = '';
     if (0 < differenceInDays && differenceInDays <= 5) {
       warningMessage = `Your membership at ${userMembership.gym.name} expiring in ${differenceInDays} days`;
     } else if (differenceInDays <= 0) {
@@ -35,58 +34,54 @@ export const membershipExpiryWarning = async (data: any) => {
       warningMessage = `Your membership at ${userMembership.gym.name} has been expired`;
     }
 
-
     const checkIfWarningExists = await prisma.warningNotifications.findFirst({
       where: {
         userId: Number(userMembership.userId),
         gymId: userMembership.gymId,
         resolved: false,
-        message: warningMessage,  
+        message: warningMessage,
       },
     });
     let notification;
 
-  
     if (!checkIfWarningExists) {
-     notification= await prisma.warningNotifications.create({
+      notification = await prisma.warningNotifications.create({
         data: {
           userId: Number(userMembership.userId),
           gymId: userMembership.gymId,
           message: warningMessage,
           resolved: false,
         },
-        select:{
-          gymId:true,
-          id:true,
-          userId:true,
-          message:true,
-          resolved:true
-        }
+        select: {
+          gymId: true,
+          id: true,
+          userId: true,
+          message: true,
+          resolved: true,
+        },
       });
     } else {
-     
       if (checkIfWarningExists.message !== warningMessage) {
-       notification= await prisma.warningNotifications.update({
+        notification = await prisma.warningNotifications.update({
           where: {
             id: checkIfWarningExists.id,
           },
           data: {
             message: warningMessage,
           },
-          select:{
-            gymId:true,
-            id:true,
-            userId:true,
-            message:true,
-            resolved:true
-          }
+          select: {
+            gymId: true,
+            id: true,
+            userId: true,
+            message: true,
+            resolved: true,
+          },
         });
       }
     }
-    if(notification){
-      notifications.push(notification)
+    if (notification) {
+      notifications.push(notification);
     }
-
   }
-  return notifications
+  return notifications;
 };

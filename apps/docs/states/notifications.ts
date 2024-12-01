@@ -1,4 +1,3 @@
-import { getNotifications } from '@/actions/getNotificatios';
 import { atom, selector } from 'recoil';
 import { Notification, WarningNotification } from '@/types/types';
 

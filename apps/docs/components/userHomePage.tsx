@@ -1,15 +1,14 @@
+'use client';
 
-"use client";
-
-import { useEffect, useState } from "react";
-import { Input } from "./ui/input";
-import { UserGymCard } from "./userGymCard";
+import { useEffect, useState } from 'react';
+import { Input } from './ui/input';
+import { UserGymCard } from './userGymCard';
 
 export const UserHomePage = ({ gymDetails }: any) => {
   const [filtered, setFiltered] = useState<any>(null);
 
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
 
   useEffect(() => {
     if (gymDetails) {
@@ -30,7 +29,7 @@ export const UserHomePage = ({ gymDetails }: any) => {
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    if (name == "Name") {
+    if (name == 'Name') {
       setName(value);
     } else {
       setAddress(value);
@@ -60,6 +59,7 @@ export const UserHomePage = ({ gymDetails }: any) => {
       <div className=" animate-slide-up w-full grid grid-cols-3 gap-10 pb-10">
         {filtered &&
           filtered.map((gym: any) => {
+
             if(gym.image){
               return (
                 <UserGymCard
@@ -88,6 +88,5 @@ export const UserHomePage = ({ gymDetails }: any) => {
           })}
       </div>
     </>
-
   );
 };

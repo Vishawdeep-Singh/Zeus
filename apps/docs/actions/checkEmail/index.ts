@@ -1,7 +1,6 @@
 'use server';
 
 import prisma from '@repo/db/client';
-import { error } from 'console';
 
 export const checkEmailExists = async (email: string) => {
   try {

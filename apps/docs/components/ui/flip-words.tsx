@@ -64,7 +64,6 @@ export const FlipWords = ({
         )}
         key={currentWord}
       >
-        
         {/* edit suggested by Sajal: https://x.com/DewanganSajal */}
         {/* @ts-ignore */}
         {currentWord.split(' ').map((word, wordIndex) => (

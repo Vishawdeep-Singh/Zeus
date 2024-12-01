@@ -153,8 +153,8 @@ export type AttendanceData = {
   time: string;
   users: {
     name: string;
-    provider:string;
-    image?:string | null | undefined
+    provider: string;
+    image?: string | null | undefined;
   };
 };
 

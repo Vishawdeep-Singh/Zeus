@@ -4,10 +4,8 @@ import {
   GymsData,
   MasterTableMember,
 } from '@/types/types';
-import prisma from '@repo/db/client';
 import moment from 'moment';
 import { DateRange } from 'react-day-picker';
-import { current } from 'tailwindcss/colors';
 
 export const masterTableDataConversion = async (gymsData: GymsData) => {
   let newData;

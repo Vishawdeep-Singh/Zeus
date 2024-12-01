@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import { ContainerScroll } from "./ui/container-scroll-animation";
-import Image from "next/image";
+'use client';
+import React from 'react';
+import { ContainerScroll } from './ui/container-scroll-animation';
+import Image from 'next/image';
 
 export function LandingHero() {
   return (

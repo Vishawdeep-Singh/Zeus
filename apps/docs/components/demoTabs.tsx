@@ -3,7 +3,6 @@ import { Tabs } from './ui/tabs';
 import Component from './attendanceWeeks';
 import { Component1 } from './revenueMonths';
 import { Component2 } from './todayAttendance';
-import { MembersofGym } from './membersOfGym';
 import Component3 from './membershipExpiry';
 import { MasterTable } from './masterTable';
 import { GymFilter } from './gymFilter';

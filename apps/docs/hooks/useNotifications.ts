@@ -2,7 +2,6 @@
 
 import { getNotifications } from '@/actions/getNotificatios';
 import { notificationsState } from '@/states/notifications';
-import { userState } from '@/states/socket';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { toast } from 'sonner';

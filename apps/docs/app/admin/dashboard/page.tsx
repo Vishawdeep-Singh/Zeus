@@ -1,18 +1,11 @@
 import { Navbar } from '@/components/Navbar';
-import { Button } from '@/components/ui/button';
 import { authOptions } from '@/lib/auth';
-import { SendMail } from '@/actions/sendMail/mailer';
 import { getServerSession } from 'next-auth';
 import { notFound, redirect } from 'next/navigation';
 import { TabsDemo } from '@/components/demoTabs';
-import Component3 from '@/components/membershipExpiry';
-import { Component1 } from '@/components/revenueMonths';
-import { Component2 } from '@/components/todayAttendance';
-import Component from '@/components/attendanceWeeks';
 import prisma from '@repo/db/client';
 import { masterTableDataConversion, onwerGymsConversion } from '@/lib/helper';
 import { toast } from 'sonner';
-import { GymsData } from '@/types/types';
 import React from 'react';
 
 export default async function () {
@@ -56,10 +49,9 @@ export default async function () {
 
 
         </div> */}
-       
-        <TabsDemo
 
-        // @ts-ignore
+        <TabsDemo
+          // @ts-ignore
           membershipExpiry={response.memberhshipExpiry}
           // @ts-ignore
           masterTableData={response.data}

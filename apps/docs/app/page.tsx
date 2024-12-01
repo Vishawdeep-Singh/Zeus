@@ -1,35 +1,28 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Dumbbell, Users, BarChart, ChevronRight, Menu, Zap } from 'lucide-react';
+import { Dumbbell, Users, BarChart, Menu, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-
-} from "@/components/ui/dropdown-menu"
-import AnimatedZeusImage from "./image1.png"
-import AnimatedZeusLogo from "./animated-zeus-logo"
-import { FlipWords } from "@/components/ui/flip-words"
-import Autoplay from "embla-carousel-autoplay"
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { LandingHero } from "@/components/LandingHero"
-import { StickyScrollRevealDemo } from "@/components/StickyScrollRevealDemo"
+} from '@/components/ui/dropdown-menu';
+import { LandingHero } from '@/components/LandingHero';
+import { StickyScrollRevealDemo } from '@/components/StickyScrollRevealDemo';
 
 export default function LandingPage() {
-
-
   return (
-    <div className="flex flex-col min-h-screen [&::-webkit-scrollbar]:w-2
+    <div
+      className="flex flex-col min-h-screen [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:bg-transparent
   [&::-webkit-scrollbar-thumb]:bg-gray-300
   [&::-webkit-scrollbar-thumb]:rounded-full
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+    >
       <header className="px-4 lg:px-6 h-16 flex items-center">
         <Link className="flex items-center justify-center" href="#">
-          <Zap fill='black' size={40}></Zap>
+          <Zap fill="black" size={40}></Zap>
           <span className="ml-2 text-3xl font-bold text-gray-900 dark:text-white">
             Zeus
           </span>
@@ -52,17 +45,22 @@ export default function LandingPage() {
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="hidden md:flex gap-4 sm:gap-6">
-            <Link className="text-base font-medium hover:underline underline-offset-4" href="/signup">
+            <Link
+              className="text-base font-medium hover:underline underline-offset-4"
+              href="/signup"
+            >
               Sign up
             </Link>
-            <Link className="text-base font-medium hover:underline underline-offset-4" href="/signin">
+            <Link
+              className="text-base font-medium hover:underline underline-offset-4"
+              href="/signin"
+            >
               Sign in
             </Link>
           </div>
         </nav>
       </header>
       <main className="flex-1">
-
         <section>
           <LandingHero />
         </section>
@@ -105,7 +103,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section
+          id="contact"
+          className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
+        >
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">

@@ -1,10 +1,9 @@
 'use client';
 import React from 'react';
 import { BackgroundGradient } from './ui/background-gradient';
-import { IconAppWindow } from '@tabler/icons-react';
 import Image from 'next/image';
 import moment from 'moment';
-import { CheckIcon, CircleX, CrossIcon } from 'lucide-react';
+import { CheckIcon, CircleX } from 'lucide-react';
 import Link from 'next/link';
 
 export function BackgroundGradientDemo({ image,dateJoined, membershipDetails }: any) {

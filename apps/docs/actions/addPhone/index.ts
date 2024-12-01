@@ -3,7 +3,6 @@
 
 import { authOptions } from '@/lib/auth';
 import prisma from '@repo/db/client';
-import { error } from 'console';
 import { getServerSession } from 'next-auth';
 
 export const addPhone = async (cellPh: string | null, mail: string | null) => {
