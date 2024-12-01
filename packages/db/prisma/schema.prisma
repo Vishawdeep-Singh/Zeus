@@ -38,6 +38,7 @@ name String
 address String
 owner User @relation("Gym Owner",fields: [ownerId], references: [id])
 ownerId Int 
+image String?
 memberships Membership[]
 members User[]  @relation("Gym member")
 attendance  Attendance[]

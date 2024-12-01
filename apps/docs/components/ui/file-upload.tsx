@@ -33,7 +33,7 @@ export const FileUpload = ({
   const [file, setFile] = useState<File | null>(null); // State for a single file
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
-  const MAX_FILE_SIZE_MB = 1;
+  const MAX_FILE_SIZE_MB = 5;
   const acceptedFileTypes = ['image/png', 'image/jpeg'];
 
   useEffect(() => {

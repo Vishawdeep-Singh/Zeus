@@ -6,7 +6,7 @@ import moment from 'moment';
 import { CheckIcon, CircleX } from 'lucide-react';
 import Link from 'next/link';
 
-export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
+export function BackgroundGradientDemo({ image,dateJoined, membershipDetails }: any) {
   const originalDate = moment(dateJoined);
 
   const monthsToSubtract = membershipDetails.duration;
@@ -22,13 +22,20 @@ export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
         containerClassName=""
         className="rounded-[22px] w-auto  p-4 sm:p-10 bg-white dark:bg-zinc-900"
       >
-        <Image
-          src={`https://mir-s3-cdn-cf.behance.net/project_modules/1400/00d3e180778075.5ceb8de957e85.jpg`}
+        {image ?  <Image
+          src={`${image}`}
           alt="jordans"
           height="400"
           width="400"
           className="object-cover rounded-lg"
-        />
+        /> :  <Image
+        src={`https://images.unsplash.com/photo-1623874514711-0f321325f318?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
+        alt="jordans"
+        height="400"
+        width="400"
+        className="object-cover rounded-lg"
+      /> }
+       
         <p className="text-base sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
           {membershipDetails.gym.name}
         </p>
@@ -48,7 +55,7 @@ export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           <b className="text-black"> Price:</b> ₹ {membershipDetails.price}
         </p>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <div className="text-sm text-neutral-600 dark:text-neutral-400">
           <div className="flex space-x-2">
             <b className="text-black"> isActive :</b>
             {differenceInDays > 0 ? (
@@ -63,7 +70,7 @@ export function BackgroundGradientDemo({ dateJoined, membershipDetails }: any) {
               </div>
             )}
           </div>
-        </p>
+        </div>
         <Link
           target="_blank"
           href={`/user/view/${membershipDetails.gymId}`}

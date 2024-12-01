@@ -76,6 +76,7 @@ export default async function () {
         {response.data?.map((membership, i) => {
           return (
             <BackgroundGradientDemo
+              image ={membership.membership.gym.image}
               dateJoined={membership.dateJoined}
               membershipDetails={membership.membership}
             ></BackgroundGradientDemo>

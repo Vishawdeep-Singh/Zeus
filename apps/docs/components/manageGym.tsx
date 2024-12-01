@@ -23,6 +23,7 @@ export const ManageGym = ({
   return (
     <div className="flex rounded-3xl p-7 flex-col items-center bg-slate-100 mx-0 scroll-smooth space-y-24 bg-muted/40 border shadow-sm">
       <ManageGymHero
+        image={gymDetails?.image}
         address={gymDetails?.address as string}
         name={gymDetails?.name as string}
       />

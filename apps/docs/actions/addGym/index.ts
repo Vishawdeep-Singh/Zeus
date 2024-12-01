@@ -7,7 +7,8 @@ import { error } from 'console';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 
-export const addGym = async (gymData: TAddForm) => {
+
+export const addGym = async (gymData: TAddForm,imageUrl:string | undefined) => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -29,6 +30,7 @@ export const addGym = async (gymData: TAddForm) => {
         address: gymData.address,
         phoneNumber: gymData.phoneNumber,
         ownerId: Number(session?.user.id),
+        image:imageUrl
       },
     });
     revalidatePath('/admin/manageGyms');
