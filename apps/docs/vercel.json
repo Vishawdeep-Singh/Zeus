@@ -1,9 +1,8 @@
 {
-    "cron": [
+    "crons": [
       {
         "path": "/api/expiration",      
-        "schedule": "0 1 * * *",       
-        "timezone": "UTC"              
+        "schedule": "0 1 * * *"           
       }
     ]
   }

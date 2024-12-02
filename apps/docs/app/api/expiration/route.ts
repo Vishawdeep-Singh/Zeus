@@ -3,6 +3,8 @@ import moment from 'moment';
 import { revalidatePath } from 'next/cache';
 import { NextRequest } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     const userMemberships = await prisma.userMembership.findMany({
