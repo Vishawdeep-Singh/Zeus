@@ -58,6 +58,7 @@ export const Signup = () => {
           const sendmail = await SendMail({
             reciepientEmail: formData.email,
             otp: otpresponse.data.otp as string,
+            // @ts-ignore
             expiresAt: '30',
           });
 
