@@ -2,7 +2,7 @@
 
 import { authOptions } from '@/lib/auth';
 import { Membership, MembershipAction } from '@/types/types';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 

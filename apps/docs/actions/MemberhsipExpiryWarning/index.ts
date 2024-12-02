@@ -1,5 +1,5 @@
 'use server';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import moment from 'moment';
 
 export const membershipExpiryWarning = async (data: any) => {

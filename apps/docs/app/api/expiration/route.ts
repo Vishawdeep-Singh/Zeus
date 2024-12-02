@@ -1,4 +1,4 @@
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import moment from 'moment';
 import { revalidatePath } from 'next/cache';
 import { NextRequest } from 'next/server';

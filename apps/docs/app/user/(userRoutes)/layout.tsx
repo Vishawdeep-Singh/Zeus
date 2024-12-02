@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import { UserNotifications } from '@/components/userNotifications';
 import { AccessAdmin } from '@/components/accessAdminTools';
 import { UserLogOut } from '@/components/userLogoutButton';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { WarningShower } from '@/components/warningShower';
 
 export default async function RootLayout({
@@ -24,7 +24,7 @@ export default async function RootLayout({
     <>
       <div className="p-5 flex">
         <WarningShower data={response.data} />
-        <Link className="flex items-center justify-center" href="#">
+        <Link className="flex items-center justify-center" href="/">
           <Zap fill="Black" size={50}></Zap>
           <span className="ml-2 text-4xl font-bold text-gray-900 dark:text-white">
             Zeus

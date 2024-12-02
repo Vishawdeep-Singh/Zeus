@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+id   Int @id @default(autoincrement())
+name String
+email String @unique
+cellPh String @unique
+password String?
+image String?
+roles Roles @default(USER)
+owner Gym[] @relation("Gym Owner")
+member Gym[] @relation("Gym member")
+memberships UserMembership[] // Explicit Many to Many Relation
+attendance Attendance[] @relation("UserAttendance")
+provider Providers
+notifications Notification[]
+warningNotifications WarningNotifications[]
+}
+
+
+
+model Gym {
+id String @id @default(uuid())
+name String
+address String
+owner User @relation("Gym Owner",fields: [ownerId], references: [id])
+ownerId Int 
+image String?
+memberships Membership[]
+members User[]  @relation("Gym member")
+attendance  Attendance[]
+phoneNumber String
+userMemberships UserMembership[]
+warningNotifications WarningNotifications[]
+}
+
+model OTP {
+  id        Int      @id @default(autoincrement())
+  email     String
+  otp       String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+model Membership {
+  id String @id @default(uuid())
+  price String
+  duration Int
+  description String[]
+  gym Gym @relation(fields: [gymId], references: [id])
+  gymId String
+  users UserMembership[] 
+  color String
+  
+}
+
+model UserMembership {
+  userId        Int
+  membershipId  String
+  dateJoined    DateTime
+  gymId         String
+  user          User       @relation(fields: [userId], references: [id])
+  membership    Membership @relation(fields: [membershipId], references: [id])
+  gym           Gym        @relation(fields: [gymId], references: [id])
+  expired      Boolean @default(false)
+   @@id([userId, membershipId]) // Composite primary key
+}
+
+model Attendance {
+  id String @id @default(uuid())
+  gym Gym @relation(fields: [gymId],references: [id])
+  gymId String
+  users User @relation("UserAttendance",fields: [userId], references: [id])
+  userId Int
+  date String
+  time String
+  
+   @@index([userId])
+  @@index([gymId])
+  @@index([date])
+  @@index([time])
+}
+
+model Notification {
+  id String @id @default(uuid())
+  userId Int
+  User User @relation(fields: [userId], references: [id])
+  message String
+  createdAt DateTime
+  isRead Boolean @default(false)
+  type Roles
+}
+
+model WarningNotifications {
+ id String @id @default(uuid())
+ userId Int
+ User User @relation(fields: [userId],references: [id])
+ gymId String
+ gym Gym @relation(fields: [gymId],references: [id])
+ message String
+ resolved Boolean
+}
+
+enum Roles {
+  USER
+  ADMIN
+}
+enum Providers {
+google
+credentials
+}

@@ -1,6 +1,6 @@
 'use server';
 
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 
 export const verifyOtp = async (otp: string, email: string) => {
   try {

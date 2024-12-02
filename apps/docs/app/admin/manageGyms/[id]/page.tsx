@@ -3,7 +3,7 @@ import { Navbar } from '@/components/Navbar';
 import { authOptions } from '@/lib/auth';
 import { Gym } from '@/types/types';
 import { paramsId } from '@/types/validations';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { notFound, redirect } from 'next/navigation';
 

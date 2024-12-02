@@ -2,7 +2,7 @@
 import { authOptions } from '@/lib/auth';
 import { TAddForm } from '@/types/types';
 import { addFormSchema } from '@/types/validations';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { error } from 'console';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';

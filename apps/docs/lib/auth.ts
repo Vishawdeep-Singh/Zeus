@@ -1,9 +1,9 @@
-import db from '@repo/db/client';
+import db from '@/lib/db';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 import GoogleProvider from 'next-auth/providers/google';
 import { NextAuthOptions } from 'next-auth';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { toast } from 'sonner';
 
 export const authOptions: NextAuthOptions = {

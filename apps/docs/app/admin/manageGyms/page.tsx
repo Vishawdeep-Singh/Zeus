@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { ManageGyms } from '@/components/manageGyms';
 import { Navbar } from '@/components/Navbar';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { toast } from 'sonner';
 import { Gym } from '@/types/types';
 import { Suspense } from 'react';

@@ -1,7 +1,7 @@
 import { BackgroundGradientDemo } from '@/components/backgroundGradient';
 import { FloatingDockDemo } from '@/components/floatingDock';
 import { authOptions } from '@/lib/auth';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 

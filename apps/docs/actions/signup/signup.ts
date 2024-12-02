@@ -1,7 +1,7 @@
 'use server';
 
 import { SignUp } from '@/types/types';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import bcrypt from 'bcrypt';
 import { signUpSchema } from '@/types/validations';
 

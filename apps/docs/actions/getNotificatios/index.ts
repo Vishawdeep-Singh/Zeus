@@ -1,7 +1,7 @@
 'use server';
 
 import { authOptions } from '@/lib/auth';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 
 export async function getNotifications() {

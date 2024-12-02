@@ -1,6 +1,6 @@
 import { FloatingDockDemo } from '@/components/floatingDock';
 import { UserHomePage } from '@/components/userHomePage';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 
 async function getGymDetails() {
   try {

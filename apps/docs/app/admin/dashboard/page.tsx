@@ -3,7 +3,7 @@ import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
 import { notFound, redirect } from 'next/navigation';
 import { TabsDemo } from '@/components/demoTabs';
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 import { masterTableDataConversion, onwerGymsConversion } from '@/lib/helper';
 import { toast } from 'sonner';
 import React from 'react';

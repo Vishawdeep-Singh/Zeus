@@ -1,6 +1,6 @@
 'use server';
 
-import prisma from '@repo/db/client';
+import prisma from '@/lib/db';
 
 export async function generateOTP(email: string) {
   try {
