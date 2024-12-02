@@ -32,20 +32,8 @@ import { WebSocket } from "ws";
           return ZeusManager.instance;
       }
 
-      async logData(){
-        console.log("Admin",this.admins)
-        console.log("Users",this.users)
-        console.log("Admin Subscribers",this.adminSubscribers)
-        console.log("User Subscribers",this.userSubscribers)
-
-
-
-      }
-      startLogging() {
-        setInterval(() => {
-          this.logData();
-        }, 10000); // Log every 10 seconds
-      }
+  
+      
 
   
       async joinGymNotificationsAdmin(gymIds: string[], adminId: string, ws: WebSocket) {
@@ -105,13 +93,16 @@ import { WebSocket } from "ws";
           const subscribers = this.adminSubscribers.get(gymId);
           if (subscribers) {
               subscribers.forEach(ws => {
+                if(ws.readyState===WebSocket.OPEN){
+
+                
                 console.log("sending")
                       ws.send(JSON.stringify({ type, data:{
                         message,
                         time:new Date(),
                         notificationMetaData
                       } }));
-                  
+                    }
               });
           }
       }
@@ -152,10 +143,7 @@ import { WebSocket } from "ws";
       }
 
       disconnect(ws:WebSocket){
-        this.adminSubscribers.forEach(subscribers => subscribers.delete(ws));
-        this.userSubscribers.forEach(subscribers => subscribers.delete(ws));
-        this.admins.forEach(admin => admin.ws.delete(ws));
-        this.users.forEach(user => user.ws.delete(ws));
+        console.log("Disconnect")
       }
   }
   

@@ -33,12 +33,9 @@ export const Navbar = ({ title }: { title: string }) => {
 
   const [notifications, setNotifications] = useRecoilState(notificationsState);
 
-  console.log(notifications);
-
   const [dialogOpen, setDialogOpen] = useState(false);
   const handleFileUpload = (file: File) => {
     setFile(file);
-    console.log(file);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +47,7 @@ export const Navbar = ({ title }: { title: string }) => {
   };
 
   const handleFormSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); 
+    event.preventDefault();
     const result = addFormSchema.safeParse(gymFormData);
     setLoading(true);
     try {
@@ -66,7 +63,6 @@ export const Navbar = ({ title }: { title: string }) => {
 
         const url = signedUrlResult.success?.url;
         if (url) {
-          console.log({ url });
           await fetch(url, {
             method: 'PUT',
             headers: {
@@ -77,7 +73,6 @@ export const Navbar = ({ title }: { title: string }) => {
 
           const response = await addGym(gymFormData, url.split('?')[0]);
           if (response.data) {
-            console.log(response);
             toast.success('Gym added successfully', {
               position: 'top-center',
               closeButton: true,
@@ -94,7 +89,6 @@ export const Navbar = ({ title }: { title: string }) => {
           } else if (response.errors) {
             const errors = response.errors;
             for (const field in errors) {
-              console.log(field);
               toast.error(`${field} : ${errors[field]?.join(',')}`, {
                 closeButton: true,
               });
@@ -111,7 +105,6 @@ export const Navbar = ({ title }: { title: string }) => {
           string[]
         >;
         for (const field in errors) {
-          console.log(field);
           toast.error(`${field} : ${errors[field]?.join(',')}`, {
             closeButton: true,
           });
@@ -144,7 +137,13 @@ export const Navbar = ({ title }: { title: string }) => {
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="pointer-events-auto">
-              {loading &&  <div className='flex space-x-5 justify-center'> <Loader2 className='w-6 h-6 text-black animate-spin'></Loader2><div className='text-xl text-center'>Uploading....</div></div>}
+              {loading && (
+                <div className="flex space-x-5 justify-center">
+                  {' '}
+                  <Loader2 className="w-6 h-6 text-black animate-spin"></Loader2>
+                  <div className="text-xl text-center">Uploading....</div>
+                </div>
+              )}
               <AlertDialogTitle>Add New Gym</AlertDialogTitle>
               <form className="space-y-4" onSubmit={handleFormSubmit}>
                 <div>

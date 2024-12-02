@@ -14,28 +14,26 @@ import Link from 'next/link';
 
 export async function MembersofGym({ membersDetails, owner }: any) {
   const session = await getServerSession(authOptions);
-  console.log('Inside members of gym', membersDetails);
+
   return (
     <div className=" h-96 w-full mx-auto overflow-y-auto bg-transparent border-none bg-opacity-100 shadow-sm hover:border hover:shadow-2xl hover:shadow-primary/30  hover:scale-105 transition-all  duration-300 hover:bg-white rounded-xl border p-4">
       <div className="grid grid-cols-3 gap-4 items-center content-center w-full ">
         {membersDetails.map((member: any, i: any) => {
-          console.log(member.memberships);
           let JoinedDate = moment(member.memberships?.[0].dateJoined).format(
             'DD/MM/YYYY'
           );
-          console.log('JoinedDate', member.memberships?.[0].dateJoined);
+
           const originalDate = moment(member.memberships?.[0].dateJoined);
 
           const monthsToSubtract = member.memberships?.[0].membership.duration;
           const addMonths = originalDate
             .clone()
             .add(monthsToSubtract, 'months');
-          console.log(moment(addMonths).format('DD/MM/YYYY')); // Number of months to subtract
+          // Number of months to subtract
 
           // Calculate the difference in days
           const differenceInDays = addMonths.diff(moment(), 'days');
-          console.log(moment().format('DD/MM/YY'));
-          console.log(differenceInDays);
+
           return (
             <Popover key={i}>
               <PopoverTrigger>

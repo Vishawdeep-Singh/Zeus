@@ -153,7 +153,10 @@ export default function ProfilePage({ userProfileInfo }: any) {
                   alt="Avatar"
                 />
               ) : (
-                <MultiAvatar name={userProfileInfo.name as string} />
+                <MultiAvatar
+                  className="h-full w-full"
+                  name={userProfileInfo.name as string}
+                />
               )}
 
               {/* <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback> */}

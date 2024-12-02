@@ -11,8 +11,6 @@ export const useWebSockets = () => {
     useRecoilState(connectionErrorState);
   const session = useSession();
 
-  console.log(socket);
-
   useEffect(() => {
     if (!socket && session.data?.user.id) {
       const ws = new WebSocket(process.env.NEXT_PUBLIC_WSS_URL as string);

@@ -13,7 +13,7 @@ export const checkEmailExists = async (email: string) => {
         provider: true,
       },
     });
-    console.log(isEmailExists, email);
+
     if (isEmailExists) {
       return { data: isEmailExists };
     } else {

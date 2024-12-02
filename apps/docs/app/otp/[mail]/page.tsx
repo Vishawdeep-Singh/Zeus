@@ -20,7 +20,7 @@ export default function ({ params }: { params: { mail: string } }) {
   const [value, setValue] = useState('');
   const router = useRouter();
   const [formData, setFormData] = useRecoilState(formDataAtom);
-  console.log(formData);
+
   useEffect(() => {
     // Only access localStorage on the client side
     if (typeof window !== 'undefined') {
@@ -71,7 +71,6 @@ export default function ({ params }: { params: { mail: string } }) {
         const errors = response.errors as Record<string, string[]>;
 
         for (const field in errors) {
-          console.log(field);
           toast.error(`${field} : ${errors[field]?.join(',')}`, {
             closeButton: true,
           });

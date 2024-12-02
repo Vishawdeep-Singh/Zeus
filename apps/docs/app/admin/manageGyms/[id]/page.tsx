@@ -72,7 +72,7 @@ export default async function ({ params }: { params: { id: string } }) {
   }
 
   const gymsDetails = await getGymDetails(id);
-  console.log(gymsDetails);
+
   if (gymsDetails.error) {
     return (
       <div className="text-4xl font-bold text-center">{gymsDetails.error}</div>

@@ -20,7 +20,7 @@ async function getMembership(id: string, gymId: string) {
         expired: true,
       },
     });
-    console.log('Inside User View', response);
+
     return { data: response };
   } catch (error) {
     console.error(error);
@@ -53,7 +53,7 @@ export default async function ({ params }: { params: { id: string } }) {
 
   const gymsDetails = await getGymDetails(id);
   const membershipUserDetails = await getMembership(session.user.id, id);
-  console.log(gymsDetails);
+
   if (gymsDetails.error || membershipUserDetails.error) {
     return (
       <div className="text-4xl font-bold text-center">
@@ -105,7 +105,7 @@ async function getGymDetails(id: string) {
     if (!response) {
       return { error: 'Gym Details doest not exist' };
     }
-    console.log('User Gym Page -------->', response.memberships);
+
     return { data: response };
   } catch (error) {
     console.error(error);

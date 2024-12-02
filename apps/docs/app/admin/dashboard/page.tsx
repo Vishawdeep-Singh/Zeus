@@ -100,13 +100,11 @@ async function getMembersOfAllGym(userId: string) {
       },
     });
 
-    console.log(JSON.stringify(response, null, 2));
     const memberhshipExpiry = response;
     // @ts-ignore
     const strucutedData = await masterTableDataConversion(response);
     // @ts-ignore
     const ownedGyms = await onwerGymsConversion(response);
-    console.log('Ow', ownedGyms);
 
     return { data: strucutedData, ownedGyms, memberhshipExpiry };
   } catch (error: any) {

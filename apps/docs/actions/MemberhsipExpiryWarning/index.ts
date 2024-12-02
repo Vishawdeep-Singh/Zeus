@@ -6,8 +6,6 @@ export const membershipExpiryWarning = async (data: any) => {
   const notifications: any[] = [];
 
   for (const userMembership of data) {
-    console.log('AAABBB', userMembership);
-
     const originalDate = moment(userMembership.dateJoined);
     const monthsToSubtract = userMembership.membership.duration;
     const addMonths = originalDate.clone().add(monthsToSubtract, 'months');
@@ -30,7 +28,6 @@ export const membershipExpiryWarning = async (data: any) => {
     if (0 < differenceInDays && differenceInDays <= 5) {
       warningMessage = `Your membership at ${userMembership.gym.name} expiring in ${differenceInDays} days`;
     } else if (differenceInDays <= 0) {
-      console.log('Diff', differenceInDays);
       warningMessage = `Your membership at ${userMembership.gym.name} has been expired`;
     }
 

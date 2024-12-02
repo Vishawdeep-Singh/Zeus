@@ -15,6 +15,15 @@ export const unreadNotificationsSelector = selector({
   },
 });
 
+export const userNotificationsSelector = selector({
+  key: 'userNotificationsSelector',
+  get: ({ get }) => {
+    const notification = get(unreadNotificationsSelector);
+
+    return notification.filter((notification) => notification.type === 'USER');
+  },
+});
+
 export const warningNotificationsState = atom<WarningNotification[]>({
   key: 'warningNotificationsState',
   default: [],

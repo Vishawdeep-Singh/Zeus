@@ -57,7 +57,7 @@ export default function Component3({
 
       if (selectedGymData) {
         const expiredMembers = membershipExpiryConversion(selectedGymData);
-        console.log('Membership Expiry', expiredMembers);
+
         if (expiredMembers.length > 0) {
           setExpiredMembers(expiredMembers);
         } else {
@@ -86,7 +86,6 @@ export default function Component3({
     }
   }, [currentPage, expiredMembers, searchTerm]);
   // const orderedData = membershipExpiryConversion(membershipExpiry[0])
-  // console.log("Membership Expiry",membershipExpiry)
 
   return (
     <Card className="w-full max-w-7xl bg-[#f7f7f7] pt-4 mx-auto hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">

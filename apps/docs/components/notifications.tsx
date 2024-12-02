@@ -21,7 +21,8 @@ export const Notifications = () => {
     setNotifications((prev) =>
       prev.map(
         (notification) =>
-          notificationIds.includes(notification.id)
+          notificationIds.includes(notification.id) &&
+          notification.type === 'ADMIN'
             ? { ...notification, isRead: true } // Update isRead to true
             : notification // Keep the original notification
       )
@@ -36,8 +37,6 @@ export const Notifications = () => {
   }
   const [notifications, setNotifications] = useRecoilState(notificationsState);
   const unreadNotifications = useRecoilValue(unreadNotificationsSelector);
-  console.log('Filtered Notifications', unreadNotifications);
-  console.log('Notifications', notifications);
 
   return (
     <Popover>
@@ -65,17 +64,21 @@ export const Notifications = () => {
           {unreadNotifications.length > 0 ? (
             <ScrollArea className="h-[300px] pr-4">
               <ol className="space-y-4">
-                {unreadNotifications.map((notification, index) => (
-                  <li key={notification.id} className="flex space-x-4">
-                    <div className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
-                      {index + 1}
-                    </div>
-                    <div className="flex-grow">
-                      <p className="text-sm">{notification.message}</p>
-                      {/* <p className="text-xs text-muted-foreground mt-1">{notification}</p> */}
-                    </div>
-                  </li>
-                ))}
+                {unreadNotifications.map((notification, index) => {
+                  if (notification.type === 'ADMIN') {
+                    return (
+                      <li key={notification.id} className="flex space-x-4">
+                        <div className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                          {index + 1}
+                        </div>
+                        <div className="flex-grow">
+                          <p className="text-sm">{notification.message}</p>
+                          {/* <p className="text-xs text-muted-foreground mt-1">{notification}</p> */}
+                        </div>
+                      </li>
+                    );
+                  }
+                })}
               </ol>
             </ScrollArea>
           ) : (

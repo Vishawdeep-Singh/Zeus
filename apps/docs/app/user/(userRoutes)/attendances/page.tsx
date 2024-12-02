@@ -73,7 +73,7 @@ async function getUsersRegisteredGyms(id: string) {
     //         gymId:true
     //     }
     // })
-    console.log('Gym assigned', response);
+
     return { data: response };
   } catch (error) {
     console.error(error);

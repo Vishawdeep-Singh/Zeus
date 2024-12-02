@@ -83,7 +83,6 @@ export const Signup = () => {
       >;
 
       for (const field in errors) {
-        console.log(field);
         toast.error(`${field} : ${errors[field]?.join(',')}`, {
           closeButton: true,
         });
@@ -98,8 +97,6 @@ export const Signup = () => {
       ...prevData,
       [name]: value,
     }));
-
-    console.log(formData);
   }
 
   return (
@@ -210,6 +207,11 @@ export const Signup = () => {
                   )}
                   Sign Up
                 </Button>
+                {loading && (
+                  <p className="font-bold text-xl">
+                    Please Wait... Sending OTP . This may take time{' '}
+                  </p>
+                )}
               </form>
             </CardContent>
             <CardFooter className="flex justify-center">

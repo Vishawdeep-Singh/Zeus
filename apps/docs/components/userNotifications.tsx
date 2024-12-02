@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   notificationsState,
   unreadNotificationsSelector,
+  userNotificationsSelector,
   warningNotificationsState,
 } from '@/states/notifications';
 import { ScrollArea } from './ui/scroll-area';
@@ -27,13 +28,14 @@ export const UserNotifications = ({
   image?: string | null | undefined;
 }) => {
   async function handleClick() {
-    const notificationIds = unreadNotifications.map(
+    const notificationIds = userNotifications.map(
       (notification) => notification.id
     );
     setNotifications((prev) =>
       prev.map(
         (notification) =>
-          notificationIds.includes(notification.id)
+          notificationIds.includes(notification.id) &&
+          notification.type === 'USER'
             ? { ...notification, isRead: true } // Update isRead to true
             : notification // Keep the original notification
       )
@@ -48,9 +50,8 @@ export const UserNotifications = ({
   }
   const [notifications, setNotifications] = useRecoilState(notificationsState);
   const warningNotifications = useRecoilValue(warningNotificationsState);
-  const unreadNotifications = useRecoilValue(unreadNotificationsSelector);
-  console.log('Filtered Notifications', unreadNotifications);
-  console.log('Notifications', notifications);
+  // const unreadNotifications = useRecoilValue(unreadNotificationsSelector);
+  const userNotifications = useRecoilValue(userNotificationsSelector);
 
   return (
     <Popover>
@@ -68,12 +69,12 @@ export const UserNotifications = ({
             <MultiAvatar className="" name={name}></MultiAvatar>
           )}
 
-          {unreadNotifications.length > 0 && (
+          {userNotifications.length > 0 && (
             <Badge
               variant="destructive"
               className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
             >
-              {unreadNotifications.length}
+              {userNotifications.length}
             </Badge>
           )}
 
@@ -87,7 +88,7 @@ export const UserNotifications = ({
       <PopoverContent className="w-80 mr-4">
         <div className="space-y-4">
           <h3 className="font-semibold text-center">Notifications</h3>
-          {unreadNotifications.length > 0 || warningNotifications.length > 0 ? (
+          {userNotifications.length > 0 || warningNotifications.length > 0 ? (
             <ScrollArea className="h-[300px] pr-4">
               <ol className="space-y-4">
                 {warningNotifications.length > 0 &&
@@ -119,18 +120,22 @@ export const UserNotifications = ({
                       </li>
                     );
                   })}
-                {unreadNotifications.length > 0 &&
-                  unreadNotifications.map((notification, index) => (
-                    <li key={notification.id} className="flex space-x-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
-                        {index + 1}
-                      </div>
-                      <div className="flex-grow">
-                        <p className="text-sm">{notification.message}</p>
-                        {/* <p className="text-xs text-muted-foreground mt-1">{notification}</p> */}
-                      </div>
-                    </li>
-                  ))}
+                {userNotifications.length > 0 &&
+                  userNotifications.map((notification, index) => {
+                    if (notification.type === 'USER') {
+                      return (
+                        <li key={notification.id} className="flex space-x-4">
+                          <div className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
+                            {index + 1}
+                          </div>
+                          <div className="flex-grow">
+                            <p className="text-sm">{notification.message}</p>
+                            {/* <p className="text-xs text-muted-foreground mt-1">{notification}</p> */}
+                          </div>
+                        </li>
+                      );
+                    }
+                  })}
               </ol>
             </ScrollArea>
           ) : (
@@ -140,7 +145,7 @@ export const UserNotifications = ({
           )}
           <Button
             onClick={handleClick}
-            disabled={unreadNotifications.length === 0}
+            disabled={userNotifications.length === 0}
             variant="outline"
             className="w-full"
           >

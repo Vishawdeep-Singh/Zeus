@@ -43,12 +43,9 @@ export default function SidebarHome({ children, session }: any) {
 
   useEffect(() => {
     if (socket) {
-      console.log('here');
       socket.onmessage = async (event) => {
-        console.log(JSON.parse(event.data));
-
         const { type, data } = JSON.parse(event.data) || {};
-        console.log(type, data);
+
         if (type === 'check-in') {
           const audio = new Audio(`/notifications.mp3`);
           await audio.play();
@@ -121,8 +118,6 @@ export default function SidebarHome({ children, session }: any) {
       );
     }
   }, [user, socket, gymIds]);
-
-  console.log(session);
 
   const links = [
     {

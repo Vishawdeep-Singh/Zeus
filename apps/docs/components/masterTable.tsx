@@ -211,7 +211,6 @@ export function MasterTable({
   ownedGyms: { gymId: string; gymName: string }[];
 }) {
   const router = useRouter();
-  console.log('Master table member data', membersData);
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setGymFilter] = useRecoilState(GymFilterState);
   const dateFilter = useRecoilValue(dateRange);

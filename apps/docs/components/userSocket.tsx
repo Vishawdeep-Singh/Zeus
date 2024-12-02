@@ -27,7 +27,7 @@ export function UserSocket({ children }: any) {
   }, []);
 
   useEffect(() => {
-    if (user && socket && gymIds?.length > 0) {
+    if (user && socket) {
       socket.send(
         JSON.stringify({
           type: 'join-notifications-user',

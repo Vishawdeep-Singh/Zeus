@@ -11,7 +11,7 @@ const server = http.createServer((request, response) => {
 const wss = new WebSocketServer({ server });
 
 wss.on("connection", (ws) => {
-  ZeusManager.getInstance().logData();
+  
   ws.on("error", console.error);
 
   ws.on("message", async (raw) => {

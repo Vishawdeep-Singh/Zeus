@@ -6,36 +6,42 @@ import moment from 'moment';
 import { CheckIcon, CircleX } from 'lucide-react';
 import Link from 'next/link';
 
-export function BackgroundGradientDemo({ image,dateJoined, membershipDetails }: any) {
+export function BackgroundGradientDemo({
+  image,
+  dateJoined,
+  membershipDetails,
+}: any) {
   const originalDate = moment(dateJoined);
 
   const monthsToSubtract = membershipDetails.duration;
   const addMonths = originalDate.clone().add(monthsToSubtract, 'months');
-  console.log(moment(addMonths).format('DD/MM/YYYY')); // Number of months to subtract
 
-  // Calculate the difference in days
   const differenceInDays = addMonths.diff(moment(), 'days');
-  console.log(moment().format('DD/MM/YY'));
+
   return (
     <div>
       <BackgroundGradient
         containerClassName=""
         className="rounded-[22px] w-auto  p-4 sm:p-10 bg-white dark:bg-zinc-900"
       >
-        {image ?  <Image
-          src={`${image}`}
-          alt="jordans"
-          height="400"
-          width="400"
-          className="object-cover rounded-lg"
-        /> :  <Image
-        src={`https://images.unsplash.com/photo-1623874514711-0f321325f318?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
-        alt="jordans"
-        height="400"
-        width="400"
-        className="object-cover rounded-lg"
-      /> }
-       
+        {image ? (
+          <Image
+            src={`${image}`}
+            alt="jordans"
+            height="400"
+            width="400"
+            className="object-cover rounded-lg"
+          />
+        ) : (
+          <Image
+            src={`https://images.unsplash.com/photo-1623874514711-0f321325f318?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
+            alt="jordans"
+            height="400"
+            width="400"
+            className="object-cover rounded-lg"
+          />
+        )}
+
         <p className="text-base sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
           {membershipDetails.gym.name}
         </p>

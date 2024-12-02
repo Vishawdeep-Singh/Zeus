@@ -17,9 +17,6 @@ export function TabsDemo({
   ownedGyms: { gymId: string; gymName: string }[];
   membershipExpiry: GymsData;
 }) {
-  console.log('In Tabs', masterTableData);
-  console.log('Owned', ownedGyms);
-  console.log('Membership Expiry', membershipExpiry);
   const tabs = [
     {
       title: 'Analytics',

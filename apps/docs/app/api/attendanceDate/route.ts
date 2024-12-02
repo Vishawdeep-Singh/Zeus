@@ -19,7 +19,6 @@ export async function GET(req: NextRequest) {
 
     const date = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
-    console.log(date, time);
 
     // Fetch attendance records
     const response = await prisma.attendance.findMany({

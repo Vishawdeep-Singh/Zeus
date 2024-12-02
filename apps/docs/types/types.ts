@@ -28,7 +28,7 @@ export type Gym = {
   name: string;
   address: string;
   phoneNumber: string;
-  image:string | null
+  image: string | null;
   id: string;
   ownerId: number;
   memberships?: MembershipAction[];

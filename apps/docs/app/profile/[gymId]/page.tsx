@@ -28,7 +28,6 @@ export default async function ({
   } else if (userInfo.error === 'Cannot process profile at the moment') {
     console.error();
   }
-  console.log('UserProfileInfo', userInfo.data);
 
   return (
     <div>
@@ -72,7 +71,7 @@ async function getUserProfileInfo(userId: number, gymId: string) {
         },
       },
     });
-    console.log('UserProfileInfoxx', response);
+
     if (!response) {
       return { error: '404' };
     }

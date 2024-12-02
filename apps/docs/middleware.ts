@@ -5,7 +5,7 @@ import { getToken } from "next-auth/jwt";
 export default async function(req:NextRequest){
 const token= await getToken({req,secret:process.env.JWT_SECRET,cookieName:"zeus-auth.session-token"})
 const url = req.nextUrl;
-console.log("Token",token)
+
 if(!token){
     return NextResponse.redirect(new URL("/signin", url.origin));
 }

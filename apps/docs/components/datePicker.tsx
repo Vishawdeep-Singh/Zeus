@@ -66,9 +66,6 @@ export function DatePicker({
   membersData: MasterTableMember[];
 }) {
   const [date, setDate] = useRecoilState(dateRange);
-  console.log(new Date('10/27/2024'));
-  console.log(membersData);
-  console.log(date?.from);
 
   return (
     <div className={cn('grid gap-2')}>

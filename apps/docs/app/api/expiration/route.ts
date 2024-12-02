@@ -1,5 +1,6 @@
 import prisma from '@repo/db/client';
 import moment from 'moment';
+import { revalidatePath } from 'next/cache';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -17,7 +18,7 @@ export async function GET(req: NextRequest) {
         const differenceInDays = addMonths.diff(moment(), 'days');
         return differenceInDays <= 0;
       });
-      console.log('Expired', expiredMemberhsips);
+
       await Promise.all(
         expiredMemberhsips.map((membershipDetails) => {
           return prisma.userMembership.update({
@@ -33,6 +34,8 @@ export async function GET(req: NextRequest) {
           });
         })
       );
+
+      revalidatePath('/user');
       return new Response(
         JSON.stringify({ message: 'Expired memberships updated successfully' }),
         { status: 200 }

@@ -18,6 +18,7 @@ export default async function RootLayout({
   if (!session?.user.id) {
     redirect('/signin');
   }
+
   const response = await getMembership(session.user.id);
   return (
     <>
@@ -66,7 +67,7 @@ async function getMembership(id: string) {
         },
       },
     });
-    console.log('Warning', response);
+
     return { data: response };
   } catch (error) {
     console.error(error);

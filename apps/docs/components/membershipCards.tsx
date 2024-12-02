@@ -25,7 +25,6 @@ export function MembershipCard({
   const url = usePathname();
 
   const isUser = url.startsWith('/user/');
-  console.log('is user', isUser);
 
   const [warningNotification, setWarningNotifications] = useRecoilState(
     warningNotificationsState
@@ -33,8 +32,6 @@ export function MembershipCard({
   const { sendMessage, user } = useWebSocket();
 
   async function handleChoosePlan() {
-    console.log(id);
-    console.log(gymId);
     const response = await joinMembership(id, gymId);
     if (response.data) {
       if (response.warningNotifications.length > 0) {
@@ -58,6 +55,7 @@ export function MembershipCard({
         gymName: response.gymDetails.name,
         notificationMetaData: data,
       });
+
       toast.success('Membership sucessfully purchased', {
         closeButton: true,
         position: 'top-center',
@@ -82,7 +80,6 @@ export function MembershipCard({
     membershipUserDetails?.find(
       (details) => details.membershipId === id && details.expired === false
     ) || false;
-  console.log(activeMembership);
 
   return (
     <div

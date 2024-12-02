@@ -59,7 +59,7 @@ const content = [
     content: (
       <div className="h-full w-full flex items-center justify-center text-white">
         <Image
-          src={'/scroll4.png'}
+          src={'/new.png'}
           fill
           priority
           className="h-full w-full object-contain"

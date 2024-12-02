@@ -51,7 +51,7 @@ export const Signin = () => {
 
   async function checkEmail(value: string) {
     const response = await checkEmailExists(value);
-    console.log(response);
+
     if (response.data?.provider === 'credentials') {
       setInputError('ok');
       setInputLoading(false);
@@ -83,7 +83,6 @@ export const Signin = () => {
         position: 'bottom-center',
       });
     }
-    console.log(response);
 
     setTimeout(() => {
       setLoading(false);

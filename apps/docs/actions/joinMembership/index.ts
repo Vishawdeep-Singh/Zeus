@@ -3,10 +3,11 @@
 import { authOptions } from '@/lib/auth';
 import prisma from '@repo/db/client';
 import { getServerSession } from 'next-auth';
+import { revalidatePath } from 'next/cache';
 
 export async function joinMembership(membershipId: string, gymId: string) {
   const session = await getServerSession(authOptions);
-  console.log(session?.user.id);
+
   try {
     const activeMembership = await prisma.userMembership.findFirst({
       where: {
@@ -85,19 +86,18 @@ export async function joinMembership(membershipId: string, gymId: string) {
             });
           })
         );
-        console.log('All warnings resolved successfully.');
       } catch (error) {
         console.error('Failed to resolve some warnings:', error);
       }
     }
-
+    revalidatePath(`/user/view/${gymId}`);
+    revalidatePath(`/user/memberships`);
     return {
       data: membership,
       gymDetails: gym,
       warningNotifications: activeWarningAboutThisGym,
     };
   } catch (error: any) {
-    console.log(error);
     if (error.code === 'P2002') {
       // Prisma unique constraint violation error
       return { error: 'You already have a membership at this gym' };

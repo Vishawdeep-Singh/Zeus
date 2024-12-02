@@ -17,8 +17,6 @@ export const MembershipExpiringWarning = async () => {
   }
 
   return <WarningShower data={response.data}></WarningShower>;
-
-  console.log(response.data);
 };
 
 async function getMembership(id: string) {
@@ -40,7 +38,7 @@ async function getMembership(id: string) {
         },
       },
     });
-    console.log('Warning', response);
+
     return { data: response };
   } catch (error) {
     console.error(error);

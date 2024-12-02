@@ -24,7 +24,7 @@ export const GymFilter = ({
       setGymFilter(ownedGyms?.[0]?.gymId);
     }
   }, [ownedGyms]);
-  console.log(gymFilter);
+
   return (
     <Select
       value={gymFilter || defaultGymId} // Use gymFilter if it's set, else use defaultGymId

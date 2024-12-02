@@ -96,19 +96,17 @@ export default function Component() {
   useEffect(() => {
     async function fetchData() {
       const response = await getLastSevenDaysAttendance();
-      console.log(response.data);
+
       const attendances = response.data?.find(
         (attendance) => attendance.id === gymFilterValue
       );
-      console.log(attendances);
+
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Set time to the start of the day for accuracy
 
       // Calculate the date 7 days ago
       const sevenDaysAgo = new Date(today);
       sevenDaysAgo.setDate(today.getDate() - 7);
-      console.log(today);
-      console.log(sevenDaysAgo);
 
       const sevenDaysAgoAttendances = attendances?.attendance
         .filter((attendance, i) => {
@@ -141,7 +139,7 @@ export default function Component() {
       };
 
       const last7Days = getLast7Days();
-      console.log(last7Days);
+
       sevenDaysAgoAttendances?.forEach((day) => {
         const dayEntry = last7Days.find((d) => d.day === day.newDate);
         if (dayEntry) {
@@ -155,8 +153,7 @@ export default function Component() {
           dayEntry.members.push(userobj);
         }
       });
-      // console.log(last7Days)
-      // console.log(sevenDaysAgoAttendances)
+
       const finalData = last7Days;
       setChartData(finalData);
     }

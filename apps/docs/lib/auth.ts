@@ -23,13 +23,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials: any) {
-        // console.log(credentials);
-        // Check if the credentials exist
-        // if (!credentials || !credentials.phone || !credentials.password) {
-        //   return null;
-        // }
-        console.log(credentials);
-
         const existingUser = await db.user.findFirst({
           where: {
             email: credentials?.email,
@@ -37,8 +30,6 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (existingUser) {
-          console.log(existingUser.email);
-
           const passwordValidation = await bcrypt.compare(
             credentials.password,
             existingUser.password as string
@@ -87,15 +78,12 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        console.log(user);
-        console.log(profile);
         token.provider = 'google';
         token.sub = googleuser?.id.toString();
         token.email = profile?.email;
         token.name = profile?.name;
         token.picture = user?.image as string;
         token.role = googleuser?.roles;
-        console.log(token);
       } else if (user) {
         const credentialsuser = await prisma.user.findUnique({
           where: {
@@ -119,8 +107,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token, user }) {
-      console.log(token);
-
       if (token.provider === 'google') {
         session.user = {
           id: token.sub as string,
@@ -140,13 +126,11 @@ export const authOptions: NextAuthOptions = {
           role: token.role as string,
           number: token.number as string,
         };
-        console.log(session);
+
         return session;
       }
     },
     async signIn({ user, account, profile, email, credentials }) {
-      console.log('User Image', user?.image);
-
       try {
         if (account?.provider === 'google') {
           const user1 = await prisma.user.findUnique({
@@ -158,7 +142,7 @@ export const authOptions: NextAuthOptions = {
             toast.error('Email is Already in use', {
               closeButton: true,
             });
-            console.log('gdfadsfasdfads');
+
             return false;
           }
           if (!user1) {
@@ -175,7 +159,6 @@ export const authOptions: NextAuthOptions = {
           return true;
         }
       } catch (error) {
-        console.log(error);
         return false;
       }
       return true;
