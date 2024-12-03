@@ -56,7 +56,7 @@ export const Signin = () => {
       setInputError('ok');
       setInputLoading(false);
     } else if (response.data?.provider === 'google') {
-      setInputError('This is your google email . Sign in with google');
+      setInputError('google');
       setInputLoading(false);
     } else {
       setInputError(response.error as string);
@@ -170,8 +170,7 @@ export const Signin = () => {
                         <p className="text-red-600">{inputError}</p>
                       </div>
                     )}
-                  {inputError ===
-                    'This is you google email . Sign in with google' &&
+                  {inputError === 'google' &&
                     !inputLoading && (
                       <div>
                         <p className="text-red-600">{inputError}</p>
