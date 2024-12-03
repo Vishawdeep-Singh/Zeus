@@ -28,6 +28,10 @@ attendance Attendance[] @relation("UserAttendance")
 provider Providers
 notifications Notification[]
 warningNotifications WarningNotifications[]
+
+
+
+@@index([cellPh])
 }
 
 
@@ -45,6 +49,10 @@ attendance  Attendance[]
 phoneNumber String
 userMemberships UserMembership[]
 warningNotifications WarningNotifications[]
+
+@@index([ownerId])
+@@index([id])
+@@index([ownerId, id])
 }
 
 model OTP {
@@ -77,6 +85,11 @@ model UserMembership {
   gym           Gym        @relation(fields: [gymId], references: [id])
   expired      Boolean @default(false)
    @@id([userId, membershipId]) // Composite primary key
+
+@@index([userId, gymId, expired])
+@@index([userId, gymId])
+@@index([gymId])
+@@index([userId])
 }
 
 model Attendance {
@@ -87,11 +100,13 @@ model Attendance {
   userId Int
   date String
   time String
-  
-   @@index([userId])
-  @@index([gymId])
-  @@index([date])
-  @@index([time])
+
+
+@@index([userId, gymId, date])
+@@index([userId])
+@@index([gymId])
+@@index([date])
+@@index([time])
 }
 
 model Notification {
@@ -102,6 +117,8 @@ model Notification {
   createdAt DateTime
   isRead Boolean @default(false)
   type Roles
+@@index([userId])
+@@index([id])
 }
 
 model WarningNotifications {
@@ -112,6 +129,11 @@ model WarningNotifications {
  gym Gym @relation(fields: [gymId],references: [id])
  message String
  resolved Boolean
+
+  @@index([userId, resolved])
+  @@index([userId, gymId, resolved, message])
+  @@index([gymId])
+  @@index([id])
 }
 
 enum Roles {
