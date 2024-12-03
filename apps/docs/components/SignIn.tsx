@@ -173,7 +173,7 @@ export const Signin = () => {
                   {inputError === 'google' &&
                     !inputLoading && (
                       <div>
-                        <p className="text-red-600">{inputError}</p>
+                        <p className="text-red-600">{"This email is associated to google . Please Sign in using google"}</p>
                       </div>
                     )}
 
