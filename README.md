@@ -1,3 +1,57 @@
+# Zeus - Gym Management Application
+
+Zeus is a robust gym management solution designed to streamline gym operations, enhance member experience, and optimize administrative efficiency. It provides tools for membership management, attendance tracking, and real-time notifications.
+
+## Key Features
+
+- **Membership Management**:
+  - Join gym memberships with ease.
+  - Receive automated warnings for memberships expiring within 5 days.
+
+- **Attendance Tracking**:
+  - Mark daily attendance for members.
+  - Search and view attendance data using the admin dashboard.
+
+- **Admin Dashboard**:
+  - Visualize data with interactive charts.
+  - Manage attendance and membership data with a master table.
+  - Automatic membership expiry management through a dedicated table.
+
+- **Real-Time Notifications**:
+  - Leveraged **WebSocket** (deployed on AWS EC2) to ensure instant updates for:
+    - Membership status changes.
+    - Attendance confirmations and warnings.
+
+- **Modern Deployment**:
+  - Deployed the frontend using **Next.js** on **Vercel**, offering a scalable and efficient hosting solution for user interactions and real-time updates.
+
+- **Backend Integration**:
+  - Seamless communication between users and admins through integrated **WebSocket** and backend services, optimizing both user experience and operational efficiency.
+
+## Deployment
+
+- **Frontend and Backend**: [Next.js](https://nextjs.org/) hosted on [Vercel](https://vercel.com/).
+- **Backend of WS**: Hosted on an AWS EC2 instance, powering WebSocket and API services.
+
+## Installation and Usage
+
+### Prerequisites
+1. Node.js (v14 or above)
+2. npm or yarn
+3. AWS credentials (for deploying the WebSocket backend)
+
+### Clone the Repository
+```bash
+git clone https://github.com/your-repo/zeus-gym-management.git
+cd zeus-gym-management
+
+
+
+
+
+
+
+
 # Turborepo starter
 
 This is an official starter Turborepo.
