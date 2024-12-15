@@ -46,7 +46,7 @@ type User = {
   provider: string;
   image?: string | null | undefined;
 };
-export function Component2() {
+export default function Component2() {
   const router = useRouter();
   const gymFilterValue = useRecoilValue(AttedanceGymFilterState);
   const [allGymAttendancesData, setAllGymAttendancesData] = useState<
@@ -61,6 +61,7 @@ export function Component2() {
   useEffect(() => {
     async function fetchTodayAttendance() {
       const response = await getTodayAttendance();
+    
       if (response.error) {
         toast.error(`${response.error}`, {
           closeButton: true,

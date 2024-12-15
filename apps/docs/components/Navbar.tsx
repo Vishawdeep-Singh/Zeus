@@ -21,8 +21,20 @@ import { Notifications } from './notifications';
 import { useRecoilState } from 'recoil';
 import { notificationsState } from '@/states/notifications';
 import { getSignedURL } from '@/actions/getSignedUrls';
+import { usePathname } from 'next/navigation';
 
-export const Navbar = ({ title }: { title: string }) => {
+export const Navbar = () => {
+  const pathname = usePathname();
+
+  const [title, setTitle] = useState<string>();
+  useEffect(() => {
+    if (pathname.includes('/admin/dashboard')) {
+      setTitle('Dashboard');
+    } else if (pathname.includes('/admin/manageGyms')) {
+      setTitle('Manage Gyms');
+    }
+  }, [pathname]);
+  
   const [gymFormData, setGymFormData] = useState<TAddForm>({
     name: '',
     address: '',

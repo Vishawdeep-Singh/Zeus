@@ -2,6 +2,8 @@ import { FloatingDockDemo } from '@/components/floatingDock';
 import { UserHomePage } from '@/components/userHomePage';
 import prisma from '@/lib/db';
 
+export const dynamic = 'force-static'
+export const  revalidate = 7200
 async function getGymDetails() {
   try {
     const response = await prisma.gym.findMany({});

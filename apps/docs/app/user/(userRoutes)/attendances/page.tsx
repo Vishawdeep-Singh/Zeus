@@ -4,41 +4,52 @@ import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
+import AttendanceCardSkeleton from './loading';
 
-export default async function () {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    redirect('/signin');
-  }
-  const response = await getUsersRegisteredGyms(session.user.id);
+
+async function AttendancesComponent({id}:{id:string}){
+
+  const response = await getUsersRegisteredGyms(id);
 
   if (response.error) {
     return (
       <div className="text-5xl font-bold text-center">{response.error}</div>
     );
   }
+ return <div className="p-10 grid grid-cols-3 gap-7">
+  {response.data?.member.map((gymDetails, id) => {
+    if (gymDetails.userMemberships.length > 0) {
+      return gymDetails.userMemberships
+        .filter((membershipData) => !membershipData.expired)
+        .map((membershipData) => {
+          return (
+            <StylishAttendanceMarker
+              key={gymDetails.id}
+              gymId={gymDetails.id}
+              name={gymDetails.name}
+              address={gymDetails.address}
+            ></StylishAttendanceMarker>
+          );
+        });
+    }
+    return null;
+  })}
+</div>
+}
+export default async function () {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    redirect('/signin');
+  }
+ 
   return (
     <div className=" w-full scroll-smooth h-full">
       <div className="text-center text-4xl p-10 font-bold">Attendances</div>
-      <div className="p-10 grid grid-cols-3 gap-7">
-        {response.data?.member.map((gymDetails, id) => {
-          if (gymDetails.userMemberships.length > 0) {
-            return gymDetails.userMemberships
-              .filter((membershipData) => !membershipData.expired)
-              .map((membershipData) => {
-                return (
-                  <StylishAttendanceMarker
-                    key={gymDetails.id}
-                    gymId={gymDetails.id}
-                    name={gymDetails.name}
-                    address={gymDetails.address}
-                  ></StylishAttendanceMarker>
-                );
-              });
-          }
-          return null;
-        })}
-      </div>
+      <Suspense fallback={<AttendanceCardSkeleton/>}>
+      <AttendancesComponent id={session.user.id}></AttendancesComponent>
+      </Suspense>
+    
       <FloatingDockDemo></FloatingDockDemo>
     </div>
   );

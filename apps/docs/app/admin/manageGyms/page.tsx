@@ -56,7 +56,7 @@ export default async function () {
   [&::-webkit-scrollbar-thumb]:rounded-full
   dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
     >
-      <Navbar title={'Manage Gyms'}></Navbar>
+      {/* <Navbar title={'Manage Gyms'}></Navbar> */}
       <Suspense fallback={<Loading></Loading>}>
         <GetGyms ownerId={session.user.id}></GetGyms>
       </Suspense>

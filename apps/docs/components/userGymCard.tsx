@@ -1,5 +1,7 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import Image from 'next/image';
 import Link from 'next/link';
+
 
 interface GymCardProps {
   imageSrc: string;
@@ -16,9 +18,12 @@ export const UserGymCard = ({
   return (
     <Card className="w-full transition transform duration-300 bg-[#f7f7f7] hover:scale-105 hover:shadow-lg max-w-sm mx-auto overflow-hidden">
       <div className="aspect-video relative">
-        <img
+        <Image
           src={imageSrc}
           alt={`${name} exterior`}
+          priority={true}
+          width={1920}
+          height={1080}
           className="object-cover w-full h-full"
         />
       </div>

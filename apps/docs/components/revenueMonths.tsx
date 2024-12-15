@@ -36,7 +36,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function Component1() {
+export default function Component1() {
   return (
     <Card className="w-[40%] bg-[#f7f7f7] hover:shadow-lg hover:shadow-primary/40 transition-shadow duration-200 shadow-sm">
       <CardHeader>

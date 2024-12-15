@@ -203,7 +203,7 @@ import { useRouter } from 'next/navigation';
 //   },
 // ];
 
-export function MasterTable({
+export default function MasterTable({
   membersData,
   ownedGyms,
 }: {

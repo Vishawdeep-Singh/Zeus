@@ -8,11 +8,16 @@ import { masterTableDataConversion, onwerGymsConversion } from '@/lib/helper';
 import { toast } from 'sonner';
 import React from 'react';
 
+
+export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'auto';
+
 export default async function () {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     redirect('/signin');
   }
+ 
   const response = await getMembersOfAllGym(session.user.id);
   if (response.error) {
     toast.error(`${response.data}`, {
@@ -29,9 +34,9 @@ export default async function () {
   [&::-webkit-scrollbar-thumb]:rounded-full
   dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
     >
-      <div>
+      {/* <div>
         <Navbar title={'Dashboard'}></Navbar>
-      </div>
+      </div> */}
 
       <div>
         {/* <div className="w-full space-y-10  overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br bg-white  border-black ">
@@ -102,9 +107,12 @@ async function getMembersOfAllGym(userId: string) {
 
     const memberhshipExpiry = response;
     // @ts-ignore
-    const strucutedData = await masterTableDataConversion(response);
-    // @ts-ignore
-    const ownedGyms = await onwerGymsConversion(response);
+    const [strucutedData, ownedGyms] = await Promise.all([
+      // @ts-ignore
+      masterTableDataConversion(response),
+      // @ts-ignore
+      onwerGymsConversion(response)
+    ]);
 
     return { data: strucutedData, ownedGyms, memberhshipExpiry };
   } catch (error: any) {

@@ -30,6 +30,7 @@ export function BackgroundGradientDemo({
             alt="jordans"
             height="400"
             width="400"
+            priority={true}
             className="object-cover rounded-lg"
           />
         ) : (

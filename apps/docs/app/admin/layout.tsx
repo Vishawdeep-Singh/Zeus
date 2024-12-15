@@ -1,3 +1,4 @@
+import { Navbar } from '@/components/Navbar';
 import SidebarHome from '@/components/SidebarHome';
 import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
@@ -12,5 +13,9 @@ export default async function Layout({
   if (!session?.user) {
     redirect('/signin');
   }
-  return <SidebarHome session={session}>{children}</SidebarHome>;
+  return <div className=''>
+   
+<SidebarHome session={session}>{children}</SidebarHome>
+
+  </div> ;
 }

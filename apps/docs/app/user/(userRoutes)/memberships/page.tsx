@@ -4,6 +4,8 @@ import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
+import MembershipCardSkeleton from './loading';
 
 async function getMembership(id: string) {
   try {
@@ -53,41 +55,49 @@ async function getMembership(id: string) {
     return { error: 'Not able to process memberships at the moment' };
   }
 }
-export default async function () {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    redirect('/signin');
-  }
 
-  const response = await getMembership(session.user.id);
+async function MemberhshipComponent({id}:{id:string}) {
+  const response = await getMembership(id);
  
   if (response.error) {
     return (
       <div className="text-5xl font-bold text-center">{response.error}</div>
     );
   }
+ return <div className="grid grid-cols-3 mx-auto w-[90%] gap-10 pb-10 ">
+  {response.data?.map((membership, i) => {
+    return (
+      <BackgroundGradientDemo
+        image={membership.membership.gym.image}
+        dateJoined={membership.dateJoined}
+        membershipDetails={membership.membership}
+      ></BackgroundGradientDemo>
+    );
+  })}
+
+  {/* <BackgroundGradientDemo></BackgroundGradientDemo>
+  <BackgroundGradientDemo></BackgroundGradientDemo>
+  <BackgroundGradientDemo></BackgroundGradientDemo>
+  <BackgroundGradientDemo></BackgroundGradientDemo> */}
+</div>
+  
+}
+export default async function () {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    redirect('/signin');
+  }
+
+  
   return (
     <div className="  w-full scroll-smooth h-full">
       <div className="text-center text-4xl p-10 font-bold">
         Your Memberships
       </div>
-
-      <div className="grid grid-cols-3 mx-auto w-[90%] gap-10 pb-10 ">
-        {response.data?.map((membership, i) => {
-          return (
-            <BackgroundGradientDemo
-              image={membership.membership.gym.image}
-              dateJoined={membership.dateJoined}
-              membershipDetails={membership.membership}
-            ></BackgroundGradientDemo>
-          );
-        })}
-
-        {/* <BackgroundGradientDemo></BackgroundGradientDemo>
-        <BackgroundGradientDemo></BackgroundGradientDemo>
-        <BackgroundGradientDemo></BackgroundGradientDemo>
-        <BackgroundGradientDemo></BackgroundGradientDemo> */}
-      </div>
+    <Suspense fallback={<MembershipCardSkeleton/>}>
+    <MemberhshipComponent id={session.user.id}></MemberhshipComponent>
+    </Suspense>
+    
       <FloatingDockDemo></FloatingDockDemo>
     </div>
   );

@@ -19,12 +19,13 @@ import {
 } from '@/components/ui/chart';
 import { useEffect, useState } from 'react';
 import { getLastSevenDaysAttendance } from '@/actions/Last7DaysAttendance';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { AttedanceGymFilterState } from '@/states/filters';
 import MultiAvatar from './Multiavatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import Image from 'next/image';
+import { sevenDaysAttendance } from '@/states/attendance';
 // const chartData = [
 //   { day: "Monday", attendance: 186 , members:[]},
 //   { day: "Tuesday", attendance: 305 },
@@ -34,7 +35,7 @@ import Image from 'next/image';
 //   { day: "Saturday", attendance: 214 },
 //   { day: "Sunday", attendance: 295 },
 // ];
-
+const CACHE_DURATION = 60 * 60 * 1000;
 const chartConfig = {
   attendance: {
     label: 'Attendance',
@@ -58,44 +59,55 @@ export default function Component() {
   );
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
+  // const CustomTooltip = ({ active, payload, label }: any) => {
+  //   if (active && payload && payload.length) {
+  //     const data = payload[0].payload;
 
-      return (
-        <div className="bg-white overflow-auto h-fit border rounded-lg  shadow-xl p-4">
-          <p className="font-bold text-sm">{label}</p>
-          <p className="text-primary text-sm">Attendances: {data.attendance}</p>
-          <p className="font-bold text-xl mt-5">Members</p>
+  //     return (
+  //       <div className="bg-white overflow-auto h-fit border rounded-lg  shadow-xl p-4">
+  //         <p className="font-bold text-sm">{label}</p>
+  //         <p className="text-primary text-sm">Attendances: {data.attendance}</p>
+  //         <p className="font-bold text-xl mt-5">Members</p>
 
-          <div className="h-full w-full mt-5">
-            <ul className="space-y-3 overflow-auto">
-              {data.members.length > 0 &&
-                data.members.map((data: any) => {
-                  return (
-                    <li className="flex  space-x-5 items-center">
-                      <MultiAvatar
-                        className="h-10 w-10"
-                        name={data.userName}
-                      ></MultiAvatar>
-                      <p className="text-base">{data.userName}</p>
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
+  //         <div className="h-full w-full mt-5">
+  //           <ul className="space-y-3 overflow-auto">
+  //             {data.members.length > 0 &&
+  //               data.members.map((data: any) => {
+  //                 return (
+  //                   <li className="flex  space-x-5 items-center">
+  //                     <MultiAvatar
+  //                       className="h-10 w-10"
+  //                       name={data.userName}
+  //                     ></MultiAvatar>
+  //                     <p className="text-base">{data.userName}</p>
+  //                   </li>
+  //                 );
+  //               })}
+  //           </ul>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  //   return null;
+  // };
   const gymFilterValue = useRecoilValue(AttedanceGymFilterState);
+  const [sevenDayAttendance,setSevenDayAttendance]=useRecoilState(sevenDaysAttendance);
   const [chartData, setChartData] = useState<DayEntry[] | null>(null);
   const [selectedDay, setSelectedDay] = useState<String | null>(null);
+  
 
   useEffect(() => {
     async function fetchData() {
+      const currentTime = new Date().getTime();
+      const cachedData = sevenDayAttendance;
+      if (cachedData && cachedData.expiration && cachedData.expiration > currentTime) {
+        console.log('Using cached data');
+        setChartData(cachedData.data); // Use the cached data
+        return;
+      }
+      console.log("Not cached")
       const response = await getLastSevenDaysAttendance();
+      
 
       const attendances = response.data?.find(
         (attendance) => attendance.id === gymFilterValue
@@ -156,9 +168,13 @@ export default function Component() {
 
       const finalData = last7Days;
       setChartData(finalData);
+      setSevenDayAttendance({
+        data: last7Days,
+        expiration: currentTime + CACHE_DURATION, // Set new expiration time
+      });
     }
     fetchData();
-  }, [gymFilterValue]);
+  }, [gymFilterValue,sevenDayAttendance]);
 
   return (
     <div className="w-[50%]  h-full">
