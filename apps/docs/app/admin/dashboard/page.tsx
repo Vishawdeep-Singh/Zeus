@@ -16,7 +16,7 @@ export default async function () {
   }
 
   const data = await fetch(
-    `http://localhost:3000/api/getDashboardData?userId=${session.user.id}`,
+    `https://zeus.vishawdeepsingh.in/api/getDashboardData?userId=${session.user.id}`,
     {
       next: { revalidate: 3600 }, // Cache and revalidate every 60 seconds
     }

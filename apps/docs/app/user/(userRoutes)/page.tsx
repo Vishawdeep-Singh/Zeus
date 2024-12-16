@@ -3,7 +3,7 @@ import { UserHomePage } from '@/components/userHomePage';
 
 async function getGymDetails() {
   try {
-    const response = await fetch('http://localhost:3000/api/getGyms', {
+    const response = await fetch('https://zeus.vishawdeepsingh.in/api/getGyms', {
       next: { revalidate: 300 },
     }).then((res) => res.json());
 
