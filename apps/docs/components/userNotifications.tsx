@@ -64,6 +64,7 @@ export const UserNotifications = ({
               width={50}
               height={50}
               alt="Avatar"
+              priority
             />
           ) : (
             <MultiAvatar className="" name={name}></MultiAvatar>

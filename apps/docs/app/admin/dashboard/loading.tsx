@@ -1,15 +1,16 @@
-import React from "react";
-import { Skeleton } from "@/components/ui/skeleton"; // Adjust import based on your setup
+import React from 'react';
+import { Skeleton } from '@/components/ui/skeleton'; // Adjust import based on your setup
 
 const AnalyticsSkeleton = () => {
   return (
     <div className="p-6  space-y-6">
-
-        <div className="flex space-x-8 w-full items-center">
+      <div className="flex space-x-8 w-full items-center">
         <Skeleton className="h-10 w-36 rounded-3xl" /> {/* Title Placeholder */}
-        <Skeleton className="h-10 w-36 rounded-3xl" /> {/* Dropdown Placeholder */}
+        <Skeleton className="h-10 w-36 rounded-3xl" />{' '}
+        {/* Dropdown Placeholder */}
         <Skeleton className="h-10 w-36 rounded-3xl" /> {/* Title Placeholder */}
-        <Skeleton className="h-10 w-36 rounded-3xl" /> {/* Dropdown Placeholder */}
+        <Skeleton className="h-10 w-36 rounded-3xl" />{' '}
+        {/* Dropdown Placeholder */}
       </div>
       {/* Header */}
       <div className="flex mt-5 space-x-8 items-center">

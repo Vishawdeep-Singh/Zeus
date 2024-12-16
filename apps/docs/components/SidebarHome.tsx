@@ -90,7 +90,7 @@ export default function SidebarHome({ children, session }: any) {
           if (data.notificationMetaData) {
             setNotifications((prev) => [...prev, data.notificationMetaData]);
           }
-          revalidatePath('/admin/dashboard')
+          revalidatePath('/admin/dashboard');
           // const response = await addNotifications(data.message,data.time)
 
           // if(response.data){
@@ -193,6 +193,7 @@ export default function SidebarHome({ children, session }: any) {
                       width={50}
                       height={50}
                       alt="Avatar"
+                      priority
                     />
                   ),
                 }}
@@ -251,7 +252,7 @@ const Dashboard = ({ children }: any) => {
   return (
     <div className="flex flex-1">
       <div className=" rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-      <Navbar></Navbar>
+        <Navbar></Navbar>
         {children}
       </div>
     </div>

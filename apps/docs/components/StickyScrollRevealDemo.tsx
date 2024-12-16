@@ -13,7 +13,7 @@ const content = [
         <Image
           src={'/scroll01.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -29,7 +29,7 @@ const content = [
         <Image
           src={'/scroll02.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -45,7 +45,7 @@ const content = [
         <Image
           src={'/scroll3.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -61,7 +61,7 @@ const content = [
         <Image
           src={'/new.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -77,7 +77,7 @@ const content = [
         <Image
           src={'/scroll5.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -93,7 +93,7 @@ const content = [
         <Image
           src={'/scroll6.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -109,7 +109,7 @@ const content = [
         <Image
           src={'/scroll7.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -125,7 +125,7 @@ const content = [
         <Image
           src={'/scroll8.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -141,7 +141,7 @@ const content = [
         <Image
           src={'/scroll9.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -157,7 +157,7 @@ const content = [
         <Image
           src={'/scroll10.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />
@@ -173,7 +173,7 @@ const content = [
         <Image
           src={'/scroll4.png'}
           fill
-          priority={true}
+          priority
           className="h-full w-full object-contain"
           alt="linear board demo"
         />

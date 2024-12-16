@@ -1,12 +1,13 @@
 import { FloatingDockDemo } from '@/components/floatingDock';
 import { UserHomePage } from '@/components/userHomePage';
-import prisma from '@/lib/db';
-
 
 async function getGymDetails() {
   try {
-    const response = await prisma.gym.findMany({});
-    return { data: response };
+    const response = await fetch('http://localhost:3000/api/getGyms', {
+      next: { revalidate: 300 },
+    }).then((res) => res.json());
+
+    return { data: response.data };
   } catch (error) {
     console.error(error);
 

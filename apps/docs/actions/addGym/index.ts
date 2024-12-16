@@ -37,7 +37,7 @@ export const addGym = async (
     });
     revalidatePath('/admin/manageGyms');
     revalidatePath('/admin/dashboard');
-    revalidatePath('/user');
+    revalidatePath('/user/(userRoutes)', 'page');
     return { data: response };
   } catch (error) {
     console.error(error);

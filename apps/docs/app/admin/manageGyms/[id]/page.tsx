@@ -87,7 +87,6 @@ export default async function ({ params }: { params: { id: string } }) {
   [&::-webkit-scrollbar-thumb]:rounded-full
   dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
     >
-      
       <div className="animate-slide-up">
         <ManageGym
           role="admin"

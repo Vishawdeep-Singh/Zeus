@@ -91,32 +91,34 @@ export default function Component() {
   //   return null;
   // };
   const gymFilterValue = useRecoilValue(AttedanceGymFilterState);
-  const [sevenDayAttendance,setSevenDayAttendance]=useRecoilState(sevenDaysAttendance);
+  const [sevenDayAttendance, setSevenDayAttendance] =
+    useRecoilState(sevenDaysAttendance);
   const [chartData, setChartData] = useState<DayEntry[] | null>(null);
   const [selectedDay, setSelectedDay] = useState<String | null>(null);
-  
 
   useEffect(() => {
     async function fetchData() {
       const currentTime = new Date().getTime();
-      const cachedData = sevenDayAttendance;
-      if (cachedData && cachedData.expiration && cachedData.expiration > currentTime) {
+      const cachedData = sevenDayAttendance[gymFilterValue as string];
+      if (
+        cachedData &&
+        cachedData.expiration &&
+        cachedData.expiration > currentTime
+      ) {
         console.log('Using cached data');
-        setChartData(cachedData.data); // Use the cached data
+        setChartData(cachedData.data);
         return;
       }
-      console.log("Not cached")
+      console.log('Not cached');
       const response = await getLastSevenDaysAttendance();
-      
 
       const attendances = response.data?.find(
         (attendance) => attendance.id === gymFilterValue
       );
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // Set time to the start of the day for accuracy
+      today.setHours(0, 0, 0, 0);
 
-      // Calculate the date 7 days ago
       const sevenDaysAgo = new Date(today);
       sevenDaysAgo.setDate(today.getDate() - 7);
 
@@ -168,13 +170,18 @@ export default function Component() {
 
       const finalData = last7Days;
       setChartData(finalData);
-      setSevenDayAttendance({
-        data: last7Days,
-        expiration: currentTime + CACHE_DURATION, // Set new expiration time
-      });
+
+      setSevenDayAttendance((prevCache) => ({
+        ...prevCache,
+        // @ts-ignore
+        [gymFilterValue]: {
+          data: last7Days,
+          expiration: currentTime + CACHE_DURATION,
+        },
+      }));
     }
     fetchData();
-  }, [gymFilterValue,sevenDayAttendance]);
+  }, [gymFilterValue, sevenDayAttendance]);
 
   return (
     <div className="w-[50%]  h-full">
@@ -184,7 +191,6 @@ export default function Component() {
           <CardDescription>Last 7 Days</CardDescription>
         </CardHeader>
         <CardContent>
-          {/* Keep ChartContainer as required by the chart library */}
           <ChartContainer config={chartConfig} className="w-full h-[150px]">
             <BarChart
               accessibilityLayer
@@ -259,6 +265,7 @@ export default function Component() {
                     width={50}
                     height={50}
                     alt="Avatar"
+                    priority
                   />
                 ) : (
                   <MultiAvatar className="h-10 w-10" name={member.userName} />

@@ -151,6 +151,7 @@ export default function ProfilePage({ userProfileInfo }: any) {
                   width={1000}
                   height={1000}
                   alt="Avatar"
+                  priority
                 />
               ) : (
                 <MultiAvatar

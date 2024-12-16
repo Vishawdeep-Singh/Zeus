@@ -1,6 +1,5 @@
 import { atom } from 'recoil';
 
-
 type DayEntry = {
   day: string;
   attendance: number;
@@ -8,22 +7,20 @@ type DayEntry = {
 };
 
 type User = {
-  userId: Number;
+  userId: number;
   userName: string;
   provider: string;
   image?: string | null | undefined;
 };
 
-type Custom = {
-  data: DayEntry[] | null;
-  expiration: number | null; 
+type CachedAttendance = {
+  [gymFilterValue: string]: {
+    data: DayEntry[] | null;
+    expiration: number | null;
+  };
 };
 
-
-export const sevenDaysAttendance = atom<Custom>({
-  key: 'sevenDayAttendance', 
-  default: {
-    data: null,
-    expiration: null,
-  },
+export const sevenDaysAttendance = atom<CachedAttendance>({
+  key: 'sevenDayAttendance',
+  default: {},
 });

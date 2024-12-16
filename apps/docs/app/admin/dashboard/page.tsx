@@ -7,20 +7,23 @@ import prisma from '@/lib/db';
 import { masterTableDataConversion, onwerGymsConversion } from '@/lib/helper';
 import { toast } from 'sonner';
 import React from 'react';
-
-
-export const revalidate = 3600; // Revalidate every hour
-export const dynamic = 'auto';
+import { cache } from 'react';
 
 export default async function () {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     redirect('/signin');
   }
- 
-  const response = await getMembersOfAllGym(session.user.id);
-  if (response.error) {
-    toast.error(`${response.data}`, {
+
+  const data = await fetch(
+    `http://localhost:3000/api/getDashboardData?userId=${session.user.id}`,
+    {
+      next: { revalidate: 3600 }, // Cache and revalidate every 60 seconds
+    }
+  ).then((res) => res.json());
+
+  if (data.error) {
+    toast.error(`${data.error}`, {
       closeButton: true,
       position: 'top-center',
     });
@@ -57,66 +60,67 @@ export default async function () {
 
         <TabsDemo
           // @ts-ignore
-          membershipExpiry={response.memberhshipExpiry}
+          membershipExpiry={data.memberhshipExpiry}
           // @ts-ignore
-          masterTableData={response.data}
+          masterTableData={data.data}
           // @ts-ignore
-          ownedGyms={response.ownedGyms}
+          ownedGyms={data.ownedGyms}
         ></TabsDemo>
       </div>
       <div></div>
     </div>
   );
 }
-async function getMembersOfAllGym(userId: string) {
-  try {
-    if (!userId) {
-      notFound();
-    }
-    const response = await prisma.gym.findMany({
-      where: {
-        ownerId: Number(userId),
-      },
-      select: {
-        id: true,
-        name: true,
-        members: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            cellPh: true,
-            memberships: {
-              select: {
-                gymId: true,
-                membershipId: true,
-                dateJoined: true,
-                expired: true,
-                membership: {
-                  select: {
-                    duration: true,
-                  },
-                },
-              },
-            },
-            attendance: true,
-          },
-        },
-      },
-    });
 
-    const memberhshipExpiry = response;
-    // @ts-ignore
-    const [strucutedData, ownedGyms] = await Promise.all([
-      // @ts-ignore
-      masterTableDataConversion(response),
-      // @ts-ignore
-      onwerGymsConversion(response)
-    ]);
+// async function getMembersOfAllGym(userId: string) {
+//   try {
+//     if (!userId) {
+//       notFound();
+//     }
+//     const response = await prisma.gym.findMany({
+//       where: {
+//         ownerId: Number(userId),
+//       },
+//       select: {
+//         id: true,
+//         name: true,
+//         members: {
+//           select: {
+//             id: true,
+//             name: true,
+//             email: true,
+//             cellPh: true,
+//             memberships: {
+//               select: {
+//                 gymId: true,
+//                 membershipId: true,
+//                 dateJoined: true,
+//                 expired: true,
+//                 membership: {
+//                   select: {
+//                     duration: true,
+//                   },
+//                 },
+//               },
+//             },
+//             attendance: true,
+//           },
+//         },
+//       },
+//     });
 
-    return { data: strucutedData, ownedGyms, memberhshipExpiry };
-  } catch (error: any) {
-    console.error(error.message);
-    return { error: 'Not able to get Dashboard Data at the moment' };
-  }
-}
+//     const memberhshipExpiry = response;
+//     // @ts-ignore
+//     const [strucutedData, ownedGyms] = await Promise.all([
+//       // @ts-ignore
+//       masterTableDataConversion(response),
+//       // @ts-ignore
+//       onwerGymsConversion(response)
+//     ]);
+
+//     return { data: strucutedData, ownedGyms, memberhshipExpiry };
+//   } catch (error: any) {
+//     console.error(error.message);
+//     return { error: 'Not able to get Dashboard Data at the moment' };
+//   }
+// }

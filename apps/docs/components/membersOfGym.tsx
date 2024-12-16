@@ -45,6 +45,7 @@ export async function MembersofGym({ membersDetails, owner }: any) {
                       width={50}
                       height={50}
                       alt="Avatar"
+                      priority
                     />
                   ) : (
                     <MultiAvatar
@@ -74,6 +75,7 @@ export async function MembersofGym({ membersDetails, owner }: any) {
                           width={50}
                           height={50}
                           alt="Avatar"
+                          priority
                         />
                       ) : (
                         <MultiAvatar

@@ -2,7 +2,6 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
 
-
 interface GymCardProps {
   imageSrc: string;
   name: string;
@@ -21,7 +20,7 @@ export const UserGymCard = ({
         <Image
           src={imageSrc}
           alt={`${name} exterior`}
-          priority={true}
+          priority
           width={1920}
           height={1080}
           className="object-cover w-full h-full"

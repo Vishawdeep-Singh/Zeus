@@ -44,6 +44,7 @@ export default async function UserProfilePage({
                   width={1000}
                   height={1000}
                   alt="Avatar"
+                  priority
                 />
               ) : (
                 <MultiAvatar name={user?.name as string} />

@@ -34,7 +34,7 @@ export const Navbar = () => {
       setTitle('Manage Gyms');
     }
   }, [pathname]);
-  
+
   const [gymFormData, setGymFormData] = useState<TAddForm>({
     name: '',
     address: '',

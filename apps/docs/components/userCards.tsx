@@ -150,6 +150,7 @@ export function ExpandableCardDemo({ gymDetails }: any) {
                     height={100}
                     src={card.src}
                     alt={card.title}
+                    priority
                     className="h-60 w-full  rounded-lg  object-cover "
                   />
                 </motion.div>

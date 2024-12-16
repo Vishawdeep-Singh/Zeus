@@ -87,6 +87,7 @@ export const DirectionAwareHover = ({
             }}
           >
             <Image
+              priority
               alt="image"
               className={cn(
                 'h-full w-full object-cover scale-[1.15]',

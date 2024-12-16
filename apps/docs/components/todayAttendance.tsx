@@ -61,7 +61,7 @@ export default function Component2() {
   useEffect(() => {
     async function fetchTodayAttendance() {
       const response = await getTodayAttendance();
-    
+
       if (response.error) {
         toast.error(`${response.error}`, {
           closeButton: true,
@@ -201,6 +201,7 @@ export default function Component2() {
                       width={50}
                       height={50}
                       alt="Avatar"
+                      priority
                     />
                   ) : (
                     <MultiAvatar

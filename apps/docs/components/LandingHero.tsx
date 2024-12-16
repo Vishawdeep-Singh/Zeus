@@ -20,6 +20,7 @@ export function LandingHero() {
       >
         <Image
           src={'/heroImage.png'}
+          priority
           alt="hero"
           height={720}
           width={1400}

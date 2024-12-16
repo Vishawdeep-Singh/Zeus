@@ -13,9 +13,9 @@ export default async function Layout({
   if (!session?.user) {
     redirect('/signin');
   }
-  return <div className=''>
-   
-<SidebarHome session={session}>{children}</SidebarHome>
-
-  </div> ;
+  return (
+    <div className="">
+      <SidebarHome session={session}>{children}</SidebarHome>
+    </div>
+  );
 }
