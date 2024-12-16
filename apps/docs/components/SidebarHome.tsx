@@ -90,7 +90,7 @@ export default function SidebarHome({ children, session }: any) {
           if (data.notificationMetaData) {
             setNotifications((prev) => [...prev, data.notificationMetaData]);
           }
-          revalidatePath('/admin/dashboard');
+          
           // const response = await addNotifications(data.message,data.time)
 
           // if(response.data){

@@ -3,6 +3,7 @@
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth';
+import { revalidatePath } from 'next/cache';
 
 export async function markAttendance(gymId: string) {
   try {
@@ -18,6 +19,7 @@ export async function markAttendance(gymId: string) {
         time: new Date().toLocaleTimeString(),
       },
     });
+    revalidatePath(`/admin/dashboard`)
     return { data: response };
   } catch (error) {
     console.error(error);

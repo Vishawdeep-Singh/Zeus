@@ -92,6 +92,7 @@ export async function joinMembership(membershipId: string, gymId: string) {
     }
     revalidatePath(`/user/view/${gymId}`);
     revalidatePath(`/user/memberships`);
+    revalidatePath(`/admin/dashboard`)
     return {
       data: membership,
       gymDetails: gym,

@@ -1,8 +1,9 @@
 import prisma from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET(req:Request) {
   console.log('API /api/getGyms called');
+
   try {
     const response = await prisma.gym.findMany({});
 

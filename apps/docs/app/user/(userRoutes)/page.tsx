@@ -1,13 +1,25 @@
 import { FloatingDockDemo } from '@/components/floatingDock';
 import { UserHomePage } from '@/components/userHomePage';
+import prisma from '@/lib/db';
 
+// async function getGymDetails() {
+//   try {
+//     const response = await fetch('https://zeus.vishawdeepsingh.in/api/getGyms', {
+//       next: { revalidate: 300 },
+//     }).then((res) => res.json());
+
+//     return { data: response.data };
+//   } catch (error) {
+//     console.error(error);
+
+//     return { error: 'Not able to Process at moment' };
+//   }
+// }
 async function getGymDetails() {
   try {
-    const response = await fetch('https://zeus.vishawdeepsingh.in/api/getGyms', {
-      next: { revalidate: 300 },
-    }).then((res) => res.json());
-
-    return { data: response.data };
+    const response = await prisma.gym.findMany({});
+    return { data: response };
+    
   } catch (error) {
     console.error(error);
 
@@ -15,8 +27,9 @@ async function getGymDetails() {
   }
 }
 
+
 export default async function UserHome() {
-  const gymDetails = await getGymDetails();
+  const gymDetails = await getGymDetails()
 
   return (
     <div className="">
